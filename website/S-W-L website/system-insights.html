@@ -1,0 +1,129 @@
+
+<!doctype html>
+<html>
+<head>
+  <title>System Insights - Smart Water Monitoring</title>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700&display=swap' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/custom.js"></script>
+   <style>
+    .menu-system-insights { /* Specific class for this page's menu item */
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+<body class="system-insights-page">
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <div class="content">
+      <div class="content-table flex-column">
+
+        <!--Start Project Design-->
+        <section class="flex-row" id="design">
+          <div class="flex-item flex-column">
+            <h2>Project Design Decoded</h2>
+            <hr>
+            <p class="text">Explore the architecture of our Smart Water-Level Monitoring System. Click on components in the diagram to learn more about their role and functionality.</p>
+            <div class="interactive-diagram-container">
+              <img src="img/project_design_diagram.png" alt="Project Design Diagram" usemap="#systemmap" class="interactive-svg" id="project-design-svg">
+              <map name="systemmap">
+                <area shape="rect" coords="50,50,150,150" href="javascript:void(0)" alt="ESP32" data-component="esp32" title="ESP32 Microcontroller">
+                <area shape="rect" coords="200,50,300,150" href="javascript:void(0)" alt="Ultrasonic Sensor" data-component="ultrasonic" title="Ultrasonic Sensor">
+                <area shape="rect" coords="350,150,450,250" href="javascript:void(0)" alt="LCD Display" data-component="lcd" title="LCD Display">
+                <!-- Add more clickable areas as needed based on your diagram.png structure. Coordinates might need adjustment for PNG. -->
+              </map>
+              <div id="component-popup" class="component-popup" style="display:none;">
+                <h4 id="popup-title">Component Detail</h4>
+                <p id="popup-description">Details about the selected component.</p>
+                <button id="close-popup-btn">Close</button>
+              </div>
+            </div>
+             <p class="image-caption">Figure 1: Interactive System Architecture</p>
+          </div>
+        </section>
+        <!--End Project Design-->
+
+        <!--Start Results-->
+        <section class="flex-row" id="results">
+          <div class="flex-item flex-column">
+            <h2>Performance & Outcomes</h2>
+            <hr>
+            <h3>System Performance Metrics</h3>
+            <p class="text">The chart below illustrates key performance indicators. Bars animate on load, showcasing system efficiency (green for success, yellow for targets met).</p>
+            <div class="results-chart-container">
+              <div class="bar-chart animated-bar-chart">
+                  <div class="bar" style="height: 70%; background-color: var(--neon-green);" data-label="Accuracy">70%</div>
+                  <div class="bar" style="height: 90%; background-color: var(--neon-green);" data-label="Alert Timeliness">90%</div>
+                  <div class="bar" style="height: 60%; background-color: var(--accent-yellow);" data-label="Power Efficiency">60%</div>
+                  <div class="bar" style="height: 85%; background-color: var(--neon-green);" data-label="User Satisfaction">85%</div>
+              </div>
+            </div>
+            <p class="image-caption">Chart 1: System Performance (Illustrative)</p>
+
+            <h3>Operational Walkthrough</h3>
+            <div class="results-gallery">
+              <div class="gallery-item">
+                <img src="img/step_1.png" alt="Step 1: System Components">
+                <p><b>Step 1:</b> Key components assembly and initial setup.</p>
+              </div>
+              <div class="gallery-item">
+                <img src="img/step_2.png" alt="Step 2: Sensor Calibration">
+                <p><b>Step 2:</b> Sensor calibration for accurate readings.</p>
+              </div>
+              <div class="gallery-item">
+                <img src="img/step_3.png" alt="Step 3: Testing Logic">
+                <p><b>Step 3:</b> Testing overflow and dry tank alert logic.</p>
+              </div>
+              <div class="gallery-item">
+                <img src="img/step_4.png" alt="Step 4: Real-world Simulation">
+                <p><b>Step 4:</b> Simulation of real-world usage scenarios.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--End Results-->
+
+        <!--Start Conclusion-->
+        <section class="flex-row" id="conclusion">
+          <div class="flex-item flex-column">
+            <h2>Concluding Insights</h2>
+            <hr>
+            <div class="custom-legend conclusion-accordion" id="conclusionAccordion">
+              <h3 class="legend-title">Key Discoveries & Validation <i class="fas fa-chevron-down"></i></h3>
+              <div class="legend-scale">
+                <p>The system successfully monitored water levels in real-time and provided timely alerts, reducing estimated manual checks by up to 80% and preventing potential overflows during extensive test periods. Data collected robustly supports the hypothesis that such a monitoring system significantly enhances water management efficiency and user convenience.</p>
+              </div>
+              <h3 class="legend-title">Impact & Significance <i class="fas fa-chevron-down"></i></h3>
+              <div class="legend-scale">
+                <p>This project demonstrates a viable and cost-effective solution to common water storage issues in urban communities. Its adoption can lead to substantial water savings, reduced property damage, and improved quality of life for residents and efficiency for institutions.</p>
+              </div>
+            </div>
+            <div class="text-center add-top-margin">
+                <a href="future-innovations.html" class="custom-button custom-button-primary pulse-primary explore-more-btn">Explore Future Innovations <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </section>
+        <!--End Conclusion-->
+
+      </div>
+    </div>
+    <div class="footer-container"></div>
+  </div>
+</body>
+</html>

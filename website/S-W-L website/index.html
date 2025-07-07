@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Smart Water Monitoring - Overview</title>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" media="screen" rel="stylesheet"
+    type="text/css" />
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700&display=swap' rel='stylesheet'
+    type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/custom.js"></script>
+  <style>
+    .menu-index {
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+
+<body class="overview-page">
+  <!-- Water Texture Background -->
+  <div class="water-texture"></div>
+
+  <!-- Animated Water Drops Background -->
+  <div class="water-drops">
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+  </div>
+
+  <!-- Wave Animation -->
+  <div class="wave-animation"></div>
+
+  <!-- Water Ripples -->
+  <div class="water-ripples">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+  </div>
+
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <!-------------------------------------------------------------------------------------------->
+    <!--Start Header-->
+    <div class="banner overview-banner" style="background-image: url('img/water_tank_banner.png');">
+      <div class="banner-overlay"></div>
+      <div class="water-ripple-effect"></div>
+      <div class="banner-table flex-column">
+        <div class="flex-row-space-between banner-content-area">
+          <div class="flex-item flex-column banner-title-group">
+            <h1 class="animated-fade-in-slow">SMART WATER-LEVEL MONITORING</h1>
+            <h2 class="animated-fade-in-slow delay-500">SYSTEM FOR TANKS & DRUMS</h2>
+          </div>
+          <div class="flex-item flex-column banner-logo-group animated-fade-in-right">
+            <div class="flex-row university-info">
+              <img src="img/makerere_building_logo.png" alt="Makerere University Logo"
+                class="university-logo animated-fade-in">
+              <div>
+                <p class="uni-name">MAKERERE UNIVERSITY</p>
+                <p class="dept-name">DEPARTMENT Of COMPUTER SCIENCE</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End Header-->
+    <!-------------------------------------------------------------------------------------------->
+    <div class="content">
+      <div class="content-table flex-column">
+
+        <!--Start Problem-->
+        <section class="flex-row scroll-reveal-section" id="problem">
+          <div class="flex-item flex-column">
+            <h2>The Challenge of Water Management</h2>
+            <hr>
+            <div class="problem-content">
+              <div class="problem-text-area">
+                <p class="text">
+                  In Kampala & its surrounding urban communities such as Kira, Mukono, and Wakiso, Water storage is
+                  commonly done using rooftop or ground-level tanks due to intermittent water supply from NWSC.
+                  <img src="img/icon_home.png" alt="Home icon" class="inline-icon problem-icon-home">
+                  However, many households lack efficient means of monitoring water levels in these tanks.
+                  <img src="img/icon_tank.png" alt="Tank icon" class="inline-icon problem-icon-tank">
+                  As a result, tank overflows frequently go unnoticed, leading to water wastage and structural damage,
+                  or run dry, leaving residents without water during peak usage times.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--End Problem-->
+
+        <!--Start Project Objectives-->
+        <section class="flex-row" id="objectives">
+          <div class="flex-item flex-column">
+            <h2>Our Objectives</h2>
+            <hr>
+            <ul class="objectives-list">
+              <li>Develop a real-time water-level monitoring system for storage tanks.</li>
+              <li>Alert users of critical water level to prevent overflows or dry tanks.</li>
+              <li>Improve water management in areas with irregular supply (e.g. Kira).</li>
+              <li>Reduce manual checks in apartments, schools, and clinics.</li>
+              <li>Provide simple, accessible user alerts (SMS/display).</li>
+            </ul>
+          </div>
+        </section>
+        <!--End Project Objectives-->
+
+        <!--Start Project Requirements-->
+        <section class="flex-row" id="requirements">
+          <div class="flex-item flex-column">
+            <h2>Key Components</h2>
+            <hr>
+            <p class="text">The system is built using a selection of robust and accessible electronic components:</p>
+            <div class="requirements-carousel">
+              <div class="carousel-item">
+                <img src="img/esp32_component.png" alt="ESP-32 Microcontroller">
+                <p>ESP-32 Microcontroller</p>
+              </div>
+              <div class="carousel-item">
+                <img src="img/ultrasonic_sensor_component.png" alt="Ultrasonic Sensor">
+                <p>Ultrasonic Sensor (HC-SR04)</p>
+              </div>
+              <div class="carousel-item">
+                <img src="img/lcd_display_component.png" alt="LCD 1602 Display">
+                <p>LCD 1602 (I2C)</p>
+              </div>
+              <div class="carousel-item">
+                <img src="img/flow_sensor_component.png" alt="YF-S201 Water Flow Sensor">
+                <p>YF-S201 Flow Sensor</p>
+              </div>
+              <div class="carousel-item">
+                <img src="img/buzzer_led_component.png" alt="Buzzer and LEDs">
+                <p>Buzzer & LEDs</p>
+              </div>
+            </div>
+            <details class="requirements-full-list">
+              <summary>View Full Component List</summary>
+              <ul>
+                <li>ESP-32, YF-S201 Water Flow Sensor Detector, 9V Battery.</li>
+                <li>Ultrasonic Sensor, USB-A to B cable.</li>
+                <li>Breadboard, 5V water Pump, DC Female.</li>
+                <li>5mm LED: (Green, Orange, Red).</li>
+                <li>Buzzer.</li>
+                <li>Male to Female, Male to Male Jumper Wires.</li>
+                <li>LCD 1602 Yellow (I2C).</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+        <!--End Project Requirements-->
+
+        <!--Start Target Users-->
+        <section class="flex-row" id="target-users">
+          <div class="flex-item flex-column full-width">
+            <h2>Who Benefits?</h2>
+            <hr>
+            <div class="custom-tab target-users-tabs" id="target-users-tab-container">
+              <div class="custom-tab-menu center">
+                <a class="custom-tab-menu-item active" data-content="homeowners" href="javascript:void(0)">
+                  <img src="img/avatar_homeowner.png" alt="Homeowner Avatar" class="tab-avatar"> Residential Owners
+                </a>
+                <a class="custom-tab-menu-item" data-content="schools" href="javascript:void(0)">
+                  <img src="img/avatar_school.png" alt="School Admin Avatar" class="tab-avatar"> Schools & Clinics
+                </a>
+                <a class="custom-tab-menu-item" data-content="landlords" href="javascript:void(0)">
+                  <img src="img/avatar_landlord.png" alt="Landlord Avatar" class="tab-avatar"> Landlords
+                </a>
+              </div>
+              <div class="custom-tab-content" data-content="homeowners">
+                <h3>Peace of Mind for Homeowners</h3>
+                <p>Imagine never worrying about your tank running dry during a critical moment or overflowing and
+                  causing damage. Our system automates water-level tracking, sending you timely alerts. Enjoy consistent
+                  water supply, save water, and protect your property by preventing unnoticed overflows.</p>
+              </div>
+              <div class="custom-tab-content" data-content="schools">
+                <h3>Reliable Water for Institutions</h3>
+                <p>For schools and clinics, a consistent water supply is paramount for sanitation and safety. Our system
+                  ensures administrators can manage water resources effectively, guaranteeing that water is always
+                  available when needed, supporting a healthy and safe environment for students and patients.</p>
+              </div>
+              <div class="custom-tab-content" data-content="landlords">
+                <h3>Efficient Management for Landlords</h3>
+                <p>Apartment managers can significantly reduce water bills and tenant complaints. Prevent costly tank
+                  overflows, schedule refills efficiently, and provide tenants with a reliable water supply. Our system
+                  makes property management smoother and more cost-effective.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--End Target Users-->
+
+      </div>
+    </div>
+    <div class="footer-container"></div>
+  </div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
