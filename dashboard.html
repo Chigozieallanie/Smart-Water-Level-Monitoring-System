@@ -45,29 +45,100 @@
             overflow-x: hidden;
         }
 
-        /* Dashboard Header */
+        /* Enhanced Dashboard Header */
         .dashboard-header {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(26, 26, 26, 0.8));
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            margin: 20px 0;
-            padding: 30px;
-            text-align: center;
             color: white;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #06b6d4, #0891b2);
         }
 
         .dashboard-header h1 {
-            color: var(--makerere-yellow);
             font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+        }
+
+        .dashboard-header h1 i {
+            color: #0ea5e9;
+            margin-right: 15px;
         }
 
         .dashboard-header p {
-            color: var(--water-blue-light);
             font-size: 1.2em;
-            opacity: 0.9;
+            margin: 0 0 20px 0;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .dashboard-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .status-indicator.online {
+            color: #10b981;
+        }
+
+        .status-indicator.online i {
+            color: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        .last-updated {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .last-updated i {
+            color: #0ea5e9;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Stats Cards Grid */
@@ -339,14 +410,12 @@
             margin: 30px 0;
         }
 
+        /* Enhanced Prediction Card Styles */
         .prediction-card {
-            background: linear-gradient(135deg,
-                    rgba(255, 255, 255, 0.95) 0%,
-                    rgba(255, 248, 240, 0.95) 30%,
-                    rgba(255, 245, 235, 0.95) 70%,
-                    rgba(250, 240, 230, 0.95) 100%);
-            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            border-radius: 15px;
             padding: 25px;
+            text-align: center;
             box-shadow:
                 0 10px 30px rgba(255, 165, 0, 0.15),
                 0 4px 12px rgba(255, 185, 50, 0.1);
@@ -375,10 +444,30 @@
                 0 6px 16px rgba(255, 185, 50, 0.15);
         }
 
+        .prediction-icon {
+            font-size: 2.5em;
+            color: #0ea5e9;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-card:hover .prediction-icon {
+            transform: scale(1.1);
+            background: rgba(14, 165, 233, 0.2);
+        }
+
         .prediction-title {
             font-size: 1.1em;
             font-weight: 700;
-            color: #8b4513;
+            color: #1a365d;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -393,7 +482,7 @@
 
         .prediction-subtitle {
             font-size: 0.9em;
-            color: #2d3748;
+            color: #64748b;
             text-align: center;
             font-weight: 500;
         }
@@ -482,8 +571,17 @@
         <!-------------------------------------------------------------------------------------------->
         <!--Start Header-->
         <div class="dashboard-header">
-            <h1><i class="fas fa-chart-line"></i> Water Analytics Dashboard</h1>
-            <p>Real-time insights, historical data, and predictive analytics for your water management system</p>
+            <h1><i class="fas fa-chart-line"></i> Smart Water Analytics Dashboard</h1>
+            <p>Monitor your water system in real-time with intelligent insights, usage patterns, and predictive
+                analytics to optimize water management efficiency</p>
+            <div class="dashboard-status">
+                <span class="status-indicator online">
+                    <i class="fas fa-circle"></i> System Online
+                </span>
+                <span class="last-updated">
+                    <i class="fas fa-clock"></i> Last updated: <span id="lastUpdateTime">Just now</span>
+                </span>
+            </div>
         </div>
         <!--End Header-->
         <!-------------------------------------------------------------------------------------------->
@@ -532,12 +630,12 @@
 
                             <div class="stat-card">
                                 <div class="stat-icon">
-                                    <i class="fas fa-dollar-sign"></i>
+                                    <i class="fas fa-cog"></i>
                                 </div>
-                                <div class="stat-value" id="monthlySavings">$85</div>
-                                <div class="stat-label">Monthly Savings</div>
+                                <div class="stat-value" id="systemEfficiency">92%</div>
+                                <div class="stat-label">System Efficiency</div>
                                 <div class="stat-trend trend-up">
-                                    <i class="fas fa-arrow-up"></i> 22% vs last month
+                                    <i class="fas fa-arrow-up"></i> Excellent performance
                                 </div>
                             </div>
                         </div>
@@ -649,39 +747,57 @@
                         </h2>
                         <div class="predictions-grid">
                             <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
                                 <div class="prediction-title">Next Refill Needed</div>
                                 <div class="prediction-value">Tomorrow</div>
                                 <div class="prediction-subtitle">at 2:30 PM (predicted)</div>
                             </div>
 
                             <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
                                 <div class="prediction-title">Weekly Consumption</div>
                                 <div class="prediction-value">18,500L</div>
                                 <div class="prediction-subtitle">15% higher than average</div>
                             </div>
 
                             <div class="prediction-card">
-                                <div class="prediction-title">Efficiency Score</div>
+                                <div class="prediction-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="prediction-title">System Efficiency</div>
                                 <div class="prediction-value">87%</div>
-                                <div class="prediction-subtitle">Good water management</div>
+                                <div class="prediction-subtitle">Excellent water management</div>
                             </div>
 
                             <div class="prediction-card">
-                                <div class="prediction-title">Cost Savings</div>
-                                <div class="prediction-value">$340</div>
-                                <div class="prediction-subtitle">saved this quarter</div>
+                                <div class="prediction-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="prediction-title">Usage Trend</div>
+                                <div class="prediction-value">↗ 5%</div>
+                                <div class="prediction-subtitle">Increasing this week</div>
                             </div>
 
                             <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-sun"></i>
+                                </div>
                                 <div class="prediction-title">Peak Usage Time</div>
                                 <div class="prediction-value">7-9 AM</div>
                                 <div class="prediction-subtitle">Morning routine</div>
                             </div>
 
                             <div class="prediction-card">
-                                <div class="prediction-title">Leak Detection</div>
+                                <div class="prediction-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="prediction-title">System Status</div>
                                 <div class="prediction-value">All Clear</div>
-                                <div class="prediction-subtitle">No anomalies detected</div>
+                                <div class="prediction-subtitle">No issues detected</div>
                             </div>
                         </div>
                     </div>
@@ -1048,6 +1164,23 @@
         function setupAlerts() {
             alert('Alert configuration panel would open here. Users can set custom thresholds for low water, high usage, etc.');
         }
+
+        // Update last updated time
+        function updateLastUpdatedTime() {
+            const lastUpdateElement = document.getElementById('lastUpdateTime');
+            if (lastUpdateElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString();
+                lastUpdateElement.textContent = timeString;
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function () {
+            updateLastUpdatedTime();
+            // Update the time every 30 seconds
+            setInterval(updateLastUpdatedTime, 30000);
+        });
     </script>
 </body>
 
