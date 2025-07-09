@@ -1,0 +1,1054 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Smart Water Monitoring - Analytics Dashboard</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" media="screen" rel="stylesheet"
+        type="text/css" />
+    <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap' rel='stylesheet'
+        type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700&display=swap' rel='stylesheet'
+        type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/widgets.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/footer.js"></script>
+    <script src="js/custom.js"></script>
+    <style>
+        .menu-dashboard {
+            color: rgb(255, 255, 255) !important;
+            opacity: 1 !important;
+            font-weight: 700 !important;
+        }
+
+        /* Dashboard Specific Styles */
+        .dashboard-page {
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.7), rgba(117, 221, 221, 0.7)),
+                url('img/water.jpg');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-attachment: fixed, fixed;
+            background-repeat: no-repeat, no-repeat;
+            color: var(--dark-text);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(26, 26, 26, 0.8));
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            margin: 20px 0;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-header h1 {
+            color: var(--makerere-yellow);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .dashboard-header p {
+            color: var(--water-blue-light);
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Stats Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(240, 248, 255, 0.95) 30%,
+                    rgba(235, 245, 255, 0.95) 70%,
+                    rgba(230, 242, 255, 0.95) 100%);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow:
+                0 10px 30px rgba(0, 150, 255, 0.15),
+                0 4px 12px rgba(52, 152, 219, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 150, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0096ff, #3498db, #74b9ff);
+            opacity: 0.8;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 15px 40px rgba(0, 150, 255, 0.2),
+                0 6px 16px rgba(52, 152, 219, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            color: var(--water-blue-dark);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0, 150, 255, 0.3));
+        }
+
+        .stat-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--makerere-green);
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            font-size: 1em;
+            color: #1a365d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-trend {
+            font-size: 0.9em;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            color: #27ae60;
+        }
+
+        .trend-down {
+            color: #e74c3c;
+        }
+
+        .trend-stable {
+            color: #f39c12;
+        }
+
+        /* Chart Containers */
+        .chart-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.95));
+            border-radius: 16px;
+            margin: 30px 0;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chart-section h2 {
+            color: #1a365d;
+            font-weight: 700;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+
+        .chart-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .chart-control-btn {
+            background: linear-gradient(135deg, var(--water-blue-light), var(--water-blue-dark));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 150, 255, 0.3);
+        }
+
+        .chart-control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 150, 255, 0.4);
+        }
+
+        .chart-control-btn.active {
+            background: linear-gradient(135deg, var(--makerere-green), var(--water-blue-light));
+            box-shadow: 0 6px 16px rgba(0, 104, 55, 0.4);
+        }
+
+        /* Tank Status Cards */
+        .tank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .tank-card {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(248, 255, 248, 0.95) 30%,
+                    rgba(240, 255, 240, 0.95) 70%,
+                    rgba(235, 250, 235, 0.95) 100%);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow:
+                0 10px 30px rgba(0, 104, 55, 0.15),
+                0 4px 12px rgba(117, 221, 221, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 104, 55, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--makerere-green), var(--water-blue-light));
+            opacity: 0.8;
+        }
+
+        .tank-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 15px 40px rgba(0, 104, 55, 0.2),
+                0 6px 16px rgba(117, 221, 221, 0.15);
+        }
+
+        .tank-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tank-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--makerere-green);
+        }
+
+        .tank-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-normal {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+
+        .status-low {
+            background: rgba(243, 156, 18, 0.2);
+            color: #f39c12;
+        }
+
+        .status-critical {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .status-full {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        /* Water Level Indicator */
+        .water-level-indicator {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .water-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(0deg, var(--water-blue-dark), var(--water-blue-light));
+            transition: height 1s ease;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .water-level-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2em;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        /* Predictions Section */
+        .predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .prediction-card {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(255, 248, 240, 0.95) 30%,
+                    rgba(255, 245, 235, 0.95) 70%,
+                    rgba(250, 240, 230, 0.95) 100%);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow:
+                0 10px 30px rgba(255, 165, 0, 0.15),
+                0 4px 12px rgba(255, 185, 50, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 165, 0, 0.25);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prediction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffa500, #ffb732, #ffc947);
+            opacity: 0.8;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 15px 40px rgba(255, 165, 0, 0.2),
+                0 6px 16px rgba(255, 185, 50, 0.15);
+        }
+
+        .prediction-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #8b4513;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .prediction-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--makerere-green);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .prediction-subtitle {
+            font-size: 0.9em;
+            color: #2d3748;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 2em;
+            }
+
+            .dashboard-header p {
+                font-size: 1em;
+            }
+
+            .stats-grid,
+            .tank-grid,
+            .predictions-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .chart-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chart-control-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .tank-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .water-level-indicator {
+                height: 100px;
+            }
+
+            .chart-section,
+            .stat-card,
+            .tank-card,
+            .prediction-card {
+                padding: 20px;
+                margin: 15px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-header {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.7em;
+            }
+
+            .stat-value {
+                font-size: 1.8em;
+            }
+
+            .prediction-value {
+                font-size: 1.5em;
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-page">
+    <!-- Water Texture Background -->
+    <div class="water-texture"></div>
+
+    <div class="menu-container"></div>
+    <div class="content-container">
+        <!-------------------------------------------------------------------------------------------->
+        <!--Start Header-->
+        <div class="dashboard-header">
+            <h1><i class="fas fa-chart-line"></i> Water Analytics Dashboard</h1>
+            <p>Real-time insights, historical data, and predictive analytics for your water management system</p>
+        </div>
+        <!--End Header-->
+        <!-------------------------------------------------------------------------------------------->
+        <div class="content">
+            <div class="content-table flex-column">
+
+                <!--Start Key Statistics-->
+                <section class="flex-row">
+                    <div class="flex-item flex-column full-width">
+                        <h2 style="text-align: center; color: #1a365d; margin-bottom: 30px;">
+                            <i class="fas fa-tachometer-alt"></i> System Overview
+                        </h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="stat-value" id="totalConsumption">2,450</div>
+                                <div class="stat-label">Liters Today</div>
+                                <div class="stat-trend trend-down">
+                                    <i class="fas fa-arrow-down"></i> 12% vs yesterday
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-value" id="avgLevel">72</div>
+                                <div class="stat-label">Avg Level %</div>
+                                <div class="stat-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> 8% vs last week
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-value" id="nextRefill">16</div>
+                                <div class="stat-label">Hours to Refill</div>
+                                <div class="stat-trend trend-stable">
+                                    <i class="fas fa-minus"></i> On schedule
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="stat-value" id="monthlySavings">$85</div>
+                                <div class="stat-label">Monthly Savings</div>
+                                <div class="stat-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> 22% vs last month
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End Key Statistics-->
+
+                <!--Start Water Level Trends-->
+                <section class="chart-section">
+                    <h2><i class="fas fa-water"></i> Water Level Trends</h2>
+                    <div class="chart-controls">
+                        <button class="chart-control-btn active" onclick="updateChart('24h')">24 Hours</button>
+                        <button class="chart-control-btn" onclick="updateChart('7d')">7 Days</button>
+                        <button class="chart-control-btn" onclick="updateChart('30d')">30 Days</button>
+                        <button class="chart-control-btn" onclick="updateChart('90d')">3 Months</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="waterLevelChart"></canvas>
+                    </div>
+                </section>
+                <!--End Water Level Trends-->
+
+                <!--Start Usage Patterns-->
+                <section class="chart-section">
+                    <h2><i class="fas fa-chart-bar"></i> Water Usage Patterns</h2>
+                    <div class="chart-controls">
+                        <button class="chart-control-btn active" onclick="updateUsageChart('daily')">Daily
+                            Pattern</button>
+                        <button class="chart-control-btn" onclick="updateUsageChart('weekly')">Weekly Pattern</button>
+                        <button class="chart-control-btn" onclick="updateUsageChart('monthly')">Monthly
+                            Comparison</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="usagePatternChart"></canvas>
+                    </div>
+                </section>
+                <!--End Usage Patterns-->
+
+                <!--Start Tank Status-->
+                <section class="flex-row">
+                    <div class="flex-item flex-column full-width">
+                        <h2 style="text-align: center; color: #1a365d; margin-bottom: 30px;">
+                            <i class="fas fa-database"></i> Tank Status Monitor
+                        </h2>
+                        <div class="tank-grid">
+                            <div class="tank-card">
+                                <div class="tank-header">
+                                    <div class="tank-name">Main Storage Tank</div>
+                                    <div class="tank-status status-normal">Normal</div>
+                                </div>
+                                <div class="water-level-indicator">
+                                    <div class="water-fill" style="height: 68%"></div>
+                                    <div class="water-level-text">68%</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                                    <span><strong>Capacity:</strong> 5,000L</span>
+                                    <span><strong>Current:</strong> 3,400L</span>
+                                </div>
+                                <div style="margin-top: 10px; color: #2d3748;">
+                                    <i class="fas fa-clock"></i> Last refill: 2 days ago
+                                </div>
+                            </div>
+
+                            <div class="tank-card">
+                                <div class="tank-header">
+                                    <div class="tank-name">Backup Tank</div>
+                                    <div class="tank-status status-low">Low</div>
+                                </div>
+                                <div class="water-level-indicator">
+                                    <div class="water-fill" style="height: 25%"></div>
+                                    <div class="water-level-text">25%</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                                    <span><strong>Capacity:</strong> 2,000L</span>
+                                    <span><strong>Current:</strong> 500L</span>
+                                </div>
+                                <div style="margin-top: 10px; color: #2d3748;">
+                                    <i class="fas fa-exclamation-triangle"></i> Refill recommended
+                                </div>
+                            </div>
+
+                            <div class="tank-card">
+                                <div class="tank-header">
+                                    <div class="tank-name">Garden Tank</div>
+                                    <div class="tank-status status-full">Full</div>
+                                </div>
+                                <div class="water-level-indicator">
+                                    <div class="water-fill" style="height: 95%"></div>
+                                    <div class="water-level-text">95%</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                                    <span><strong>Capacity:</strong> 1,500L</span>
+                                    <span><strong>Current:</strong> 1,425L</span>
+                                </div>
+                                <div style="margin-top: 10px; color: #2d3748;">
+                                    <i class="fas fa-check-circle"></i> Optimal level
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End Tank Status-->
+
+                <!--Start Predictive Analytics-->
+                <section class="flex-row">
+                    <div class="flex-item flex-column full-width">
+                        <h2 style="text-align: center; color: #1a365d; margin-bottom: 30px;">
+                            <i class="fas fa-crystal-ball"></i> Predictive Analytics & Recommendations
+                        </h2>
+                        <div class="predictions-grid">
+                            <div class="prediction-card">
+                                <div class="prediction-title">Next Refill Needed</div>
+                                <div class="prediction-value">Tomorrow</div>
+                                <div class="prediction-subtitle">at 2:30 PM (predicted)</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-title">Weekly Consumption</div>
+                                <div class="prediction-value">18,500L</div>
+                                <div class="prediction-subtitle">15% higher than average</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-title">Efficiency Score</div>
+                                <div class="prediction-value">87%</div>
+                                <div class="prediction-subtitle">Good water management</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-title">Cost Savings</div>
+                                <div class="prediction-value">$340</div>
+                                <div class="prediction-subtitle">saved this quarter</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-title">Peak Usage Time</div>
+                                <div class="prediction-value">7-9 AM</div>
+                                <div class="prediction-subtitle">Morning routine</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-title">Leak Detection</div>
+                                <div class="prediction-value">All Clear</div>
+                                <div class="prediction-subtitle">No anomalies detected</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End Predictive Analytics-->
+
+                <!--Start Flow Rate Analysis-->
+                <section class="chart-section">
+                    <h2><i class="fas fa-tachometer-alt"></i> Flow Rate Analysis</h2>
+                    <div class="chart-container">
+                        <canvas id="flowRateChart"></canvas>
+                    </div>
+                </section>
+                <!--End Flow Rate Analysis-->
+
+            </div>
+        </div>
+        <div class="footer-container"></div>
+    </div>
+
+    <!-- Dashboard JavaScript -->
+    <script>
+        // Initialize all charts when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeWaterLevelChart();
+            initializeUsagePatternChart();
+            initializeFlowRateChart();
+            updateStats();
+            setInterval(updateStats, 30000); // Update stats every 30 seconds
+        });
+
+        let waterLevelChart, usagePatternChart, flowRateChart;
+
+        // Water Level Chart
+        function initializeWaterLevelChart() {
+            const ctx = document.getElementById('waterLevelChart').getContext('2d');
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(117, 221, 221, 0.8)');
+            gradient.addColorStop(1, 'rgba(117, 221, 221, 0.1)');
+
+            waterLevelChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: generateTimeLabels('24h'),
+                    datasets: [{
+                        label: 'Water Level (%)',
+                        data: generateWaterLevelData('24h'),
+                        borderColor: '#318CE7',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#318CE7',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a365d',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d',
+                                callback: function (value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Usage Pattern Chart
+        function initializeUsagePatternChart() {
+            const ctx = document.getElementById('usagePatternChart').getContext('2d');
+
+            usagePatternChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM', '12 AM', '3 AM'],
+                    datasets: [{
+                        label: 'Water Usage (Liters)',
+                        data: [450, 320, 280, 180, 380, 220, 80, 40],
+                        backgroundColor: [
+                            'rgba(0, 104, 55, 0.8)',
+                            'rgba(117, 221, 221, 0.8)',
+                            'rgba(49, 140, 231, 0.8)',
+                            'rgba(0, 150, 255, 0.8)',
+                            'rgba(0, 104, 55, 0.8)',
+                            'rgba(117, 221, 221, 0.8)',
+                            'rgba(49, 140, 231, 0.8)',
+                            'rgba(0, 150, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            '#006837',
+                            '#75DDDD',
+                            '#318CE7',
+                            '#0096FF',
+                            '#006837',
+                            '#75DDDD',
+                            '#318CE7',
+                            '#0096FF'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a365d',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d',
+                                callback: function (value) {
+                                    return value + 'L';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Flow Rate Chart
+        function initializeFlowRateChart() {
+            const ctx = document.getElementById('flowRateChart').getContext('2d');
+
+            flowRateChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: generateTimeLabels('24h'),
+                    datasets: [
+                        {
+                            label: 'Inflow Rate (L/min)',
+                            data: generateFlowData('in'),
+                            borderColor: '#27ae60',
+                            backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Outflow Rate (L/min)',
+                            data: generateFlowData('out'),
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a365d',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d',
+                                callback: function (value) {
+                                    return value + ' L/min';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generate sample data
+        function generateTimeLabels(period) {
+            const labels = [];
+            const now = new Date();
+
+            if (period === '24h') {
+                for (let i = 23; i >= 0; i--) {
+                    const time = new Date(now.getTime() - i * 60 * 60 * 1000);
+                    labels.push(time.getHours() + ':00');
+                }
+            } else if (period === '7d') {
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                }
+            } else if (period === '30d') {
+                for (let i = 29; i >= 0; i--) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    labels.push(date.getDate());
+                }
+            } else if (period === '90d') {
+                for (let i = 89; i >= 0; i -= 7) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                }
+            }
+
+            return labels;
+        }
+
+        function generateWaterLevelData(period) {
+            const dataPoints = period === '24h' ? 24 : period === '7d' ? 7 : period === '30d' ? 30 : 13;
+            const data = [];
+
+            for (let i = 0; i < dataPoints; i++) {
+                // Simulate realistic water level patterns
+                const baseLevel = 60 + Math.sin(i * 0.3) * 20 + Math.random() * 10;
+                data.push(Math.max(10, Math.min(95, baseLevel)));
+            }
+
+            return data;
+        }
+
+        function generateFlowData(type) {
+            const data = [];
+
+            for (let i = 0; i < 24; i++) {
+                if (type === 'in') {
+                    // Higher inflow during refill times
+                    const baseFlow = i >= 6 && i <= 8 || i >= 18 && i <= 20 ? 15 + Math.random() * 10 : Math.random() * 5;
+                    data.push(baseFlow);
+                } else {
+                    // Higher outflow during usage times
+                    const baseFlow = i >= 6 && i <= 9 || i >= 17 && i <= 21 ? 8 + Math.random() * 6 : 2 + Math.random() * 3;
+                    data.push(baseFlow);
+                }
+            }
+
+            return data;
+        }
+
+        // Chart update functions
+        function updateChart(period) {
+            // Update active button
+            document.querySelectorAll('.chart-control-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update chart data
+            waterLevelChart.data.labels = generateTimeLabels(period);
+            waterLevelChart.data.datasets[0].data = generateWaterLevelData(period);
+            waterLevelChart.update();
+        }
+
+        function updateUsageChart(pattern) {
+            // Update active button
+            document.querySelectorAll('.chart-control-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let labels, data;
+
+            if (pattern === 'daily') {
+                labels = ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM', '12 AM', '3 AM'];
+                data = [450, 320, 280, 180, 380, 220, 80, 40];
+            } else if (pattern === 'weekly') {
+                labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                data = [2100, 1950, 2200, 1800, 2050, 2400, 1900];
+            } else {
+                labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                data = [58000, 52000, 61000, 55000, 63000, 59000];
+            }
+
+            usagePatternChart.data.labels = labels;
+            usagePatternChart.data.datasets[0].data = data;
+            usagePatternChart.update();
+        }
+
+        // Update statistics
+        function updateStats() {
+            // Simulate real-time data updates
+            const consumption = 2450 + Math.floor(Math.random() * 100) - 50;
+            const avgLevel = 72 + Math.floor(Math.random() * 10) - 5;
+            const nextRefill = Math.max(1, 16 + Math.floor(Math.random() * 6) - 3);
+            const savings = 85 + Math.floor(Math.random() * 20) - 10;
+
+            document.getElementById('totalConsumption').textContent = consumption.toLocaleString();
+            document.getElementById('avgLevel').textContent = avgLevel;
+            document.getElementById('nextRefill').textContent = nextRefill;
+            document.getElementById('monthlySavings').textContent = '$' + savings;
+        }
+
+        // Export data functionality
+        function exportData(format) {
+            alert(`Exporting data in ${format} format... This feature would integrate with your backend system.`);
+        }
+
+        // Alert management
+        function setupAlerts() {
+            alert('Alert configuration panel would open here. Users can set custom thresholds for low water, high usage, etc.');
+        }
+    </script>
+</body>
+
+</html>
