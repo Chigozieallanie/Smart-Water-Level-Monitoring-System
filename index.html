@@ -508,6 +508,359 @@
     .inline-icon:hover {
       transform: scale(1.1);
     }
+
+    /* Enhanced Mobile Menu Styles */
+    @media (max-width: 768px) {
+
+      /* Improve menu visibility and functionality on mobile */
+      .menu-table {
+        padding: 10px 15px;
+      }
+
+      .logo a {
+        font-size: 1.2em !important;
+        color: var(--makerere-yellow) !important;
+        font-weight: 700 !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .menu-button {
+        display: block !important;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--makerere-green), var(--water-blue-light));
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 104, 55, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .menu-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 104, 55, 0.4);
+      }
+
+      .menu-button img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+      }
+
+      .menu-items {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95));
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        border-top: 3px solid var(--makerere-yellow);
+        display: none;
+        z-index: 1001;
+      }
+
+      .menu-items.show {
+        display: flex !important;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      .menu-items a {
+        color: var(--water-blue-light) !important;
+        font-size: 1.1em !important;
+        font-weight: 600 !important;
+        padding: 15px 20px !important;
+        margin: 5px 0 !important;
+        background: rgba(117, 221, 221, 0.1);
+        border-radius: 10px;
+        border-left: 4px solid var(--makerere-green);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+      }
+
+      .menu-items a:hover,
+      .menu-items a.active {
+        background: rgba(117, 221, 221, 0.2) !important;
+        color: var(--makerere-yellow) !important;
+        transform: translateX(8px);
+        box-shadow: 0 4px 12px rgba(0, 104, 55, 0.2);
+      }
+
+      .menu-items .menu-icon {
+        margin-right: 12px !important;
+        font-size: 1.2em;
+        min-width: 20px;
+      }
+
+      /* Enhanced dropdown for mobile */
+      .dropdown {
+        width: 100%;
+      }
+
+      .dropbtn {
+        width: 100% !important;
+        text-align: left !important;
+        justify-content: space-between !important;
+      }
+
+      .dropdown-content {
+        position: static !important;
+        background: rgba(0, 104, 55, 0.2) !important;
+        margin: 10px 0 !important;
+        border-radius: 10px !important;
+        border: none !important;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        transition: max-height 0.3s ease !important;
+      }
+
+      .dropdown.active .dropdown-content {
+        max-height: 500px !important;
+        display: block !important;
+      }
+
+      .dropdown-content a {
+        color: var(--water-blue-light) !important;
+        background: transparent !important;
+        border-left: 2px solid var(--water-blue-light) !important;
+        margin-left: 20px !important;
+        font-size: 0.95em !important;
+        padding: 12px 15px !important;
+      }
+
+      .dropdown-content a:hover {
+        background: rgba(117, 221, 221, 0.2) !important;
+        color: var(--makerere-yellow) !important;
+      }
+
+      /* Enhanced banner for mobile */
+      .banner {
+        min-height: 60vh;
+        padding: 100px 20px 40px;
+      }
+
+      .banner-title-group h1 {
+        font-size: 1.8em !important;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+
+      .banner-title-group h2 {
+        font-size: 1.3em !important;
+        line-height: 1.3;
+      }
+
+      .university-info {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .university-logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+
+      .uni-name,
+      .dept-name {
+        font-size: 0.9em;
+      }
+
+      /* Enhanced sections for mobile */
+      section {
+        margin: 15px 10px !important;
+        padding: 20px 15px !important;
+        border-radius: 12px !important;
+      }
+
+      section h2 {
+        font-size: 1.8em !important;
+        text-align: center;
+        margin-bottom: 15px !important;
+      }
+
+      section p.text {
+        font-size: 1em !important;
+        line-height: 1.6 !important;
+        text-align: justify;
+      }
+
+      /* Mobile-optimized carousel */
+      .requirements-carousel {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+        margin: 20px 0 !important;
+      }
+
+      .carousel-item {
+        margin: 0 !important;
+        padding: 20px !important;
+        transform: none !important;
+      }
+
+      .carousel-item:hover {
+        transform: translateY(-3px) !important;
+      }
+
+      /* Mobile-optimized tabs */
+      .custom-tab-menu {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+
+      .custom-tab-menu-item {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 15px !important;
+        font-size: 1em !important;
+      }
+
+      .tab-avatar {
+        width: 30px !important;
+        height: 30px !important;
+        margin-right: 10px !important;
+      }
+
+      /* Mobile-optimized tech specs */
+      .tech-specs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+
+      .tech-spec-card {
+        padding: 20px !important;
+      }
+
+      .tech-spec-card h3 {
+        font-size: 1.2em !important;
+        text-align: center !important;
+      }
+
+      /* Mobile-optimized operation steps */
+      .operation-step {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 20px !important;
+      }
+
+      .step-number {
+        margin-right: 0 !important;
+        margin-bottom: 15px !important;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1.3em !important;
+      }
+
+      .step-content {
+        text-align: left !important;
+      }
+
+      .step-content h3 {
+        font-size: 1.3em !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+      }
+
+      .step-highlight {
+        font-size: 0.85em !important;
+        padding: 10px 12px !important;
+        text-align: center !important;
+      }
+
+      /* Mobile-optimized objectives list */
+      .objectives-list {
+        padding: 15px !important;
+      }
+
+      .objectives-list li {
+        font-size: 1em !important;
+        padding: 12px 15px !important;
+        margin: 10px 0 !important;
+      }
+
+      /* Mobile-optimized requirements list */
+      .requirements-full-list {
+        padding: 15px !important;
+      }
+
+      .requirements-full-list summary {
+        padding: 12px !important;
+        font-size: 1em !important;
+      }
+
+      .requirements-full-list li {
+        font-size: 0.95em !important;
+        padding: 10px 12px !important;
+      }
+
+      /* Improved text readability on mobile */
+      .inline-icon {
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 3px !important;
+      }
+    }
+
+    /* Animation for mobile menu */
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Extra small mobile devices */
+    @media (max-width: 480px) {
+      .banner {
+        min-height: 50vh;
+        padding: 80px 15px 30px;
+      }
+
+      .banner-title-group h1 {
+        font-size: 1.5em !important;
+      }
+
+      .banner-title-group h2 {
+        font-size: 1.1em !important;
+      }
+
+      section {
+        margin: 10px 5px !important;
+        padding: 15px 10px !important;
+      }
+
+      section h2 {
+        font-size: 1.5em !important;
+      }
+
+      .menu-items a {
+        font-size: 1em !important;
+        padding: 12px 15px !important;
+      }
+
+      .tech-spec-card,
+      .operation-step {
+        padding: 15px !important;
+      }
+
+      .custom-tab-menu-item {
+        padding: 12px !important;
+        font-size: 0.9em !important;
+      }
+
+      .step-highlight {
+        font-size: 0.8em !important;
+      }
+    }
   </style>
 </head>
 
@@ -809,6 +1162,142 @@
     <div class="footer-container"></div>
   </div>
   <script type="module" src="/index.tsx"></script>
+  <!-- Enhanced Mobile Menu JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Mobile menu toggle functionality
+      const menuButton = document.querySelector('.menu-button');
+      const menuItems = document.querySelector('.menu-items');
+      const dropdowns = document.querySelectorAll('.dropdown');
+
+      // Toggle mobile menu
+      if (menuButton && menuItems) {
+        menuButton.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          menuItems.classList.toggle('show');
+
+          // Add animation class
+          if (menuItems.classList.contains('show')) {
+            menuItems.style.display = 'flex';
+            // Force reflow
+            menuItems.offsetHeight;
+          } else {
+            setTimeout(() => {
+              if (!menuItems.classList.contains('show')) {
+                menuItems.style.display = 'none';
+              }
+            }, 300);
+          }
+        });
+      }
+
+      // Enhanced dropdown functionality for mobile
+      dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+          dropbtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Close other dropdowns
+            dropdowns.forEach(otherDropdown => {
+              if (otherDropdown !== dropdown) {
+                otherDropdown.classList.remove('active');
+              }
+            });
+
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+          });
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function (e) {
+        if (menuItems && !menuItems.contains(e.target) && !menuButton?.contains(e.target)) {
+          menuItems.classList.remove('show');
+          setTimeout(() => {
+            if (!menuItems.classList.contains('show')) {
+              menuItems.style.display = 'none';
+            }
+          }, 300);
+        }
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', function (e) {
+        dropdowns.forEach(dropdown => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+          }
+        });
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) {
+          menuItems.classList.remove('show');
+          menuItems.style.display = '';
+          dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+          });
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            // Close mobile menu if open
+            if (menuItems.classList.contains('show')) {
+              menuItems.classList.remove('show');
+              setTimeout(() => {
+                menuItems.style.display = 'none';
+              }, 300);
+            }
+
+            // Smooth scroll to target
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Enhanced mobile menu item highlighting
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const menuLinks = document.querySelectorAll('.menu-items a');
+
+      menuLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && (href === currentPage || href.includes(currentPage))) {
+          link.classList.add('active');
+        }
+      });
+
+      // Mobile-specific optimizations
+      if (window.innerWidth <= 768) {
+        // Improve touch targets
+        const allButtons = document.querySelectorAll('button, .carousel-item, .tech-spec-card, .operation-step');
+        allButtons.forEach(button => {
+          button.style.minHeight = '44px';
+          button.style.cursor = 'pointer';
+        });
+
+        // Prevent zoom on input focus (if any forms are added later)
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+          input.style.fontSize = '16px';
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>
