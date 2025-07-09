@@ -1342,359 +1342,330 @@ body:not(.force-no-scroll) .content-container {
 }
 
 /*************************************************************************
- * COMPREHENSIVE MENU BAR FIXES - START
- * These styles completely override frame.css menu behavior
+ * NEW MENU STYLES - START
+ * These styles will override the defaults from frame.css
  *************************************************************************/
 
-/* --- 1. Fix Menu Container and Positioning --- */
+/* --- 1. Main Menu Bar --- */
+/* Remove default solid background from the container */
 .menu-container {
-  background-color: transparent !important;
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  z-index: 2000 !important;
-  /* Higher than any content */
-  box-shadow: none !important;
-  min-width: unset !important;
+  background-color: transparent;
+  position: fixed;
+  /* Make it a fixed header */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
-/* --- 2. Main Menu Bar Styling --- */
+/* Style the menu bar itself */
 .menu.fixed-header {
-  max-width: none !important;
-  background: linear-gradient(135deg,
-      rgba(0, 26, 51, 0.95) 0%,
-      rgba(0, 52, 102, 0.95) 50%,
-      rgba(0, 78, 153, 0.95) 100%) !important;
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  border-bottom: 2px solid rgba(0, 207, 255, 0.3) !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
-  position: relative !important;
-  margin: 0 !important;
+  max-width: none;
+  /* Make the bar full-width */
+  background-color: var(--deep-water-bg);
+  /* Dark, semi-transparent blue */
+  backdrop-filter: blur(10px);
+  /* The "glass" effect */
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 207, 255, 0.2);
+  /* Subtle glowing bottom border */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* --- 3. Menu Table Layout --- */
+/* Center the menu content within the full-width bar */
 .menu .menu-table {
-  max-width: 1400px !important;
-  margin: 0 auto !important;
-  padding: 0 30px !important;
-  height: 70px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
+  max-width: 1200px;
+  /* Adjust as needed */
+  margin: 0 auto;
+  padding: 0 20px;
+  /* Add some padding on the sides */
+  height: 65px;
+  /* Give the menu a consistent height */
 }
 
-/* --- 4. Logo Styling --- */
-.menu .logo {
-  margin-left: 0 !important;
-  flex: 0 0 auto !important;
-}
-
+/* --- 2. Logo --- */
 .menu .logo a {
-  font-size: 28px !important;
+  font-size: 24px;
   color: #ffffff !important;
-  text-shadow: 0 0 15px rgba(0, 207, 255, 0.6) !important;
-  font-family: 'Open Sans Condensed', Helvetica, Arial, sans-serif !important;
-  font-weight: 700 !important;
-  transition: all 0.3s ease !important;
-  text-decoration: none !important;
-  padding: 10px 0 !important;
+  text-shadow: 0 0 8px rgba(0, 207, 255, 0.5);
+  /* Subtle glow effect */
+  font-family: 'Open Sans Condensed', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  transition: all 0.3s ease;
 }
 
 .menu .logo a:hover {
   color: var(--neon-blue) !important;
-  text-shadow: 0 0 20px var(--neon-blue) !important;
-  transform: scale(1.05) !important;
+  text-shadow: 0 0 12px var(--neon-blue);
 }
 
-/* --- 5. Menu Button (Mobile) --- */
-.menu .menu-button {
-  width: 45px !important;
-  height: 45px !important;
-  display: none !important;
-  cursor: pointer !important;
-  margin-right: 0 !important;
-  background: rgba(0, 207, 255, 0.2) !important;
-  border-radius: 8px !important;
-  padding: 8px !important;
-  transition: all 0.3s ease !important;
-  border: 2px solid rgba(0, 207, 255, 0.3) !important;
-}
-
-.menu .menu-button:hover {
-  background: rgba(0, 207, 255, 0.4) !important;
-  transform: scale(1.1) !important;
-}
-
-.menu .menu-button img {
-  width: 100% !important;
-  height: 100% !important;
-  filter: brightness(0) invert(1) !important;
-}
-
-/* --- 6. Menu Items Container --- */
-.menu .menu-items {
-  align-self: stretch !important;
-  display: flex !important;
-  align-items: center !important;
-  height: 100% !important;
-  flex: 1 1 auto !important;
-  justify-content: flex-end !important;
-  gap: 5px !important;
-}
-
-/* --- 7. Individual Menu Items --- */
+/* --- 3. Menu Items & Hover Effect --- */
 .menu .menu-items>a,
-.menu .menu-items>div,
 .menu .menu-items .dropbtn {
-  color: rgba(255, 255, 255, 0.9) !important;
-  text-decoration: none !important;
-  font-weight: 500 !important;
-  font-size: 16px !important;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
-  white-space: nowrap !important;
-  display: flex !important;
-  align-items: center !important;
-  height: 50px !important;
-  padding: 0 16px !important;
-  margin: 0 2px !important;
-  border-radius: 8px !important;
-  position: relative !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  background: transparent !important;
-  border: 1px solid transparent !important;
-  cursor: pointer !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 400 !important;
+  font-size: 16px;
+  padding: 0 15px;
+  height: 100%;
+  position: relative;
+  /* Needed for the ::after pseudo-element */
+  transition: color 0.3s ease;
+  background-color: transparent !important;
+  /* Override any potential background */
 }
 
-/* --- 8. Menu Item Hover Effects --- */
 .menu .menu-items>a:hover,
-.menu .menu-items>div:hover,
 .menu .menu-items .dropbtn:hover {
   color: #ffffff !important;
-  background: rgba(0, 207, 255, 0.15) !important;
-  border-color: rgba(0, 207, 255, 0.3) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 15px rgba(0, 207, 255, 0.3) !important;
 }
 
-/* --- 9. Active Menu Item Highlighting --- */
+/* The animated underline */
+.menu .menu-items>a::after,
+.menu .menu-items .dropbtn::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 15px;
+  /* Position the line a bit up from the bottom */
+  left: 0;
+  background-color: var(--neon-blue);
+  transform-origin: bottom center;
+  transition: transform 0.25s ease-out;
+}
+
+/* Animate the underline on hover */
+.menu .menu-items>a:hover::after,
+.menu .menu-items .dropbtn:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom center;
+}
+
+/* --- 4. Active/Highlighted Menu Item --- */
+/* The main text highlight */
 .menu .menu-highlight,
-.menu a.menu-highlight,
 .menu .menu-highlight i {
   color: #ffffff !important;
   font-weight: 700 !important;
   opacity: 1 !important;
-  background: rgba(0, 207, 255, 0.25) !important;
-  border-color: rgba(0, 207, 255, 0.5) !important;
-  box-shadow: 0 0 20px rgba(0, 207, 255, 0.4) !important;
 }
 
-/* --- 10. Menu Icons --- */
-.menu .menu-items .menu-icon {
-  margin-right: 8px !important;
-  font-size: 16px !important;
-  width: 18px !important;
-  text-align: center !important;
+/* Keep the underline visible for the active item */
+.menu a.menu-highlight::after,
+.menu a.menu-highlight.dropbtn::after {
+  transform: scaleX(1) !important;
+  background-color: var(--neon-blue);
 }
 
-/* --- 11. Dropdown Container --- */
-.menu .menu-items .dropdown {
-  overflow: visible !important;
-  cursor: pointer !important;
-  position: relative !important;
+/* --- 5. Dropdown Menu --- */
+.dropdown-content {
+  top: 100%;
+  /* Position it right below the menu bar */
+  background-color: var(--deep-water-bg) !important;
+  /* Same glass effect */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 207, 255, 0.2);
+  border-top: none;
+  /* Top border is handled by menu bar */
+  border-radius: 0 0 8px 8px;
+  padding: 5px 0;
+  min-width: 220px;
+  overflow: hidden;
+  /* For rounded corners to work */
 }
 
-/* --- 12. Dropdown Button --- */
-.menu .menu-items .dropdown .dropbtn {
-  background: transparent !important;
-  border: 1px solid transparent !important;
-}
-
-.menu .menu-items .dropdown i {
+.dropdown-content a {
   color: rgba(255, 255, 255, 0.8) !important;
-  margin-left: 8px !important;
-  transition: transform 0.3s ease !important;
+  padding: 12px 20px !important;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.menu .menu-items .dropdown:hover i,
-.menu .menu-items .dropdown.active i {
-  transform: rotate(180deg) !important;
+.dropdown-content a:hover {
+  background-color: rgba(0, 207, 255, 0.15) !important;
   color: #ffffff !important;
 }
 
-/* --- 13. Dropdown Content (The Most Important Fix) --- */
-.menu .menu-items .dropdown .dropdown-content {
-  display: none !important;
-  position: absolute !important;
-  top: calc(100% + 10px) !important;
-  right: 0 !important;
-  background: linear-gradient(135deg,
-      rgba(0, 26, 51, 0.98) 0%,
-      rgba(0, 52, 102, 0.98) 100%) !important;
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  min-width: 280px !important;
-  border-radius: 12px !important;
-  border: 2px solid rgba(0, 207, 255, 0.4) !important;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(0, 207, 255, 0.2) !important;
-  overflow: hidden !important;
-  z-index: 2001 !important;
-  /* Above everything */
-  opacity: 0 !important;
-  transform: translateY(-10px) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+/* --- 6. General Adjustments --- */
+/* Push page content down to account for the fixed menu */
+body .content-container {
+  padding-top: 65px;
+  /* Match the menu height */
 }
 
-/* --- 14. Show Dropdown on Hover/Active --- */
-.menu .menu-items .dropdown:hover .dropdown-content,
-.menu .menu-items .dropdown.active .dropdown-content {
-  display: block !important;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+/* Ensure the future-innovations page hero section is handled correctly */
+.future-innovations-page .content-container {
+  padding-top: 0;
 }
 
-/* --- 15. Dropdown Links --- */
-.menu .menu-items .dropdown .dropdown-content a {
-  color: rgba(255, 255, 255, 0.9) !important;
-  padding: 15px 20px !important;
-  text-decoration: none !important;
-  display: flex !important;
-  align-items: center !important;
-  font-size: 15px !important;
-  font-weight: 500 !important;
-  border-bottom: 1px solid rgba(0, 207, 255, 0.1) !important;
-  transition: all 0.3s ease !important;
-  text-align: left !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-.menu .menu-items .dropdown .dropdown-content a:last-child {
-  border-bottom: none !important;
-}
-
-.menu .menu-items .dropdown .dropdown-content a:hover {
-  background: rgba(0, 207, 255, 0.2) !important;
-  color: #ffffff !important;
-  transform: translateX(5px) !important;
-  text-shadow: 0 0 10px rgba(0, 207, 255, 0.8) !important;
-}
-
-/* --- 16. Dropdown Link Icons (Emojis) --- */
-.menu .menu-items .dropdown .dropdown-content a:first-child {
-  font-weight: 600 !important;
-  border-bottom: 2px solid rgba(0, 207, 255, 0.3) !important;
-  background: rgba(0, 207, 255, 0.1) !important;
-}
-
-/* --- 17. Mobile Responsive Design --- */
-@media screen and (max-width: 768px) {
-  .menu .menu-table {
-    padding: 0 20px !important;
-    height: 60px !important;
-  }
-
-  .menu .logo a {
-    font-size: 22px !important;
-  }
-
+/* Override frame.css menu button display on mobile */
+@media screen and (max-width: 750px) {
   .menu .menu-button {
-    display: block !important;
+    display: flex !important;
+  }
+}
+
+/* Ensure menu button never gets hidden by frame.css */
+.menu .menu-button {
+  visibility: visible !important;
+}
+
+/* --- Mobile Menu Adjustments --- */
+@media screen and (max-width: 750px) {
+  .menu.fixed-header {
+    /* On mobile, the menu expands, so a solid color is better for readability */
+    background-color: #1a1a1a;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
+  .menu .menu-items>a::after,
+  .menu .menu-items .dropbtn::after {
+    display: none;
+    /* Hide animated underline on mobile */
+  }
+
+  /* Fix mobile menu button display */
+  .menu .menu-button {
+    display: flex !important;
+    width: 40px !important;
+    height: 40px !important;
+    background: linear-gradient(135deg, var(--makerere-green), var(--water-blue-light)) !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 104, 55, 0.3) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-right: 15px !important;
+  }
+
+  .menu .menu-button:hover,
+  .menu .menu-button:focus {
+    transform: scale(1.05) !important;
+    box-shadow: 0 6px 16px rgba(0, 104, 55, 0.4) !important;
+    outline: none !important;
+  }
+
+  .menu .menu-button img {
+    width: 24px !important;
+    height: 24px !important;
+    filter: brightness(0) invert(1) !important;
+  }
+
+  /* Enhanced mobile menu items */
   .menu .menu-items {
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
     right: 0 !important;
-    background: linear-gradient(135deg,
-        rgba(0, 26, 51, 0.98) 0%,
-        rgba(0, 52, 102, 0.98) 100%) !important;
-    backdrop-filter: blur(15px) !important;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)) !important;
+    backdrop-filter: blur(10px) !important;
     flex-direction: column !important;
     padding: 20px !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
-    border-top: 2px solid rgba(0, 207, 255, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    border-top: 3px solid var(--makerere-yellow) !important;
     display: none !important;
-    gap: 10px !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    height: auto !important;
+    z-index: 1001 !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   .menu .menu-items.show {
     display: flex !important;
-    animation: slideDownMobile 0.4s ease-out !important;
+    animation: slideDown 0.3s ease-out !important;
   }
 
   .menu .menu-items>a,
-  .menu .menu-items>div,
   .menu .menu-items .dropbtn {
-    width: 100% !important;
-    height: 50px !important;
-    justify-content: flex-start !important;
-    margin: 0 !important;
-    padding: 0 20px !important;
+    color: var(--water-blue-light) !important;
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+    padding: 15px 20px !important;
+    margin: 5px 0 !important;
+    background: rgba(117, 221, 221, 0.1) !important;
     border-radius: 10px !important;
+    border-left: 4px solid var(--makerere-green) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .menu .menu-items>a:hover,
+  .menu .menu-items>a.menu-highlight,
+  .menu .menu-items .dropbtn:hover {
+    background: rgba(117, 221, 221, 0.2) !important;
+    color: var(--makerere-yellow) !important;
+    transform: translateX(8px) !important;
+    box-shadow: 0 4px 12px rgba(0, 104, 55, 0.2) !important;
+  }
+
+  .menu .menu-items .menu-icon {
+    margin-right: 12px !important;
+    font-size: 1.2em !important;
+    min-width: 20px !important;
+  }
+
+  /* Mobile dropdown styling */
+  .menu .menu-items .dropdown {
+    width: 100% !important;
+  }
+
+  .menu .menu-items .dropdown .dropbtn {
+    width: 100% !important;
+    text-align: left !important;
+    justify-content: space-between !important;
+    background: rgba(117, 221, 221, 0.1) !important;
   }
 
   .menu .menu-items .dropdown .dropdown-content {
     position: static !important;
-    background: rgba(0, 207, 255, 0.1) !important;
+    background: rgba(0, 104, 55, 0.2) !important;
     margin: 10px 0 !important;
-    border-radius: 8px !important;
-    transform: none !important;
-    opacity: 1 !important;
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2) !important;
     max-height: 0 !important;
     overflow: hidden !important;
     transition: max-height 0.3s ease !important;
+    display: block !important;
   }
 
   .menu .menu-items .dropdown.active .dropdown-content {
-    max-height: 400px !important;
+    max-height: 500px !important;
   }
 
   .menu .menu-items .dropdown .dropdown-content a {
-    padding: 12px 25px !important;
-    font-size: 14px !important;
-    border-left: 3px solid rgba(0, 207, 255, 0.3) !important;
-    border-bottom: 1px solid rgba(0, 207, 255, 0.1) !important;
-  }
-}
-
-/* --- 18. Micro Animations --- */
-@keyframes slideDownMobile {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
+    color: var(--water-blue-light) !important;
+    background: transparent !important;
+    border-left: 2px solid var(--water-blue-light) !important;
+    margin-left: 20px !important;
+    font-size: 0.95em !important;
+    padding: 12px 15px !important;
+    border-radius: 6px !important;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .menu .menu-items .dropdown .dropdown-content a:hover {
+    background: rgba(117, 221, 221, 0.2) !important;
+    color: var(--makerere-yellow) !important;
   }
-}
 
-/* --- 19. Content Padding Fix --- */
-body .content-container {
-  padding-top: 70px !important;
-}
-
-.future-innovations-page .content-container {
-  padding-top: 0 !important;
-}
-
-/* --- 20. Ensure Menu Always Visible --- */
-.menu-container,
-.menu.fixed-header {
-  visibility: visible !important;
-  opacity: 1 !important;
+  /* Mobile dropdown arrow rotation */
+  .menu .menu-items .dropdown.active .dropbtn i {
+    transform: rotate(180deg) !important;
+    transition: transform 0.3s ease !important;
+  }
 }
 
 /*************************************************************************
- * COMPREHENSIVE MENU BAR FIXES - END
+ * NEW MENU STYLES - END
  *************************************************************************/
 
 /* Enhanced Dropdown Functionality Fix */
@@ -1719,7 +1690,7 @@ body .content-container {
   display: block !important;
 }
 
-/* Desktop dropdown hover effect */
+/* Desktop dropdown hover effect - only for desktop */
 @media (min-width: 769px) {
   .menu .menu-items .dropdown:hover .dropdown-content {
     display: block !important;
@@ -1727,10 +1698,29 @@ body .content-container {
     transform: translateY(0) !important;
     animation: dropdownSlideIn 0.3s ease-out !important;
   }
+
+  /* Ensure dropdown arrow rotates on hover for desktop */
+  .menu .menu-items .dropdown:hover .dropbtn i {
+    transform: rotate(180deg) !important;
+    transition: transform 0.3s ease !important;
+  }
 }
 
 /* Dropdown slide-in animation */
 @keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile menu slide down animation */
+@keyframes slideDown {
   from {
     opacity: 0;
     transform: translateY(-10px);
