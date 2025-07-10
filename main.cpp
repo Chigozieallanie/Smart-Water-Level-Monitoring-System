@@ -486,7 +486,7 @@ void setup() {
 
   // Read last 14 entries
   for (int i = 0; i < 14; i++) {
-    usage[i] = ThingSpeak.readField(channelID, 1, readAPIKey, i + 1);
+    usage[i] = ThingSpeak.readField(3001129, 1, "GET https://api.thingspeak.com/update?api_key=L6EE5X3VM6Z3N5ZV&field1=", i + 1);
     if (usage[i] == -1) {
       Serial.println("Error reading data at entry " + String(i));
       return;
@@ -517,7 +517,7 @@ void setup() {
 
   // Optional: Send message to another ThingSpeak channel
   ThingSpeak.setField(1, message);
-  int result = ThingSpeak.writeFields(alertChannelID, writeAPIKey);
+  int result = ThingSpeak.writeFields(3001129,"GET https://api.thingspeak.com/update?api_key=L6EE5X3VM6Z3N5ZV&field1=");
   if (result == 200) {
     Serial.println("Feedback successfully sent to ThingSpeak.");
   } else {
