@@ -1,4 +1,4 @@
-#include <Wire.h>
+ #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
 // LCD setup
@@ -215,7 +215,7 @@ void loop() {
   delay(4000);
   ShowSerialData();
   
-  String str="GET https://api.thingspeak.com/update?api_key=L6EE5X3VM6Z3N5ZV&field1=" + String(distance) +"&field2="+String(88);
+  String str="GET https://api.thingspeak.com/update?api_key=L6EE5X3VM6Z3N5ZV&field1=" + String(distance) +"&field2="+String(ltr)+"&field3="+String(depth);
   Serial.println(str);
   Serial.println(str);//begin send data to remote server
   
