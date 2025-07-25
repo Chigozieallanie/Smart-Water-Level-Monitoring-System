@@ -1,0 +1,1879 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Smart Water Monitoring - Analytics Dashboard</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" media="screen" rel="stylesheet"
+        type="text/css" />
+    <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap' rel='stylesheet'
+        type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700&display=swap' rel='stylesheet'
+        type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/widgets.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/footer.js"></script>
+    <script src="js/custom.js"></script>
+    <style>
+        .menu-dashboard {
+            color: rgb(255, 255, 255) !important;
+            opacity: 1 !important;
+            font-weight: 700 !important;
+        }
+
+        /* Dashboard Specific Styles */
+        .dashboard-page {
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.7), rgba(117, 221, 221, 0.7)),
+                url('img/water.jpg');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-attachment: fixed, fixed;
+            background-repeat: no-repeat, no-repeat;
+            color: var(--dark-text);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Enhanced Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(26, 26, 26, 0.8));
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #06b6d4, #0891b2);
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5em;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+        }
+
+        .dashboard-header h1 i {
+            color: #0ea5e9;
+            margin-right: 15px;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2em;
+            margin: 0 0 20px 0;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .dashboard-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .status-indicator.online {
+            color: #10b981;
+        }
+
+        .status-indicator.online i {
+            color: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        .last-updated {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .last-updated i {
+            color: #0ea5e9;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Stats Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(240, 248, 255, 0.95) 30%,
+                    rgba(235, 245, 255, 0.95) 70%,
+                    rgba(230, 242, 255, 0.95) 100%);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow:
+                0 10px 30px rgba(0, 150, 255, 0.15),
+                0 4px 12px rgba(52, 152, 219, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 150, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0096ff, #3498db, #74b9ff);
+            opacity: 0.8;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 15px 40px rgba(0, 150, 255, 0.2),
+                0 6px 16px rgba(52, 152, 219, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            color: var(--water-blue-dark);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0, 150, 255, 0.3));
+        }
+
+        .stat-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--makerere-green);
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            font-size: 1em;
+            color: #1a365d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-trend {
+            font-size: 0.9em;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            color: #27ae60;
+        }
+
+        .trend-down {
+            color: #e74c3c;
+        }
+
+        .trend-stable {
+            color: #f39c12;
+        }
+
+        /* Chart Containers */
+        .chart-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.95));
+            border-radius: 16px;
+            margin: 30px 0;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chart-section h2 {
+            color: #1a365d;
+            font-weight: 700;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+
+        .chart-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .chart-control-btn {
+            background: linear-gradient(135deg, var(--water-blue-light), var(--water-blue-dark));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 150, 255, 0.3);
+        }
+
+        .chart-control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 150, 255, 0.4);
+        }
+
+        .chart-control-btn.active {
+            background: linear-gradient(135deg, var(--makerere-green), var(--water-blue-light));
+            box-shadow: 0 6px 16px rgba(0, 104, 55, 0.4);
+        }
+
+        /* Tank Status Cards */
+        .tank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .tank-card {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(248, 255, 248, 0.95) 30%,
+                    rgba(240, 255, 240, 0.95) 70%,
+                    rgba(235, 250, 235, 0.95) 100%);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow:
+                0 10px 30px rgba(0, 104, 55, 0.15),
+                0 4px 12px rgba(117, 221, 221, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 104, 55, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--makerere-green), var(--water-blue-light));
+            opacity: 0.8;
+        }
+
+        .tank-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 15px 40px rgba(0, 104, 55, 0.2),
+                0 6px 16px rgba(117, 221, 221, 0.15);
+        }
+
+        .tank-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tank-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--makerere-green);
+        }
+
+        .tank-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-normal {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+
+        .status-low {
+            background: rgba(243, 156, 18, 0.2);
+            color: #f39c12;
+        }
+
+        .status-critical {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .status-full {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        /* Water Level Indicator */
+        .water-level-indicator {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .water-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(0deg, var(--water-blue-dark), var(--water-blue-light));
+            transition: height 1s ease;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .water-level-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2em;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        /* Predictions Section */
+        .predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        /* Enhanced Prediction Card Styles */
+        .prediction-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow:
+                0 10px 30px rgba(255, 165, 0, 0.15),
+                0 4px 12px rgba(255, 185, 50, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 165, 0, 0.25);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prediction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffa500, #ffb732, #ffc947);
+            opacity: 0.8;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 15px 40px rgba(255, 165, 0, 0.2),
+                0 6px 16px rgba(255, 185, 50, 0.15);
+        }
+
+        .prediction-icon {
+            font-size: 2.5em;
+            color: #0ea5e9;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-card:hover .prediction-icon {
+            transform: scale(1.1);
+            background: rgba(14, 165, 233, 0.2);
+        }
+
+        .prediction-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .prediction-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--makerere-green);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .prediction-subtitle {
+            font-size: 0.9em;
+            color: #64748b;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 2em;
+            }
+
+            .dashboard-header p {
+                font-size: 1em;
+            }
+
+            .stats-grid,
+            .tank-grid,
+            .predictions-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .chart-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chart-control-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .tank-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .water-level-indicator {
+                height: 100px;
+            }
+
+            .chart-section,
+            .stat-card,
+            .tank-card,
+            .prediction-card {
+                padding: 20px;
+                margin: 15px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-header {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.7em;
+            }
+
+            .stat-value {
+                font-size: 1.8em;
+            }
+
+            .prediction-value {
+                font-size: 1.5em;
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-page">
+    <!-- Water Texture Background -->
+    <div class="water-texture"></div>
+
+    <div class="menu-container"></div>
+    <div class="content-container">
+        <!-------------------------------------------------------------------------------------------->
+        <!--Start Header-->
+        <div class="dashboard-header">
+            <h1><i class="fas fa-chart-line"></i> Smart Water Analytics Dashboard</h1>
+            <p>Monitor your water system in real-time with intelligent insights, usage patterns, and predictive
+                analytics to optimize water management efficiency</p>
+            <div class="dashboard-status">
+                <span class="status-indicator online">
+                    <i class="fas fa-circle"></i> System Online
+                </span>
+                <span class="last-updated">
+                    <i class="fas fa-clock"></i> Last updated: <span id="lastUpdateTime">Just now</span>
+                </span>
+                <span id="dataStatusArea"
+                    style="margin-left: 18px; display: inline-flex; align-items: center; min-width: 160px;">
+                    <span id="dataStatusSpinner" style="display: none; margin-right: 8px;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                    <span id="dataStatusMsg" style="font-size: 0.98em;"></span>
+                </span>
+            </div>
+        </div>
+        <!--End Header-->
+        <!-------------------------------------------------------------------------------------------->
+        <div class="content">
+            <div class="content-table flex-column">
+
+                <!--Start Key Statistics-->
+                <section class="flex-row">
+                    <div class="flex-item flex-column full-width">
+                        <h2 style="text-align: center; color: #1a365d; margin-bottom: 30px;">
+                            <i class="fas fa-tachometer-alt"></i> System Overview
+                        </h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="stat-value" id="totalConsumption">2,450</div>
+                                <div class="stat-label">Liters Today</div>
+                                <div class="stat-trend trend-down">
+                                    <i class="fas fa-arrow-down"></i> 12% vs yesterday
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-value" id="avgLevel">72</div>
+                                <div class="stat-label">Avg Level %</div>
+                                <div class="stat-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> 8% vs last week
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-value" id="nextRefill">16</div>
+                                <div class="stat-label">Hours to Refill</div>
+                                <div class="stat-trend trend-stable">
+                                    <i class="fas fa-minus"></i> On schedule
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <div class="stat-value" id="systemEfficiency">92%</div>
+                                <div class="stat-label">System Efficiency</div>
+                                <div class="stat-trend trend-up">
+                                    <i class="fas fa-arrow-up"></i> Excellent performance
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End Key Statistics-->
+
+                <!--Start Water Level Trends-->
+                <section class="chart-section">
+                    <h2><i class="fas fa-water"></i> Water Level Trends</h2>
+                    <div class="chart-controls">
+                        <button class="chart-control-btn active" onclick="updateChart('24h')">24 Hours</button>
+                        <button class="chart-control-btn" onclick="updateChart('7d')">7 Days</button>
+                        <button class="chart-control-btn" onclick="updateChart('30d')">30 Days</button>
+                        <button class="chart-control-btn" onclick="updateChart('90d')">3 Months</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="waterLevelChart"></canvas>
+                    </div>
+                </section>
+                <!--End Water Level Trends-->
+
+                <!--Start Usage Patterns-->
+                <section class="chart-section">
+                    <h2><i class="fas fa-chart-bar"></i> Water Usage Patterns</h2>
+                    <div class="chart-controls">
+                        <button class="chart-control-btn active" onclick="updateUsageChart('daily')">Daily
+                            Pattern</button>
+                        <button class="chart-control-btn" onclick="updateUsageChart('weekly')">Weekly Pattern</button>
+                        <button class="chart-control-btn" onclick="updateUsageChart('monthly')">Monthly
+                            Comparison</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="usagePatternChart"></canvas>
+                    </div>
+                </section>
+                <!--End Usage Patterns-->
+
+                <!--Start Tank Status-->
+                <section class="flex-row">
+                    <div class="flex-item flex-column full-width">
+                        <h2 style="text-align: center; color: #1a365d; margin-bottom: 30px;">
+                            <i class="fas fa-database"></i> Tank Status Monitor
+                        </h2>
+                        <div class="tank-grid">
+                            <div class="tank-card">
+                                <div class="tank-header">
+                                    <div class="tank-name">Main Storage Tank</div>
+                                    <div class="tank-status status-normal" id="mainTankStatus">Normal</div>
+                                </div>
+                                <div class="water-level-indicator">
+                                    <div class="water-fill" id="mainTankFill" style="height: 68%"></div>
+                                    <div class="water-level-text" id="mainTankLevel">68%</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                                    <span><strong>Capacity:</strong> <span id="mainTankCapacity">5,000L</span></span>
+                                    <span><strong>Current:</strong> <span id="mainTankCurrent">3,400L</span></span>
+                                </div>
+                                <div style="margin-top: 10px; color: #2d3748;">
+                                    <i class="fas fa-clock"></i> Last refill: <span id="mainTankLastRefill">2 days
+                                        ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End Tank Status-->
+
+                <!--Start Predictive Analytics-->
+                <section class="flex-row">
+                    <div class="flex-item flex-column full-width">
+                        <h2 style="text-align: center; color: #1a365d; margin-bottom: 30px;">
+                            <i class="fas fa-crystal-ball"></i> Predictive Analytics & Recommendations
+                        </h2>
+                        <div class="predictions-grid">
+                            <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="prediction-title">Next Refill Needed</div>
+                                <div class="prediction-value">Tomorrow</div>
+                                <div class="prediction-subtitle">at 2:30 PM (predicted)</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="prediction-title">Weekly Consumption</div>
+                                <div class="prediction-value">18,500L</div>
+                                <div class="prediction-subtitle">15% higher than average</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="prediction-title">System Efficiency</div>
+                                <div class="prediction-value">87%</div>
+                                <div class="prediction-subtitle">Excellent water management</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="prediction-title">Usage Trend</div>
+                                <div class="prediction-value">↗ 5%</div>
+                                <div class="prediction-subtitle">Increasing this week</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <div class="prediction-title">Peak Usage Time</div>
+                                <div class="prediction-value">7-9 AM</div>
+                                <div class="prediction-subtitle">Morning routine</div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="prediction-title">System Status</div>
+                                <div class="prediction-value">All Clear</div>
+                                <div class="prediction-subtitle">No issues detected</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End Predictive Analytics-->
+
+                <!-- SMS & Reporting Section (moved here for dashboard style) -->
+                <section class="chart-section dashboard-card"
+                    style="margin-bottom: 40px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); border-radius: 16px; background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(240,248,255,0.97));">
+                    <h2 style="color: #1a365d; font-weight: 700; margin-bottom: 18px;"><i class="fas fa-sms"></i> SMS
+                        Reports & Custom Alerts</h2>
+                    <div style="margin-bottom: 12px; font-size: 1.08em;">
+                        <strong>SMS Recipient:</strong> <span id="smsRecipient"
+                            style="color: #0ea5e9; font-weight: 600;">+256786178453</span>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 32px;">
+                        <div
+                            style="flex: 1 1 340px; min-width: 320px; background: #f8fafc; border-radius: 12px; padding: 18px 22px; box-shadow: 0 2px 8px rgba(0,150,255,0.06);">
+                            <h3 style="color: #318CE7; font-size: 1.15em; margin-bottom: 10px;"><i
+                                    class="fas fa-calendar-alt"></i> Schedule Reports</h3>
+                            <form id="smsScheduleForm">
+                                <label style="display: flex; align-items: center; margin-bottom: 8px;"><input
+                                        type="checkbox" id="enableDaily" style="margin-right: 8px;"> Daily Report at
+                                    <input type="time" id="dailyTime" value="08:00"
+                                        style="margin-left: 8px; border-radius: 6px; border: 1px solid #bcd; padding: 3px 8px;"></label>
+                                <label style="display: flex; align-items: center; margin-bottom: 8px;"><input
+                                        type="checkbox" id="enableWeekly" style="margin-right: 8px;"> Weekly Report on
+                                    <select id="weeklyDay"
+                                        style="margin-left: 8px; border-radius: 6px; border: 1px solid #bcd; padding: 3px 8px;">
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                        <option value="Sunday">Sunday</option>
+                                    </select>
+                                    at <input type="time" id="weeklyTime" value="08:00"
+                                        style="margin-left: 8px; border-radius: 6px; border: 1px solid #bcd; padding: 3px 8px;"></label>
+                                <button type="submit"
+                                    style="margin-top: 10px; background: #318CE7; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Save
+                                    Schedule</button>
+                            </form>
+                        </div>
+                        <div
+                            style="flex: 1 1 340px; min-width: 320px; background: #f8fafc; border-radius: 12px; padding: 18px 22px; box-shadow: 0 2px 8px rgba(0,150,255,0.06);">
+                            <h3 style="color: #318CE7; font-size: 1.15em; margin-bottom: 10px;"><i
+                                    class="fas fa-comment-dots"></i> Send Custom SMS</h3>
+                            <form id="customSmsForm">
+                                <textarea id="customSmsContent" rows="3"
+                                    style="width: 100%; border-radius: 6px; border: 1px solid #bcd; padding: 8px; font-size: 1em;"
+                                    placeholder="Enter custom SMS content..."></textarea><br>
+                                <button type="submit"
+                                    style="margin-top: 8px; background: #1a365d; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Send
+                                    Custom SMS</button>
+                            </form>
+                            <button id="sendManualAlert"
+                                style="margin-top: 12px; background: #0ea5e9; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-weight: 600; cursor: pointer;"><i
+                                    class="fas fa-bell"></i> Send Manual Alert</button>
+                            <button id="sendTestSms"
+                                style="margin-top: 8px; background: #10b981; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-weight: 600; cursor: pointer;"><i
+                                    class="fas fa-vial"></i> Send Test SMS</button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 28px;">
+                        <h3 style="color: #1a365d; font-size: 1.08em; margin-bottom: 8px;"><i
+                                class="fas fa-history"></i> SMS Log / History</h3>
+                        <ul id="smsLog"
+                            style="max-height: 200px; overflow-y: auto; background: #fff; border-radius: 8px; padding: 12px 18px; font-size: 0.98em; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
+                        </ul>
+                    </div>
+                    <div id="smsStatusMsg" style="margin-top: 10px; font-weight: 600; color: #e67e22;"></div>
+                </section>
+
+                <!--Start Flow Rate Analysis-->
+                <section class="chart-section">
+                    <h2><i class="fas fa-tachometer-alt"></i> Flow Rate Analysis</h2>
+                    <div class="chart-container">
+                        <canvas id="flowRateChart"></canvas>
+                    </div>
+                </section>
+                <!--End Flow Rate Analysis-->
+
+            </div>
+        </div>
+        <div class="footer-container"></div>
+    </div>
+
+    <!-- Settings Button and Modal -->
+    <button id="settingsBtn"
+        style="position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: #1a365d; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 1.7em; box-shadow: 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-cog"></i>
+    </button>
+    <div id="settingsModal"
+        style="display:none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.35); align-items: center; justify-content: center;">
+        <div
+            style="background: #fff; border-radius: 12px; padding: 32px 28px 24px 28px; min-width: 320px; max-width: 90vw; box-shadow: 0 8px 32px rgba(0,0,0,0.18); position: relative;">
+            <button id="closeSettingsModal"
+                style="position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 1.3em; color: #1a365d; cursor: pointer;"><i
+                    class="fas fa-times"></i></button>
+            <h2 style="margin-top: 0; color: #1a365d; font-size: 1.3em;">ThingSpeak Settings</h2>
+            <div style="margin-bottom: 18px;">
+                <label for="channelIdInput" style="font-weight: 600; color: #1a365d;">Channel ID</label><br>
+                <input id="channelIdInput" type="text"
+                    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 12px;"
+                    placeholder="Enter ThingSpeak Channel ID">
+                <label for="apiKeyInput" style="font-weight: 600; color: #1a365d;">API Key</label><br>
+                <input id="apiKeyInput" type="text"
+                    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc;"
+                    placeholder="Enter ThingSpeak API Key">
+            </div>
+            <div id="settingsError" style="color: #e74c3c; font-size: 0.98em; min-height: 22px; margin-bottom: 10px;">
+            </div>
+            <button id="saveSettingsBtn"
+                style="background: #1a365d; color: #fff; border: none; border-radius: 6px; padding: 10px 22px; font-weight: 600; font-size: 1em; cursor: pointer;">Save</button>
+        </div>
+    </div>
+    <button id="refreshBtn"
+        style="position: fixed; bottom: 100px; right: 30px; z-index: 1000; background: #0ea5e9; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 1.7em; box-shadow: 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; display: none; align-items: center; justify-content: center;">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <!-- Dashboard JavaScript -->
+    <script>
+        // Initialize all charts when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeWaterLevelChart();
+            initializeUsagePatternChart();
+            initializeFlowRateChart();
+            updateStats();
+            setInterval(updateStats, 30000); // Update stats every 30 seconds
+        });
+
+        let waterLevelChart, usagePatternChart, flowRateChart;
+
+        // --- Robust chart/data sync ---
+        let waterLevelChartReady = false;
+        let pendingDataLoad = false;
+
+        // Water Level Chart
+        function initializeWaterLevelChart() {
+            const ctx = document.getElementById('waterLevelChart').getContext('2d');
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(117, 221, 221, 0.8)');
+            gradient.addColorStop(1, 'rgba(117, 221, 221, 0.1)');
+
+            waterLevelChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: generateTimeLabels('24h'),
+                    datasets: [{
+                        label: 'Water Level (L)',
+                        data: generateWaterLevelData('24h'),
+                        borderColor: '#318CE7',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#318CE7',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a365d',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5,
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d',
+                                callback: function (value) {
+                                    return value + ' L';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+            window.waterLevelChart = waterLevelChart;
+            waterLevelChartReady = true;
+            if (pendingDataLoad) {
+                pendingDataLoad = false;
+                loadThingSpeakData();
+            }
+        }
+
+        // Usage Pattern Chart
+        function initializeUsagePatternChart() {
+            const ctx = document.getElementById('usagePatternChart').getContext('2d');
+
+            usagePatternChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM', '12 AM', '3 AM'],
+                    datasets: [{
+                        label: 'Water Usage (Liters)',
+                        data: [450, 320, 280, 180, 380, 220, 80, 40],
+                        backgroundColor: [
+                            'rgba(0, 104, 55, 0.8)',
+                            'rgba(117, 221, 221, 0.8)',
+                            'rgba(49, 140, 231, 0.8)',
+                            'rgba(0, 150, 255, 0.8)',
+                            'rgba(0, 104, 55, 0.8)',
+                            'rgba(117, 221, 221, 0.8)',
+                            'rgba(49, 140, 231, 0.8)',
+                            'rgba(0, 150, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            '#006837',
+                            '#75DDDD',
+                            '#318CE7',
+                            '#0096FF',
+                            '#006837',
+                            '#75DDDD',
+                            '#318CE7',
+                            '#0096FF'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a365d',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d',
+                                callback: function (value) {
+                                    return value + 'L';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Flow Rate Chart
+        function initializeFlowRateChart() {
+            const ctx = document.getElementById('flowRateChart').getContext('2d');
+
+            flowRateChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: generateTimeLabels('24h'),
+                    datasets: [
+                        {
+                            label: 'Inflow Rate (L/min)',
+                            data: generateFlowData('in'),
+                            borderColor: '#27ae60',
+                            backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Outflow Rate (L/min)',
+                            data: generateFlowData('out'),
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a365d',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d',
+                                callback: function (value) {
+                                    return value + ' L/min';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(26, 54, 93, 0.1)'
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generate sample data
+        function generateTimeLabels(period) {
+            const labels = [];
+            const now = new Date();
+
+            if (period === '24h') {
+                for (let i = 23; i >= 0; i--) {
+                    const time = new Date(now.getTime() - i * 60 * 60 * 1000);
+                    labels.push(time.getHours() + ':00');
+                }
+            } else if (period === '7d') {
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                }
+            } else if (period === '30d') {
+                for (let i = 29; i >= 0; i--) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    labels.push(date.getDate());
+                }
+            } else if (period === '90d') {
+                for (let i = 89; i >= 0; i -= 7) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                }
+            }
+
+            return labels;
+        }
+
+        function generateWaterLevelData(period) {
+            const dataPoints = period === '24h' ? 24 : period === '7d' ? 7 : period === '30d' ? 30 : 13;
+            const data = [];
+
+            for (let i = 0; i < dataPoints; i++) {
+                // Simulate realistic water level patterns
+                const baseLevel = 60 + Math.sin(i * 0.3) * 20 + Math.random() * 10;
+                data.push(Math.max(10, Math.min(95, baseLevel)));
+            }
+
+            return data;
+        }
+
+        function generateFlowData(type) {
+            const data = [];
+
+            for (let i = 0; i < 24; i++) {
+                if (type === 'in') {
+                    // Higher inflow during refill times
+                    const baseFlow = i >= 6 && i <= 8 || i >= 18 && i <= 20 ? 15 + Math.random() * 10 : Math.random() * 5;
+                    data.push(baseFlow);
+                } else {
+                    // Higher outflow during usage times
+                    const baseFlow = i >= 6 && i <= 9 || i >= 17 && i <= 21 ? 8 + Math.random() * 6 : 2 + Math.random() * 3;
+                    data.push(baseFlow);
+                }
+            }
+
+            return data;
+        }
+
+        // Chart update functions
+        function updateChart(period) {
+            if (!window.waterLevelChart) {
+                console.warn('Water level chart not initialized yet.');
+                return;
+            }
+            // Update active button
+            document.querySelectorAll('.chart-control-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (!globalFeeds || globalFeeds.length === 0) return;
+            let now = new Date();
+            let chartData = [];
+            if (period === '24h') {
+                let dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= dayAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-24);
+                waterLevelChart.data.labels = chartData.map(f => f.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+                waterLevelChart.data.datasets[0].data = chartData.map(f => f.litres ? Math.min(f.litres, 5) : 0);
+            } else if (period === '7d') {
+                let weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= weekAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-7 * 24);
+                // Group by day, take average per day
+                let byDay = {};
+                chartData.forEach(f => {
+                    let day = f.timestamp.toISOString().split('T')[0];
+                    if (!byDay[day]) byDay[day] = [];
+                    byDay[day].push(f.litres ? Math.min(f.litres, 5) : 0);
+                });
+                let days = Object.keys(byDay).sort();
+                waterLevelChart.data.labels = days;
+                waterLevelChart.data.datasets[0].data = days.map(d => {
+                    let vals = byDay[d];
+                    return vals.reduce((a, b) => a + b, 0) / vals.length;
+                });
+                waterLevelChart.update();
+                return;
+            } else if (period === '30d') {
+                let monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= monthAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-30 * 24);
+                // Group by day, take average per day
+                let byDay = {};
+                chartData.forEach(f => {
+                    let day = f.timestamp.toISOString().split('T')[0];
+                    if (!byDay[day]) byDay[day] = [];
+                    byDay[day].push(f.litres ? Math.min(f.litres, 5) : 0);
+                });
+                let days = Object.keys(byDay).sort();
+                waterLevelChart.data.labels = days;
+                waterLevelChart.data.datasets[0].data = days.map(d => {
+                    let vals = byDay[d];
+                    return vals.reduce((a, b) => a + b, 0) / vals.length;
+                });
+                waterLevelChart.update();
+                return;
+            } else if (period === '90d') {
+                let threeMonthsAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= threeMonthsAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-90 * 24);
+                // Group by week, take average per week
+                let byWeek = {};
+                chartData.forEach(f => {
+                    let year = f.timestamp.getFullYear();
+                    let week = Math.ceil((((f.timestamp - new Date(year, 0, 1)) / 86400000) + new Date(year, 0, 1).getDay() + 1) / 7);
+                    let key = year + '-W' + week;
+                    if (!byWeek[key]) byWeek[key] = [];
+                    byWeek[key].push(f.litres ? Math.min(f.litres, 5) : 0);
+                });
+                let weeks = Object.keys(byWeek).sort();
+                waterLevelChart.data.labels = weeks;
+                waterLevelChart.data.datasets[0].data = weeks.map(w => {
+                    let vals = byWeek[w];
+                    return vals.reduce((a, b) => a + b, 0) / vals.length;
+                });
+                waterLevelChart.update();
+                return;
+            }
+            // Default: 24h
+            waterLevelChart.data.datasets[0].data = chartData.map(f => f.litres ? Math.min(f.litres, 5) : 0);
+            waterLevelChart.update();
+        }
+
+        function updateUsageChart(pattern) {
+            // Update active button
+            document.querySelectorAll('.chart-control-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (!globalFeeds || globalFeeds.length === 0) return;
+            let labels = [], data = [];
+            if (pattern === 'daily') {
+                // Average usage per hour for last 24h
+                let now = new Date();
+                let dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                let last24h = globalFeeds.filter(f => f.timestamp >= dayAgo);
+                // Group by hour
+                let byHour = {};
+                last24h.forEach(f => {
+                    let hour = f.timestamp.getHours();
+                    if (!byHour[hour]) byHour[hour] = [];
+                    byHour[hour].push(f.litres);
+                });
+                let hours = Object.keys(byHour).map(h => parseInt(h)).sort((a, b) => a - b);
+                labels = hours.map(h => (h === 0 ? '12 AM' : h < 12 ? h + ' AM' : (h === 12 ? '12 PM' : (h - 12) + ' PM')));
+                data = hours.map(h => {
+                    let vals = byHour[h];
+                    return vals.length > 1 ? Math.abs(vals[0] - vals[vals.length - 1]) : 0;
+                });
+            } else if (pattern === 'weekly') {
+                // Total usage per day for last 7 days
+                let now = new Date();
+                let weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                let last7d = globalFeeds.filter(f => f.timestamp >= weekAgo);
+                // Group by day
+                let byDay = {};
+                last7d.forEach(f => {
+                    let day = f.timestamp.toISOString().split('T')[0];
+                    if (!byDay[day]) byDay[day] = [];
+                    byDay[day].push(f.litres);
+                });
+                let days = Object.keys(byDay).sort();
+                labels = days;
+                data = days.map(d => {
+                    let vals = byDay[d];
+                    return vals.length > 1 ? Math.abs(vals[0] - vals[vals.length - 1]) : 0;
+                });
+            } else {
+                // Total usage per month for last 6 months
+                let byMonth = {};
+                globalFeeds.forEach(f => {
+                    let m = f.timestamp.getFullYear() + '-' + (f.timestamp.getMonth() + 1).toString().padStart(2, '0');
+                    if (!byMonth[m]) byMonth[m] = [];
+                    byMonth[m].push(f.litres);
+                });
+                let months = Object.keys(byMonth).sort().slice(-6);
+                labels = months;
+                data = months.map(m => {
+                    let vals = byMonth[m];
+                    return vals.length > 1 ? Math.abs(vals[0] - vals[vals.length - 1]) : 0;
+                });
+            }
+            usagePatternChart.data.labels = labels;
+            usagePatternChart.data.datasets[0].data = data;
+            usagePatternChart.update();
+        }
+
+        // Update statistics
+        function updateStats() {
+            // Simulate real-time data updates
+            const consumption = 2450 + Math.floor(Math.random() * 100) - 50;
+            const avgLevel = 72 + Math.floor(Math.random() * 10) - 5;
+            const nextRefill = Math.max(1, 16 + Math.floor(Math.random() * 6) - 3);
+            const savings = 85 + Math.floor(Math.random() * 20) - 10;
+
+            document.getElementById('totalConsumption').textContent = consumption.toLocaleString();
+            document.getElementById('avgLevel').textContent = avgLevel;
+            document.getElementById('nextRefill').textContent = nextRefill;
+            // document.getElementById('monthlySavings').textContent = '$' + savings; // Removed to fix error
+        }
+
+        // Export data functionality
+        function exportData(format) {
+            alert(`Exporting data in ${format} format... This feature would integrate with your backend system.`);
+        }
+
+        // Alert management
+        function setupAlerts() {
+            alert('Alert configuration panel would open here. Users can set custom thresholds for low water, high usage, etc.');
+        }
+
+        // Update last updated time
+        function updateLastUpdatedTime() {
+            const lastUpdateElement = document.getElementById('lastUpdateTime');
+            if (lastUpdateElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString();
+                lastUpdateElement.textContent = timeString;
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function () {
+            updateLastUpdatedTime();
+            // Update the time every 30 seconds
+            setInterval(updateLastUpdatedTime, 30000);
+        });
+
+        // --- Settings Modal Logic ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsModal = document.getElementById('settingsModal');
+            const closeSettingsModal = document.getElementById('closeSettingsModal');
+            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+            const channelIdInput = document.getElementById('channelIdInput');
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            const settingsError = document.getElementById('settingsError');
+            const refreshBtn = document.getElementById('refreshBtn');
+
+            // Prefill inputs from localStorage
+            channelIdInput.value = localStorage.getItem('ts_channel_id') || '';
+            apiKeyInput.value = localStorage.getItem('ts_api_key') || '';
+
+            settingsBtn.addEventListener('click', function () {
+                settingsModal.style.display = 'flex';
+                settingsError.textContent = '';
+            });
+            closeSettingsModal.addEventListener('click', function () {
+                settingsModal.style.display = 'none';
+            });
+
+            saveSettingsBtn.addEventListener('click', async function () {
+                const channelId = channelIdInput.value.trim();
+                const apiKey = apiKeyInput.value.trim();
+                if (!channelId || !apiKey) {
+                    settingsError.textContent = 'Please enter both Channel ID and API Key.';
+                    return;
+                }
+                settingsError.textContent = 'Validating...';
+                // Try to fetch data from ThingSpeak
+                try {
+                    const url = `https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=1`;
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error('Invalid response');
+                    const json = await res.json();
+                    if (!json.feeds || !Array.isArray(json.feeds)) throw new Error('Invalid data');
+                    // Save to localStorage
+                    localStorage.setItem('ts_channel_id', channelId);
+                    localStorage.setItem('ts_api_key', apiKey);
+                    settingsModal.style.display = 'none';
+                    refreshBtn.style.display = 'flex';
+                    // Immediately load API data
+                    loadThingSpeakData();
+                } catch (e) {
+                    settingsError.textContent = 'Invalid Channel ID or API Key, or network error.';
+                }
+            });
+
+            // Show refresh button if credentials exist
+            if (localStorage.getItem('ts_channel_id') && localStorage.getItem('ts_api_key')) {
+                refreshBtn.style.display = 'flex';
+            }
+
+            // Add event listener for refresh button
+            refreshBtn.addEventListener('click', function () {
+                loadThingSpeakData();
+            });
+        });
+
+        // --- Load ThingSpeak Data (to be implemented/refactored) ---
+        // Store globally for chart updates
+        let globalFeeds = [];
+        async function loadThingSpeakData() {
+            if (!window.waterLevelChart) {
+                pendingDataLoad = true;
+                return;
+            }
+            const spinner = document.getElementById('dataStatusSpinner');
+            const msg = document.getElementById('dataStatusMsg');
+            spinner.style.display = 'inline-block';
+            msg.textContent = 'Loading data...';
+            msg.style.color = '#1a365d';
+            try {
+                const channelId = localStorage.getItem('ts_channel_id');
+                const apiKey = localStorage.getItem('ts_api_key');
+                const url = `https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=8000`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('Network or API error');
+                const json = await res.json();
+                if (!json.feeds || !Array.isArray(json.feeds) || json.feeds.length === 0) throw new Error('No data found');
+                // --- Parse and calculate System Overview values ---
+                const feeds = json.feeds.map(f => ({
+                    timestamp: new Date(f.created_at),
+                    depth: parseFloat(f.field1),
+                    litres: parseFloat(f.field2),
+                    percentage: parseFloat(f.field3)
+                })).filter(d => !isNaN(d.depth));
+                // Sort feeds by timestamp ascending
+                feeds.sort((a, b) => a.timestamp - b.timestamp);
+                globalFeeds = feeds;
+                // --- Update Water Level Trends Chart (24h default) ---
+                if (window.waterLevelChart) {
+                    // Get last 24h of data
+                    const now = new Date();
+                    const dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                    const last24h = feeds.filter(f => f.timestamp >= dayAgo);
+                    // If not enough, use last 24 points
+                    const chartData = last24h.length >= 2 ? last24h : feeds.slice(-24);
+                    window.waterLevelChart.data.labels = chartData.map(f => f.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+                    window.waterLevelChart.data.datasets[0].data = chartData.map(f => f.litres ? Math.min(f.litres, 5) : 0);
+                    window.waterLevelChart.update();
+                }
+                // Liters Today
+                const today = new Date();
+                const todayStr = today.toISOString().split('T')[0];
+                const todayFeeds = feeds.filter(f => f.timestamp.toISOString().split('T')[0] === todayStr);
+                let litersToday = 0;
+                if (todayFeeds.length > 1) {
+                    litersToday = Math.abs(todayFeeds[0].litres - todayFeeds[todayFeeds.length - 1].litres);
+                }
+                // Avg Level %
+                let avgLevel = 0;
+                if (todayFeeds.length > 0) {
+                    avgLevel = todayFeeds.reduce((a, d) => a + d.percentage, 0) / todayFeeds.length;
+                }
+                // Hours to Refill (simple estimate: if tank not full, estimate based on last 24h usage rate)
+                let hoursToRefill = '--';
+                if (feeds.length > 24) {
+                    const last24 = feeds.slice(-24);
+                    const usage = Math.abs(last24[0].litres - last24[last24.length - 1].litres);
+                    const lastPerc = last24[last24.length - 1].percentage;
+                    if (usage > 0 && lastPerc < 100) {
+                        hoursToRefill = ((100 - lastPerc) / (usage / 24)).toFixed(1);
+                    }
+                }
+                // System Efficiency (basic: ratio of avg level to 100)
+                let systemEfficiency = avgLevel ? (avgLevel / 100 * 100).toFixed(0) + '%' : '--';
+                // Update DOM
+                document.getElementById('totalConsumption').textContent = Math.round(litersToday).toLocaleString();
+                document.getElementById('avgLevel').textContent = avgLevel ? avgLevel.toFixed(1) : '--';
+                document.getElementById('nextRefill').textContent = hoursToRefill;
+                document.getElementById('systemEfficiency').textContent = systemEfficiency;
+                // Success feedback
+                spinner.style.display = 'none';
+                msg.textContent = 'Data loaded successfully!';
+                msg.style.color = '#10b981';
+                setTimeout(() => { msg.textContent = ''; }, 2000);
+
+                // Liters Today vs Yesterday
+                let litersYesterday = 0;
+                const yesterday = new Date(today.getTime() - 86400000);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                const yesterdayFeeds = feeds.filter(f => f.timestamp.toISOString().split('T')[0] === yesterdayStr);
+                if (yesterdayFeeds.length > 1) {
+                    litersYesterday = Math.abs(yesterdayFeeds[0].litres - yesterdayFeeds[yesterdayFeeds.length - 1].litres);
+                }
+                let litersTrend = '--';
+                if (litersYesterday > 0) {
+                    const diff = litersToday - litersYesterday;
+                    const pct = (diff / litersYesterday) * 100;
+                    litersTrend = (diff >= 0 ? '+' : '') + pct.toFixed(1) + '% vs yesterday';
+                }
+                // Avg Level % vs Last Week
+                let avgLevelLastWeek = 0;
+                const weekAgo = new Date(today.getTime() - 7 * 86400000);
+                const weekFeeds = feeds.filter(f => f.timestamp >= weekAgo && f.timestamp < today);
+                if (weekFeeds.length > 0) {
+                    avgLevelLastWeek = weekFeeds.reduce((a, d) => a + d.percentage, 0) / weekFeeds.length;
+                }
+                let avgLevelTrend = '--';
+                if (avgLevelLastWeek > 0) {
+                    const diff = avgLevel - avgLevelLastWeek;
+                    const pct = (diff / avgLevelLastWeek) * 100;
+                    avgLevelTrend = (diff >= 0 ? '+' : '') + pct.toFixed(1) + '% vs last week';
+                }
+                // Hours to Refill status
+                let refillStatus = 'On schedule';
+                if (hoursToRefill !== '--') {
+                    const h = parseFloat(hoursToRefill);
+                    if (h < 6) refillStatus = 'High usage';
+                    else if (h > 48) refillStatus = 'Low usage';
+                }
+                // System Efficiency status
+                let effNum = parseFloat(systemEfficiency.toString().replace('%', ''));
+                let effStatus = 'Excellent performance';
+                if (!isNaN(effNum)) {
+                    if (effNum > 85) effStatus = 'Excellent performance';
+                    else if (effNum > 70) effStatus = 'Good';
+                    else effStatus = 'Needs improvement';
+                }
+                // Update DOM for trends/comments
+                document.querySelector('#totalConsumption').parentElement.querySelector('.stat-trend').innerHTML =
+                    (litersTrend.includes('-') ? '<i class="fas fa-arrow-down"></i> ' : '<i class="fas fa-arrow-up"></i> ') + litersTrend;
+                document.querySelector('#avgLevel').parentElement.querySelector('.stat-trend').innerHTML =
+                    (avgLevelTrend.includes('-') ? '<i class="fas fa-arrow-down"></i> ' : '<i class="fas fa-arrow-up"></i> ') + avgLevelTrend;
+                document.querySelector('#nextRefill').parentElement.querySelector('.stat-trend').innerHTML =
+                    '<i class="fas fa-minus"></i> ' + refillStatus;
+                document.querySelector('#systemEfficiency').parentElement.querySelector('.stat-trend').innerHTML =
+                    (effStatus === 'Excellent performance' ? '<i class="fas fa-arrow-up"></i> ' : effStatus === 'Good' ? '<i class="fas fa-arrow-up"></i> ' : '<i class="fas fa-arrow-down"></i> ') + effStatus;
+
+                // --- Update Main Storage Tank Card ---
+                // Set tank capacity to 5L (reverted)
+                const tankCapacity = 5;
+                if (feeds.length > 0) {
+                    const latest = feeds[feeds.length - 1];
+                    // Water fill height and percentage
+                    document.getElementById('mainTankFill').style.height = (latest.percentage || 0) + '%';
+                    document.getElementById('mainTankLevel').textContent = (latest.percentage ? latest.percentage.toFixed(1) : '--') + '%';
+                    // Current liters
+                    let currentLitres = latest.litres ? Math.min(latest.litres, tankCapacity) : 0;
+                    document.getElementById('mainTankCurrent').textContent = (currentLitres ? currentLitres.toFixed(2) : '--') + 'L / ' + tankCapacity + 'L';
+                    // Capacity
+                    document.getElementById('mainTankCapacity').textContent = tankCapacity.toLocaleString() + 'L';
+                    // Status
+                    let status = 'Normal', statusClass = 'status-normal';
+                    if (latest.percentage >= 95) { status = 'Full'; statusClass = 'status-full'; }
+                    else if (latest.percentage <= 25) { status = 'Low'; statusClass = 'status-low'; }
+                    else if (latest.percentage <= 10) { status = 'Critical'; statusClass = 'status-critical'; }
+                    document.getElementById('mainTankStatus').textContent = status;
+                    document.getElementById('mainTankStatus').className = 'tank-status ' + statusClass;
+                    // Last refill: find last time percentage increased significantly
+                    let lastRefill = '--';
+                    for (let i = feeds.length - 2; i >= 0; i--) {
+                        if (feeds[i + 1].percentage - feeds[i].percentage > 10) {
+                            lastRefill = feeds[i + 1].timestamp.toLocaleDateString() + ' ' + feeds[i + 1].timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            break;
+                        }
+                    }
+                    document.getElementById('mainTankLastRefill').textContent = lastRefill;
+                }
+
+                // --- Predictive Analytics & Recommendations ---
+                // 1. Next Refill Needed
+                let nextRefillValue = '--', nextRefillComment = '';
+                if (feeds.length > 24) {
+                    const latest = feeds[feeds.length - 1];
+                    const last24 = feeds.slice(-24);
+                    const usage = Math.abs(last24[0].litres - last24[last24.length - 1].litres);
+                    const rate = usage / 24; // L/hr
+                    if (rate > 0 && latest.litres < tankCapacity) {
+                        const hoursToEmpty = (latest.litres) / rate;
+                        const nextDate = new Date(latest.timestamp.getTime() + hoursToEmpty * 60 * 60 * 1000);
+                        nextRefillValue = nextDate.toLocaleDateString() + ' at ' + nextDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        nextRefillComment = 'Predicted based on last 24h usage.';
+                    }
+                }
+                document.querySelectorAll('.prediction-card')[0].querySelector('.prediction-value').textContent = nextRefillValue;
+                document.querySelectorAll('.prediction-card')[0].querySelector('.prediction-subtitle').textContent = nextRefillComment;
+                // 2. Weekly Consumption
+                let weeklyValue = '--', weeklyComment = '';
+                const paNow = new Date();
+                const paWeekAgo = new Date(paNow.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const paPrevWeekAgo = new Date(paNow.getTime() - 14 * 24 * 60 * 60 * 1000);
+                const paWeekFeeds = feeds.filter(f => f.timestamp >= paWeekAgo);
+                const paPrevWeekFeeds = feeds.filter(f => f.timestamp >= paPrevWeekAgo && f.timestamp < paWeekAgo);
+                let weekUsage = 0, prevWeekUsage = 0;
+                if (paWeekFeeds.length > 1) weekUsage = Math.abs(paWeekFeeds[0].litres - paWeekFeeds[paWeekFeeds.length - 1].litres);
+                if (paPrevWeekFeeds.length > 1) prevWeekUsage = Math.abs(paPrevWeekFeeds[0].litres - paPrevWeekFeeds[paPrevWeekFeeds.length - 1].litres);
+                weeklyValue = weekUsage ? weekUsage.toFixed(2) + 'L' : '--';
+                if (prevWeekUsage > 0) {
+                    const diff = weekUsage - prevWeekUsage;
+                    const pct = (diff / prevWeekUsage) * 100;
+                    weeklyComment = (diff >= 0 ? '+' : '') + pct.toFixed(1) + '% compared to previous week';
+                }
+                document.querySelectorAll('.prediction-card')[1].querySelector('.prediction-value').textContent = weeklyValue;
+                document.querySelectorAll('.prediction-card')[1].querySelector('.prediction-subtitle').textContent = weeklyComment;
+                // 3. System Efficiency
+                let effValue = systemEfficiency;
+                let effComment = '';
+                if (!isNaN(effNum)) {
+                    effComment = effNum > 85 ? 'Excellent water management' : (effNum > 70 ? 'Good' : 'Needs improvement');
+                }
+                document.querySelectorAll('.prediction-card')[2].querySelector('.prediction-value').textContent = effValue;
+                document.querySelectorAll('.prediction-card')[2].querySelector('.prediction-subtitle').textContent = effComment;
+                // 4. Usage Trend
+                let trendValue = '--', trendComment = '';
+                if (prevWeekUsage > 0) {
+                    const diff = weekUsage - prevWeekUsage;
+                    const pct = (diff / prevWeekUsage) * 100;
+                    trendValue = (diff >= 0 ? '\u2197 ' : '\u2198 ') + Math.abs(pct).toFixed(1) + '%';
+                    trendComment = diff >= 0 ? 'Increasing this week' : 'Decreasing this week';
+                }
+                document.querySelectorAll('.prediction-card')[3].querySelector('.prediction-value').textContent = trendValue;
+                document.querySelectorAll('.prediction-card')[3].querySelector('.prediction-subtitle').textContent = trendComment;
+                // 5. Peak Usage Time
+                let peakValue = '--', peakComment = '';
+                if (paWeekFeeds.length > 1) {
+                    let byHour = {};
+                    paWeekFeeds.forEach(f => {
+                        let h = f.timestamp.getHours();
+                        if (!byHour[h]) byHour[h] = [];
+                        byHour[h].push(f.litres);
+                    });
+                    let maxUsage = 0, peakHour = 0;
+                    for (let h in byHour) {
+                        let vals = byHour[h];
+                        let usage = Math.abs(vals[0] - vals[vals.length - 1]);
+                        if (usage > maxUsage) { maxUsage = usage; peakHour = h; }
+                    }
+                    peakValue = (peakHour == 0 ? '12 AM' : peakHour < 12 ? peakHour + ' AM' : (peakHour == 12 ? '12 PM' : (peakHour - 12) + ' PM'));
+                    peakComment = peakHour < 12 ? 'Morning routine' : 'Evening peak';
+                }
+                document.querySelectorAll('.prediction-card')[4].querySelector('.prediction-value').textContent = peakValue;
+                document.querySelectorAll('.prediction-card')[4].querySelector('.prediction-subtitle').textContent = peakComment;
+                // 6. System Status
+                let statusValue = 'All Clear', statusComment = 'No issues detected';
+                if (feeds.length > 0) {
+                    const latest = feeds[feeds.length - 1];
+                    if (latest.litres <= 0.2) { statusValue = 'Low Water'; statusComment = 'Check tank soon'; }
+                }
+                document.querySelectorAll('.prediction-card')[5].querySelector('.prediction-value').textContent = statusValue;
+                document.querySelectorAll('.prediction-card')[5].querySelector('.prediction-subtitle').textContent = statusComment;
+
+                // --- Update Flow Rate Analysis Chart with live data ---
+                updateFlowRateChart();
+
+            } catch (e) {
+                spinner.style.display = 'none';
+                msg.textContent = 'Failed to load data: ' + (e.message || 'Unknown error');
+                msg.style.color = '#e74c3c';
+            }
+        }
+
+        // --- Update Flow Rate Analysis Chart with live data ---
+        function updateFlowRateChart() {
+            if (!window.flowRateChart || !globalFeeds || globalFeeds.length < 2) return;
+            // Use last 24h of data
+            const now = new Date();
+            const dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+            const last24h = globalFeeds.filter(f => f.timestamp >= dayAgo);
+            const chartData = last24h.length >= 2 ? last24h : globalFeeds.slice(-24);
+            let inflow = [], outflow = [], labels = [];
+            for (let i = 1; i < chartData.length; i++) {
+                const prev = chartData[i - 1];
+                const curr = chartData[i];
+                const dt = (curr.timestamp - prev.timestamp) / 60000; // minutes
+                let inRate = 0, outRate = 0;
+                if (dt > 0) {
+                    if (curr.litres > prev.litres) inRate = (curr.litres - prev.litres) / dt;
+                    if (curr.litres < prev.litres) outRate = (prev.litres - curr.litres) / dt;
+                }
+                inflow.push(inRate);
+                outflow.push(outRate);
+                labels.push(curr.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+            }
+            window.flowRateChart.data.labels = labels;
+            window.flowRateChart.data.datasets[0].data = inflow;
+            window.flowRateChart.data.datasets[1].data = outflow;
+            window.flowRateChart.update();
+        }
+
+        // --- SMS Section Logic ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const smsRecipient = document.getElementById('smsRecipient');
+            const smsScheduleForm = document.getElementById('smsScheduleForm');
+            const enableDaily = document.getElementById('enableDaily');
+            const dailyTime = document.getElementById('dailyTime');
+            const enableWeekly = document.getElementById('enableWeekly');
+            const weeklyDay = document.getElementById('weeklyDay');
+            const weeklyTime = document.getElementById('weeklyTime');
+            const customSmsForm = document.getElementById('customSmsForm');
+            const customSmsContent = document.getElementById('customSmsContent');
+            const sendManualAlert = document.getElementById('sendManualAlert');
+            const sendTestSms = document.getElementById('sendTestSms');
+            const smsLog = document.getElementById('smsLog');
+            const smsStatusMsg = document.getElementById('smsStatusMsg');
+
+            // --- LocalStorage Log ---
+            function getSmsLog() {
+                return JSON.parse(localStorage.getItem('smsLog') || '[]');
+            }
+            function addSmsLog(entry) {
+                const log = getSmsLog();
+                log.unshift(entry);
+                localStorage.setItem('smsLog', JSON.stringify(log.slice(0, 50)));
+                renderSmsLog();
+            }
+            function renderSmsLog() {
+                const log = getSmsLog();
+                smsLog.innerHTML = log.map(e => `<li><span style='color:#1a365d;'>[${e.time}]</span> <b>${e.type}</b>: ${e.content} <span style='color:#0ea5e9;'>${e.status}</span></li>`).join('');
+            }
+            renderSmsLog();
+
+            // --- ThingSpeak API ---
+            const THINGSPEAK_API_KEY = localStorage.getItem('ts_api_key') || 'L6EE5X3VM6Z3N5ZV';
+            const THINGSPEAK_CHANNEL_ID = localStorage.getItem('ts_channel_id') || '3001129';
+            const THINGSPEAK_FIELD8 = 8;
+            async function writeToThingSpeakField8(content) {
+                smsStatusMsg.textContent = 'Sending command to device...';
+                try {
+                    const url = `https://api.thingspeak.com/update?api_key=${THINGSPEAK_API_KEY}&field${THINGSPEAK_FIELD8}=${encodeURIComponent(content)}`;
+                    const res = await fetch(url);
+                    const txt = await res.text();
+                    if (txt.trim() === '0') throw new Error('ThingSpeak rate limit or error');
+                    smsStatusMsg.textContent = 'Command sent, waiting for device to send SMS...';
+                    return true;
+                } catch (e) {
+                    smsStatusMsg.textContent = 'Failed to send command: ' + e.message;
+                    return false;
+                }
+            }
+            async function pollField8Cleared(timeoutMs = 20000) {
+                const url = `https://api.thingspeak.com/channels/${THINGSPEAK_CHANNEL_ID}/fields/${THINGSPEAK_FIELD8}/last.json?api_key=${THINGSPEAK_API_KEY}`;
+                const start = Date.now();
+                while (Date.now() - start < timeoutMs) {
+                    await new Promise(r => setTimeout(r, 3000));
+                    const res = await fetch(url);
+                    const json = await res.json();
+                    if (!json[`field${THINGSPEAK_FIELD8}`] || json[`field${THINGSPEAK_FIELD8}`] === '' || json[`field${THINGSPEAK_FIELD8}`] === null) {
+                        smsStatusMsg.textContent = 'SMS sent by device!';
+                        return true;
+                    }
+                }
+                smsStatusMsg.textContent = 'Device did not confirm SMS sent (timeout).';
+                return false;
+            }
+
+            // --- Scheduling ---
+            smsScheduleForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const schedule = {
+                    daily: enableDaily.checked ? dailyTime.value : null,
+                    weekly: enableWeekly.checked ? { day: weeklyDay.value, time: weeklyTime.value } : null
+                };
+                localStorage.setItem('smsSchedule', JSON.stringify(schedule));
+                smsStatusMsg.textContent = 'Schedule saved locally. Reports will be sent at the selected times if this page is open.';
+                addSmsLog({
+                    time: new Date().toLocaleString(),
+                    type: 'Schedule',
+                    content: `Daily: ${schedule.daily || 'Off'}, Weekly: ${schedule.weekly ? schedule.weekly.day + ' ' + schedule.weekly.time : 'Off'}`,
+                    status: 'Saved'
+                });
+            });
+            // Restore schedule on load
+            const savedSchedule = JSON.parse(localStorage.getItem('smsSchedule') || '{}');
+            if (savedSchedule.daily) { enableDaily.checked = true; dailyTime.value = savedSchedule.daily; }
+            if (savedSchedule.weekly) { enableWeekly.checked = true; weeklyDay.value = savedSchedule.weekly.day; weeklyTime.value = savedSchedule.weekly.time; }
+
+            // --- Custom SMS ---
+            customSmsForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const content = customSmsContent.value.trim();
+                if (!content) { smsStatusMsg.textContent = 'Enter SMS content.'; return; }
+                const ok = await writeToThingSpeakField8(content);
+                if (ok) {
+                    addSmsLog({ time: new Date().toLocaleString(), type: 'Custom SMS', content, status: 'Sent (awaiting device)' });
+                    pollField8Cleared();
+                }
+            });
+            // --- Manual Alert ---
+            sendManualAlert.addEventListener('click', async function () {
+                const content = 'manual_alert';
+                const ok = await writeToThingSpeakField8(content);
+                if (ok) {
+                    addSmsLog({ time: new Date().toLocaleString(), type: 'Manual Alert', content, status: 'Sent (awaiting device)' });
+                    pollField8Cleared();
+                }
+            });
+            // --- Test SMS ---
+            sendTestSms.addEventListener('click', async function () {
+                const content = 'test_sms';
+                const ok = await writeToThingSpeakField8(content);
+                if (ok) {
+                    addSmsLog({ time: new Date().toLocaleString(), type: 'Test SMS', content, status: 'Sent (awaiting device)' });
+                    pollField8Cleared();
+                }
+            });
+
+            // --- Auto Scheduling (runs only if page is open) ---
+            setInterval(async function () {
+                const schedule = JSON.parse(localStorage.getItem('smsSchedule') || '{}');
+                const now = new Date();
+                // Daily
+                if (schedule.daily) {
+                    const [h, m] = schedule.daily.split(':');
+                    if (now.getHours() == parseInt(h) && now.getMinutes() == parseInt(m)) {
+                        if (!localStorage.getItem('lastDaily') || new Date(localStorage.getItem('lastDaily')).getDate() !== now.getDate()) {
+                            const ok = await writeToThingSpeakField8('daily_analysis');
+                            if (ok) {
+                                addSmsLog({ time: now.toLocaleString(), type: 'Daily Report', content: 'daily_analysis', status: 'Sent (awaiting device)' });
+                                pollField8Cleared();
+                                localStorage.setItem('lastDaily', now.toString());
+                            }
+                        }
+                    }
+                }
+                // Weekly
+                if (schedule.weekly) {
+                    const [h, m] = schedule.weekly.time.split(':');
+                    const day = schedule.weekly.day;
+                    if (now.getDay() === ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].indexOf(day) && now.getHours() == parseInt(h) && now.getMinutes() == parseInt(m)) {
+                        if (!localStorage.getItem('lastWeekly') || new Date(localStorage.getItem('lastWeekly')).toDateString() !== now.toDateString()) {
+                            const ok = await writeToThingSpeakField8('weekly_analysis');
+                            if (ok) {
+                                addSmsLog({ time: now.toLocaleString(), type: 'Weekly Report', content: 'weekly_analysis', status: 'Sent (awaiting device)' });
+                                pollField8Cleared();
+                                localStorage.setItem('lastWeekly', now.toString());
+                            }
+                        }
+                    }
+                }
+            }, 60000); // Check every minute
+        });
+    </script>
+</body>
+
+</html>
