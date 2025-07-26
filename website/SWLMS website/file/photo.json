@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "urls": { "regular": "img/dummay-img.png" },
+    "user": { "name": "Placeholder User", "links": { "html": "#" } },
+    "description": "A placeholder image."
+  },
+  {
+    "id": "2",
+    "urls": { "regular": "img/dummay-img-long.png" },
+    "user": { "name": "Another User", "links": { "html": "#" } },
+    "description": "Another placeholder image."
+  }
+]
