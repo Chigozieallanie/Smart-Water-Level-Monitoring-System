@@ -1260,7 +1260,7 @@
                   <i class="fas fa-microchip"></i>
                 </div>
                 <h3>Smart Architecture</h3>
-                <p>ESP32-based microcontroller system with real-time sensor integration and intelligent alert
+                <p>ESP32-based microcontroller system with real-time sensor integration and intelligent monitoring
                   mechanisms.</p>
               </div>
               <div class="overview-card">
@@ -1268,7 +1268,8 @@
                   <i class="fas fa-chart-line"></i>
                 </div>
                 <h3>Performance Metrics</h3>
-                <p>90% alert timeliness, 85% user satisfaction, and 80% reduction in manual monitoring requirements.</p>
+                <p>90% monitoring accuracy, 85% user satisfaction, and 80% reduction in manual monitoring requirements.
+                </p>
               </div>
               <div class="overview-card">
                 <div class="card-icon">
@@ -1340,255 +1341,6 @@
         </section>
         <!--End System Architecture-->
 
-        <!--Start Performance Analytics-->
-        <section class="flex-row scroll-reveal-section" id="performance">
-          <div class="flex-item flex-column">
-            <h2><i class="fas fa-chart-line"></i> Real-Time Performance Analytics</h2>
-            <hr>
-            <p class="text">Experience live data visualization powered by ThingSpeak IoT platform. Monitor your water
-              system's performance with real-time updates, advanced analytics, and comprehensive insights.</p>
-
-            <!-- Enhanced ThingSpeak Configuration Panel -->
-            <div class="thingspeak-config">
-              <div class="config-panel">
-                <div class="config-header">
-                  <h3><i class="fas fa-cogs"></i> IoT Data Connection</h3>
-                  <div class="connection-status" id="connectionStatus">
-                    <i class="fas fa-circle" style="color: #ffc107;"></i> Ready to Connect
-                  </div>
-                </div>
-                <div class="config-inputs">
-                  <div class="input-group">
-                    <label for="channelId"><i class="fas fa-satellite-dish"></i> Channel ID:</label>
-                    <input type="text" id="channelId" placeholder="Enter your ThingSpeak Channel ID" value="3001129">
-                    <span class="input-hint">Your unique channel identifier</span>
-                  </div>
-                  <div class="input-group">
-                    <label for="apiKey"><i class="fas fa-key"></i> Read API Key:</label>
-                    <input type="text" id="apiKey" placeholder="Enter your ThingSpeak Read API Key"
-                      value="ON4ULBWQ12ZVQ11X">
-                    <span class="input-hint">Secure access key for data retrieval</span>
-                  </div>
-                  <div class="input-group">
-                    <label for="updateInterval"><i class="fas fa-clock"></i> Update Frequency:</label>
-                    <select id="updateInterval">
-                      <option value="15">⚡ Real-time (15 seconds)</option>
-                      <option value="30" selected>🔄 Standard (30 seconds)</option>
-                      <option value="60">⏰ Moderate (1 minute)</option>
-                      <option value="300">💾 Power Save (5 minutes)</option>
-                    </select>
-                    <span class="input-hint">How often data refreshes</span>
-                  </div>
-                  <div class="control-buttons">
-                    <button id="connectBtn" class="connect-btn">
-                      <i class="fas fa-plug"></i> Connect to ThingSpeak
-                    </button>
-                    <button id="disconnectBtn" class="disconnect-btn" style="display: none;">
-                      <i class="fas fa-times"></i> Disconnect
-                    </button>
-                  </div>
-                </div>
-                <div class="connection-status" id="connectionStatus">
-                  <span class="status-indicator disconnected"></span>
-                  <span class="status-text">Disconnected</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Real-time Data Dashboard -->
-            <div class="performance-dashboard">
-              <!-- Live Charts Section -->
-              <div class="live-charts-section">
-                <h3>Live System Monitoring</h3>
-
-                <!-- Water Level Chart -->
-                <div class="chart-container">
-                  <div class="chart-header">
-                    <h4><i class="fas fa-tint"></i> Water Level Monitoring</h4>
-                    <div class="chart-controls">
-                      <button class="chart-btn active" data-range="1">1H</button>
-                      <button class="chart-btn" data-range="6">6H</button>
-                      <button class="chart-btn" data-range="24">24H</button>
-                      <button class="chart-btn" data-range="168">7D</button>
-                    </div>
-                  </div>
-                  <div class="chart-wrapper">
-                    <canvas id="waterLevelChart" width="800" height="300"></canvas>
-                    <div class="chart-loading" id="waterLevelLoading">
-                      <i class="fas fa-spinner fa-spin"></i> Loading real-time data...
-                    </div>
-                  </div>
-                  <div class="chart-info">
-                    <span class="info-item">
-                      <i class="fas fa-circle text-primary"></i> Current Level: <span id="currentLevel">--</span>%
-                    </span>
-                    <span class="info-item">
-                      <i class="fas fa-arrow-up text-success"></i> Trend: <span id="levelTrend">--</span>
-                    </span>
-                    <span class="info-item">
-                      <i class="fas fa-clock text-info"></i> Last Update: <span id="lastUpdate">--</span>
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Multi-parameter Chart -->
-                <div class="chart-container">
-                  <div class="chart-header">
-                    <h4><i class="fas fa-chart-line"></i> System Performance Metrics</h4>
-                    <div class="chart-legend">
-                      <span class="legend-item">
-                        <i class="fas fa-circle" style="color: #36a2eb;"></i> Temperature
-                      </span>
-                      <span class="legend-item">
-                        <i class="fas fa-circle" style="color: #ff6384;"></i> Humidity
-                      </span>
-                      <span class="legend-item">
-                        <i class="fas fa-circle" style="color: #4bc0c0;"></i> Flow Rate
-                      </span>
-                    </div>
-                  </div>
-                  <div class="chart-wrapper">
-                    <canvas id="multiParamChart" width="800" height="300"></canvas>
-                    <div class="chart-loading" id="multiParamLoading">
-                      <i class="fas fa-spinner fa-spin"></i> Loading system metrics...
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Enhanced ThingSpeak Live Charts -->
-                <div class="embedded-charts">
-                  <div class="charts-header">
-                    <h4><i class="fas fa-external-link-alt"></i> ThingSpeak Live Data Streams</h4>
-                    <div class="charts-info">
-                      <span class="update-indicator">
-                        <i class="fas fa-circle" style="color: #28a745;"></i>
-                        Live Updates Every 15 seconds
-                      </span>
-                    </div>
-                  </div>
-                  <div class="embedded-chart-grid">
-                    <div class="embedded-chart">
-                      <div class="chart-header">
-                        <h5><i class="fas fa-tint"></i> Water Level Monitoring</h5>
-                        <div class="chart-status">
-                          <span class="status-badge active">ACTIVE</span>
-                        </div>
-                      </div>
-                      <div class="chart-container">
-                        <iframe id="thingspeakChart1" width="100%" height="280"
-                          style="border: 1px solid #e0e0e0; border-radius: 8px;"
-                          src="https://thingspeak.com/channels/3001129/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15">
-                        </iframe>
-                      </div>
-                      <div class="chart-description">
-                        <p>Real-time water level measurements showing tank capacity utilization</p>
-                      </div>
-                    </div>
-                    <div class="embedded-chart">
-                      <div class="chart-header">
-                        <h5><i class="fas fa-stream"></i> Flow Rate Analysis</h5>
-                        <div class="chart-status">
-                          <span class="status-badge active">ACTIVE</span>
-                        </div>
-                      </div>
-                      <div class="chart-container">
-                        <iframe id="thingspeakChart2" width="100%" height="280"
-                          style="border: 1px solid #e0e0e0; border-radius: 8px;"
-                          src="https://thingspeak.com/channels/3001129/charts/2?bgcolor=%23ffffff&color=%2320d620&dynamic=true&results=60&type=line&update=15">
-                        </iframe>
-                      </div>
-                      <div class="chart-description">
-                        <p>Water flow rate trends indicating consumption patterns and pump efficiency</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Analytics Cards -->
-              <div class="analytics-cards">
-                <div class="analytics-card realtime-card">
-                  <div class="card-header">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <h4>Real-time Status</h4>
-                  </div>
-                  <div class="card-stat">
-                    <span class="stat-number" id="realtimeLevel">--</span>
-                    <span class="stat-label">Current Water Level</span>
-                  </div>
-                  <div class="status-indicator-bar">
-                    <div class="status-fill" id="statusFill"></div>
-                  </div>
-                </div>
-
-                <div class="analytics-card">
-                  <div class="card-header">
-                    <i class="fas fa-clock"></i>
-                    <h4>Response Time</h4>
-                  </div>
-                  <div class="card-stat">
-                    <span class="stat-number" id="responseTime">2.3s</span>
-                    <span class="stat-label">Average Alert Delay</span>
-                  </div>
-                </div>
-
-                <div class="analytics-card">
-                  <div class="card-header">
-                    <i class="fas fa-battery-three-quarters"></i>
-                    <h4>Power Status</h4>
-                  </div>
-                  <div class="card-stat">
-                    <span class="stat-number" id="powerLevel">45mA</span>
-                    <span class="stat-label">Current Draw</span>
-                  </div>
-                </div>
-
-                <div class="analytics-card">
-                  <div class="card-header">
-                    <i class="fas fa-wifi"></i>
-                    <h4>Connectivity</h4>
-                  </div>
-                  <div class="card-stat">
-                    <span class="stat-number" id="connectivity">98.5%</span>
-                    <span class="stat-label">Uptime Reliability</span>
-                  </div>
-                </div>
-
-                <!-- Alert Status Card -->
-                <div class="analytics-card alert-card">
-                  <div class="card-header">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h4>Alert Status</h4>
-                  </div>
-                  <div class="alert-status" id="alertStatus">
-                    <div class="alert-item">
-                      <span class="alert-dot normal"></span>
-                      <span class="alert-text">System Normal</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Data Export Section -->
-            <div class="data-export-section">
-              <h3>Data Export & Analysis</h3>
-              <div class="export-options">
-                <button class="export-btn" id="exportCSV">
-                  <i class="fas fa-file-csv"></i> Export CSV
-                </button>
-                <button class="export-btn" id="exportJSON">
-                  <i class="fas fa-file-code"></i> Export JSON
-                </button>
-                <button class="export-btn" id="generateReport">
-                  <i class="fas fa-file-pdf"></i> Generate Report
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!--End Performance Analytics-->
-
         <!--Start System Walkthrough-->
         <section class="flex-row scroll-reveal-section" id="walkthrough">
           <div class="flex-item flex-column">
@@ -1636,8 +1388,8 @@
                     <img src="img/step_3.png" alt="Step 3: Testing Logic">
                   </div>
                   <div class="timeline-text">
-                    <h4>Alert Logic Validation</h4>
-                    <p>Comprehensive testing of overflow prevention and dry tank alert mechanisms to ensure reliable
+                    <h4>System Logic Validation</h4>
+                    <p>Comprehensive testing of overflow prevention and monitoring mechanisms to ensure reliable
                       operation.</p>
                   </div>
                 </div>
@@ -1806,19 +1558,7 @@
                       </ul>
                     </div>
 
-                    <div class="insight-card">
-                      <div class="insight-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                      </div>
-                      <h4>Alert Systems</h4>
-                      <ul class="insights-list">
-                        <li><strong>Multi-Modal Alerts:</strong> Visual, audible, and digital notifications ensure user
-                          awareness</li>
-                        <li><strong>Escalation Logic:</strong> Progressive alert intensity based on urgency levels</li>
-                        <li><strong>False Positive Rate:</strong> Advanced filtering reduces false alarms by 85%</li>
-                        <li><strong>Response Time:</strong> Average alert-to-notification time of 3 seconds</li>
-                      </ul>
-                    </div>
+
                   </div>
                 </div>
 
@@ -1834,7 +1574,7 @@
                         <li><strong>Engagement Rate:</strong> 85% of users actively engage with the system within first
                           week</li>
                         <li><strong>Daily Usage:</strong> Average of 12 status checks per day per household</li>
-                        <li><strong>Feature Utilization:</strong> 78% use mobile app, 92% rely on LCD display</li>
+                        <li><strong>Feature Utilization:</strong> 92% rely on LCD display for monitoring</li>
                         <li><strong>Retention Rate:</strong> 96% continue using system after 3 months</li>
                       </ul>
                     </div>
@@ -1874,13 +1614,13 @@
                       </div>
                       <h4>User Feedback</h4>
                       <ul class="insights-list">
-                        <li><strong>Interface Preference:</strong> Users prefer visual LCD display over mobile app for
+                        <li><strong>Interface Preference:</strong> Users prefer visual LCD display for
                           quick checks</li>
-                        <li><strong>Alert Preferences:</strong> 68% prefer sound alerts, 32% prefer vibration only</li>
+
                         <li><strong>Data Presentation:</strong> Simple percentage display more popular than technical
                           readings</li>
                         <li><strong>Feature Requests:</strong> 45% want historical data graphs, 38% want predictive
-                          alerts</li>
+                          monitoring</li>
                       </ul>
                     </div>
                   </div>
@@ -1975,18 +1715,7 @@
                       </ul>
                     </div>
 
-                    <div class="insight-card">
-                      <div class="insight-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                      </div>
-                      <h4>Advanced Features</h4>
-                      <ul class="insights-list">
-                        <li><strong>Augmented Reality:</strong> AR visualization of water system status</li>
-                        <li><strong>Blockchain Tracking:</strong> Transparent water usage and quality records</li>
-                        <li><strong>Community Networks:</strong> Neighborhood water sharing optimization</li>
-                        <li><strong>Health Monitoring:</strong> Water quality sensors for health safety</li>
-                      </ul>
-                    </div>
+
 
                     <div class="insight-card">
                       <div class="insight-icon">
@@ -2192,17 +1921,16 @@
         if (data.feeds && data.feeds.length > 0) {
           processThingSpeakData(data);
           updateRealTimeCards(data.feeds[data.feeds.length - 1]);
-          updateAlertStatus('normal', 'Data received successfully');
+          console.log('Data received successfully');
         } else {
           console.log('No feeds found in response');
-          updateAlertStatus('warning', 'No data available');
         }
 
         showLoading(false);
       } catch (error) {
         console.error('Error fetching ThingSpeak data:', error);
         showLoading(false);
-        updateAlertStatus('danger', `Error: ${error.message}`);
+        console.error(`Error: ${error.message}`);
 
         // If API fails, show sample data
         if (!waterLevelChart || !waterLevelChart.data || !waterLevelChart.data.labels.length) {
@@ -2303,14 +2031,8 @@
       const statusFill = document.getElementById('statusFill');
       statusFill.style.width = `${Math.min(waterLevel, 100)}%`;
 
-      // Update alert status based on water level
-      if (waterLevel < 20) {
-        updateAlertStatus('danger', 'Low Water Level');
-      } else if (waterLevel > 90) {
-        updateAlertStatus('warning', 'High Water Level');
-      } else {
-        updateAlertStatus('normal', 'System Normal');
-      }
+      // Update system status based on water level
+      // System monitoring continues normally
 
       // Update other metrics (simulated)
       document.getElementById('powerLevel').textContent = `${(40 + Math.random() * 10).toFixed(1)}mA`;
@@ -2318,14 +2040,7 @@
       document.getElementById('responseTime').textContent = `${(2 + Math.random()).toFixed(1)}s`;
     }
 
-    function updateAlertStatus(type, message) {
-      const alertStatus = document.getElementById('alertStatus');
-      const alertDot = alertStatus.querySelector('.alert-dot');
-      const alertText = alertStatus.querySelector('.alert-text');
 
-      alertDot.className = `alert-dot ${type}`;
-      alertText.textContent = message;
-    }
 
     function initializeCharts() {
       // Initialize Water Level Chart

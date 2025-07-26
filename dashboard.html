@@ -581,6 +581,13 @@
                 <span class="last-updated">
                     <i class="fas fa-clock"></i> Last updated: <span id="lastUpdateTime">Just now</span>
                 </span>
+                <span id="dataStatusArea"
+                    style="margin-left: 18px; display: inline-flex; align-items: center; min-width: 160px;">
+                    <span id="dataStatusSpinner" style="display: none; margin-right: 8px;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                    <span id="dataStatusMsg" style="font-size: 0.98em;"></span>
+                </span>
             </div>
         </div>
         <!--End Header-->
@@ -684,54 +691,19 @@
                             <div class="tank-card">
                                 <div class="tank-header">
                                     <div class="tank-name">Main Storage Tank</div>
-                                    <div class="tank-status status-normal">Normal</div>
+                                    <div class="tank-status status-normal" id="mainTankStatus">Normal</div>
                                 </div>
                                 <div class="water-level-indicator">
-                                    <div class="water-fill" style="height: 68%"></div>
-                                    <div class="water-level-text">68%</div>
+                                    <div class="water-fill" id="mainTankFill" style="height: 68%"></div>
+                                    <div class="water-level-text" id="mainTankLevel">68%</div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                                    <span><strong>Capacity:</strong> 5,000L</span>
-                                    <span><strong>Current:</strong> 3,400L</span>
+                                    <span><strong>Capacity:</strong> <span id="mainTankCapacity">5,000L</span></span>
+                                    <span><strong>Current:</strong> <span id="mainTankCurrent">3,400L</span></span>
                                 </div>
                                 <div style="margin-top: 10px; color: #2d3748;">
-                                    <i class="fas fa-clock"></i> Last refill: 2 days ago
-                                </div>
-                            </div>
-
-                            <div class="tank-card">
-                                <div class="tank-header">
-                                    <div class="tank-name">Backup Tank</div>
-                                    <div class="tank-status status-low">Low</div>
-                                </div>
-                                <div class="water-level-indicator">
-                                    <div class="water-fill" style="height: 25%"></div>
-                                    <div class="water-level-text">25%</div>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                                    <span><strong>Capacity:</strong> 2,000L</span>
-                                    <span><strong>Current:</strong> 500L</span>
-                                </div>
-                                <div style="margin-top: 10px; color: #2d3748;">
-                                    <i class="fas fa-exclamation-triangle"></i> Refill recommended
-                                </div>
-                            </div>
-
-                            <div class="tank-card">
-                                <div class="tank-header">
-                                    <div class="tank-name">Garden Tank</div>
-                                    <div class="tank-status status-full">Full</div>
-                                </div>
-                                <div class="water-level-indicator">
-                                    <div class="water-fill" style="height: 95%"></div>
-                                    <div class="water-level-text">95%</div>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                                    <span><strong>Capacity:</strong> 1,500L</span>
-                                    <span><strong>Current:</strong> 1,425L</span>
-                                </div>
-                                <div style="margin-top: 10px; color: #2d3748;">
-                                    <i class="fas fa-check-circle"></i> Optimal level
+                                    <i class="fas fa-clock"></i> Last refill: <span id="mainTankLastRefill">2 days
+                                        ago</span>
                                 </div>
                             </div>
                         </div>
@@ -804,6 +776,9 @@
                 </section>
                 <!--End Predictive Analytics-->
 
+                <!-- SMS & Reporting Section (moved here for dashboard style) -->
+
+
                 <!--Start Flow Rate Analysis-->
                 <section class="chart-section">
                     <h2><i class="fas fa-tachometer-alt"></i> Flow Rate Analysis</h2>
@@ -818,6 +793,40 @@
         <div class="footer-container"></div>
     </div>
 
+    <!-- Settings Button and Modal -->
+    <button id="settingsBtn"
+        style="position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: #1a365d; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 1.7em; box-shadow: 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-cog"></i>
+    </button>
+    <div id="settingsModal"
+        style="display:none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.35); align-items: center; justify-content: center;">
+        <div
+            style="background: #fff; border-radius: 12px; padding: 32px 28px 24px 28px; min-width: 320px; max-width: 90vw; box-shadow: 0 8px 32px rgba(0,0,0,0.18); position: relative;">
+            <button id="closeSettingsModal"
+                style="position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 1.3em; color: #1a365d; cursor: pointer;"><i
+                    class="fas fa-times"></i></button>
+            <h2 style="margin-top: 0; color: #1a365d; font-size: 1.3em;">ThingSpeak Settings</h2>
+            <div style="margin-bottom: 18px;">
+                <label for="channelIdInput" style="font-weight: 600; color: #1a365d;">Channel ID</label><br>
+                <input id="channelIdInput" type="text"
+                    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 12px;"
+                    placeholder="Enter ThingSpeak Channel ID">
+                <label for="apiKeyInput" style="font-weight: 600; color: #1a365d;">API Key</label><br>
+                <input id="apiKeyInput" type="text"
+                    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc;"
+                    placeholder="Enter ThingSpeak API Key">
+            </div>
+            <div id="settingsError" style="color: #e74c3c; font-size: 0.98em; min-height: 22px; margin-bottom: 10px;">
+            </div>
+            <button id="saveSettingsBtn"
+                style="background: #1a365d; color: #fff; border: none; border-radius: 6px; padding: 10px 22px; font-weight: 600; font-size: 1em; cursor: pointer;">Save</button>
+        </div>
+    </div>
+    <button id="refreshBtn"
+        style="position: fixed; bottom: 100px; right: 30px; z-index: 1000; background: #0ea5e9; color: #fff; border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 1.7em; box-shadow: 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; display: none; align-items: center; justify-content: center;">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
     <!-- Dashboard JavaScript -->
     <script>
         // Initialize all charts when the page loads
@@ -830,6 +839,10 @@
         });
 
         let waterLevelChart, usagePatternChart, flowRateChart;
+
+        // --- Robust chart/data sync ---
+        let waterLevelChartReady = false;
+        let pendingDataLoad = false;
 
         // Water Level Chart
         function initializeWaterLevelChart() {
@@ -844,7 +857,7 @@
                 data: {
                     labels: generateTimeLabels('24h'),
                     datasets: [{
-                        label: 'Water Level (%)',
+                        label: 'Water Level (L)',
                         data: generateWaterLevelData('24h'),
                         borderColor: '#318CE7',
                         backgroundColor: gradient,
@@ -875,14 +888,14 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 100,
+                            max: 5,
                             grid: {
                                 color: 'rgba(26, 54, 93, 0.1)'
                             },
                             ticks: {
                                 color: '#1a365d',
                                 callback: function (value) {
-                                    return value + '%';
+                                    return value + ' L';
                                 }
                             }
                         },
@@ -897,6 +910,12 @@
                     }
                 }
             });
+            window.waterLevelChart = waterLevelChart;
+            waterLevelChartReady = true;
+            if (pendingDataLoad) {
+                pendingDataLoad = false;
+                loadThingSpeakData();
+            }
         }
 
         // Usage Pattern Chart
@@ -1108,13 +1127,85 @@
 
         // Chart update functions
         function updateChart(period) {
+            if (!window.waterLevelChart) {
+                console.warn('Water level chart not initialized yet.');
+                return;
+            }
             // Update active button
             document.querySelectorAll('.chart-control-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Update chart data
-            waterLevelChart.data.labels = generateTimeLabels(period);
-            waterLevelChart.data.datasets[0].data = generateWaterLevelData(period);
+            if (!globalFeeds || globalFeeds.length === 0) return;
+            let now = new Date();
+            let chartData = [];
+            if (period === '24h') {
+                let dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= dayAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-24);
+                waterLevelChart.data.labels = chartData.map(f => f.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+                waterLevelChart.data.datasets[0].data = chartData.map(f => f.litres ? Math.min(f.litres, 5) : 0);
+            } else if (period === '7d') {
+                let weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= weekAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-7 * 24);
+                // Group by day, take average per day
+                let byDay = {};
+                chartData.forEach(f => {
+                    let day = f.timestamp.toISOString().split('T')[0];
+                    if (!byDay[day]) byDay[day] = [];
+                    byDay[day].push(f.litres ? Math.min(f.litres, 5) : 0);
+                });
+                let days = Object.keys(byDay).sort();
+                waterLevelChart.data.labels = days;
+                waterLevelChart.data.datasets[0].data = days.map(d => {
+                    let vals = byDay[d];
+                    return vals.reduce((a, b) => a + b, 0) / vals.length;
+                });
+                waterLevelChart.update();
+                return;
+            } else if (period === '30d') {
+                let monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= monthAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-30 * 24);
+                // Group by day, take average per day
+                let byDay = {};
+                chartData.forEach(f => {
+                    let day = f.timestamp.toISOString().split('T')[0];
+                    if (!byDay[day]) byDay[day] = [];
+                    byDay[day].push(f.litres ? Math.min(f.litres, 5) : 0);
+                });
+                let days = Object.keys(byDay).sort();
+                waterLevelChart.data.labels = days;
+                waterLevelChart.data.datasets[0].data = days.map(d => {
+                    let vals = byDay[d];
+                    return vals.reduce((a, b) => a + b, 0) / vals.length;
+                });
+                waterLevelChart.update();
+                return;
+            } else if (period === '90d') {
+                let threeMonthsAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                chartData = globalFeeds.filter(f => f.timestamp >= threeMonthsAgo);
+                if (chartData.length < 2) chartData = globalFeeds.slice(-90 * 24);
+                // Group by week, take average per week
+                let byWeek = {};
+                chartData.forEach(f => {
+                    let year = f.timestamp.getFullYear();
+                    let week = Math.ceil((((f.timestamp - new Date(year, 0, 1)) / 86400000) + new Date(year, 0, 1).getDay() + 1) / 7);
+                    let key = year + '-W' + week;
+                    if (!byWeek[key]) byWeek[key] = [];
+                    byWeek[key].push(f.litres ? Math.min(f.litres, 5) : 0);
+                });
+                let weeks = Object.keys(byWeek).sort();
+                waterLevelChart.data.labels = weeks;
+                waterLevelChart.data.datasets[0].data = weeks.map(w => {
+                    let vals = byWeek[w];
+                    return vals.reduce((a, b) => a + b, 0) / vals.length;
+                });
+                waterLevelChart.update();
+                return;
+            }
+            // Default: 24h
+            waterLevelChart.data.datasets[0].data = chartData.map(f => f.litres ? Math.min(f.litres, 5) : 0);
             waterLevelChart.update();
         }
 
@@ -1123,19 +1214,59 @@
             document.querySelectorAll('.chart-control-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            let labels, data;
-
+            if (!globalFeeds || globalFeeds.length === 0) return;
+            let labels = [], data = [];
             if (pattern === 'daily') {
-                labels = ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM', '9 PM', '12 AM', '3 AM'];
-                data = [450, 320, 280, 180, 380, 220, 80, 40];
+                // Average usage per hour for last 24h
+                let now = new Date();
+                let dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                let last24h = globalFeeds.filter(f => f.timestamp >= dayAgo);
+                // Group by hour
+                let byHour = {};
+                last24h.forEach(f => {
+                    let hour = f.timestamp.getHours();
+                    if (!byHour[hour]) byHour[hour] = [];
+                    byHour[hour].push(f.litres);
+                });
+                let hours = Object.keys(byHour).map(h => parseInt(h)).sort((a, b) => a - b);
+                labels = hours.map(h => (h === 0 ? '12 AM' : h < 12 ? h + ' AM' : (h === 12 ? '12 PM' : (h - 12) + ' PM')));
+                data = hours.map(h => {
+                    let vals = byHour[h];
+                    return vals.length > 1 ? Math.abs(vals[0] - vals[vals.length - 1]) : 0;
+                });
             } else if (pattern === 'weekly') {
-                labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                data = [2100, 1950, 2200, 1800, 2050, 2400, 1900];
+                // Total usage per day for last 7 days
+                let now = new Date();
+                let weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                let last7d = globalFeeds.filter(f => f.timestamp >= weekAgo);
+                // Group by day
+                let byDay = {};
+                last7d.forEach(f => {
+                    let day = f.timestamp.toISOString().split('T')[0];
+                    if (!byDay[day]) byDay[day] = [];
+                    byDay[day].push(f.litres);
+                });
+                let days = Object.keys(byDay).sort();
+                labels = days;
+                data = days.map(d => {
+                    let vals = byDay[d];
+                    return vals.length > 1 ? Math.abs(vals[0] - vals[vals.length - 1]) : 0;
+                });
             } else {
-                labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-                data = [58000, 52000, 61000, 55000, 63000, 59000];
+                // Total usage per month for last 6 months
+                let byMonth = {};
+                globalFeeds.forEach(f => {
+                    let m = f.timestamp.getFullYear() + '-' + (f.timestamp.getMonth() + 1).toString().padStart(2, '0');
+                    if (!byMonth[m]) byMonth[m] = [];
+                    byMonth[m].push(f.litres);
+                });
+                let months = Object.keys(byMonth).sort().slice(-6);
+                labels = months;
+                data = months.map(m => {
+                    let vals = byMonth[m];
+                    return vals.length > 1 ? Math.abs(vals[0] - vals[vals.length - 1]) : 0;
+                });
             }
-
             usagePatternChart.data.labels = labels;
             usagePatternChart.data.datasets[0].data = data;
             usagePatternChart.update();
@@ -1152,7 +1283,7 @@
             document.getElementById('totalConsumption').textContent = consumption.toLocaleString();
             document.getElementById('avgLevel').textContent = avgLevel;
             document.getElementById('nextRefill').textContent = nextRefill;
-            document.getElementById('monthlySavings').textContent = '$' + savings;
+            // document.getElementById('monthlySavings').textContent = '$' + savings; // Removed to fix error
         }
 
         // Export data functionality
@@ -1181,6 +1312,351 @@
             // Update the time every 30 seconds
             setInterval(updateLastUpdatedTime, 30000);
         });
+
+        // --- Settings Modal Logic ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsModal = document.getElementById('settingsModal');
+            const closeSettingsModal = document.getElementById('closeSettingsModal');
+            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+            const channelIdInput = document.getElementById('channelIdInput');
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            const settingsError = document.getElementById('settingsError');
+            const refreshBtn = document.getElementById('refreshBtn');
+
+            // Prefill inputs from localStorage
+            channelIdInput.value = localStorage.getItem('ts_channel_id') || '';
+            apiKeyInput.value = localStorage.getItem('ts_api_key') || '';
+
+            settingsBtn.addEventListener('click', function () {
+                settingsModal.style.display = 'flex';
+                settingsError.textContent = '';
+            });
+            closeSettingsModal.addEventListener('click', function () {
+                settingsModal.style.display = 'none';
+            });
+
+            saveSettingsBtn.addEventListener('click', async function () {
+                const channelId = channelIdInput.value.trim();
+                const apiKey = apiKeyInput.value.trim();
+                if (!channelId || !apiKey) {
+                    settingsError.textContent = 'Please enter both Channel ID and API Key.';
+                    return;
+                }
+                settingsError.textContent = 'Validating...';
+                // Try to fetch data from ThingSpeak
+                try {
+                    const url = `https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=1`;
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error('Invalid response');
+                    const json = await res.json();
+                    if (!json.feeds || !Array.isArray(json.feeds)) throw new Error('Invalid data');
+                    // Save to localStorage
+                    localStorage.setItem('ts_channel_id', channelId);
+                    localStorage.setItem('ts_api_key', apiKey);
+                    settingsModal.style.display = 'none';
+                    refreshBtn.style.display = 'flex';
+                    // Immediately load API data
+                    loadThingSpeakData();
+                } catch (e) {
+                    settingsError.textContent = 'Invalid Channel ID or API Key, or network error.';
+                }
+            });
+
+            // Show refresh button if credentials exist
+            if (localStorage.getItem('ts_channel_id') && localStorage.getItem('ts_api_key')) {
+                refreshBtn.style.display = 'flex';
+            }
+
+            // Add event listener for refresh button
+            refreshBtn.addEventListener('click', function () {
+                loadThingSpeakData();
+            });
+        });
+
+        // --- Load ThingSpeak Data (to be implemented/refactored) ---
+        // Store globally for chart updates
+        let globalFeeds = [];
+        async function loadThingSpeakData() {
+            if (!window.waterLevelChart) {
+                pendingDataLoad = true;
+                return;
+            }
+            const spinner = document.getElementById('dataStatusSpinner');
+            const msg = document.getElementById('dataStatusMsg');
+            spinner.style.display = 'inline-block';
+            msg.textContent = 'Loading data...';
+            msg.style.color = '#1a365d';
+            try {
+                const channelId = localStorage.getItem('ts_channel_id');
+                const apiKey = localStorage.getItem('ts_api_key');
+                const url = `https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=8000`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('Network or API error');
+                const json = await res.json();
+                if (!json.feeds || !Array.isArray(json.feeds) || json.feeds.length === 0) throw new Error('No data found');
+                // --- Parse and calculate System Overview values ---
+                const feeds = json.feeds.map(f => ({
+                    timestamp: new Date(f.created_at),
+                    depth: parseFloat(f.field1),
+                    litres: parseFloat(f.field2),
+                    percentage: parseFloat(f.field3)
+                })).filter(d => !isNaN(d.depth));
+                // Sort feeds by timestamp ascending
+                feeds.sort((a, b) => a.timestamp - b.timestamp);
+                globalFeeds = feeds;
+                // --- Update Water Level Trends Chart (24h default) ---
+                if (window.waterLevelChart) {
+                    // Get last 24h of data
+                    const now = new Date();
+                    const dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                    const last24h = feeds.filter(f => f.timestamp >= dayAgo);
+                    // If not enough, use last 24 points
+                    const chartData = last24h.length >= 2 ? last24h : feeds.slice(-24);
+                    window.waterLevelChart.data.labels = chartData.map(f => f.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+                    window.waterLevelChart.data.datasets[0].data = chartData.map(f => f.litres ? Math.min(f.litres, 5) : 0);
+                    window.waterLevelChart.update();
+                }
+                // Liters Today
+                const today = new Date();
+                const todayStr = today.toISOString().split('T')[0];
+                const todayFeeds = feeds.filter(f => f.timestamp.toISOString().split('T')[0] === todayStr);
+                let litersToday = 0;
+                if (todayFeeds.length > 1) {
+                    litersToday = Math.abs(todayFeeds[0].litres - todayFeeds[todayFeeds.length - 1].litres);
+                }
+                // Avg Level %
+                let avgLevel = 0;
+                if (todayFeeds.length > 0) {
+                    avgLevel = todayFeeds.reduce((a, d) => a + d.percentage, 0) / todayFeeds.length;
+                }
+                // Hours to Refill (simple estimate: if tank not full, estimate based on last 24h usage rate)
+                let hoursToRefill = '--';
+                if (feeds.length > 24) {
+                    const last24 = feeds.slice(-24);
+                    const usage = Math.abs(last24[0].litres - last24[last24.length - 1].litres);
+                    const lastPerc = last24[last24.length - 1].percentage;
+                    if (usage > 0 && lastPerc < 100) {
+                        hoursToRefill = ((100 - lastPerc) / (usage / 24)).toFixed(1);
+                    }
+                }
+                // System Efficiency (basic: ratio of avg level to 100)
+                let systemEfficiency = avgLevel ? (avgLevel / 100 * 100).toFixed(0) + '%' : '--';
+                // Update DOM
+                document.getElementById('totalConsumption').textContent = Math.round(litersToday).toLocaleString();
+                document.getElementById('avgLevel').textContent = avgLevel ? avgLevel.toFixed(1) : '--';
+                document.getElementById('nextRefill').textContent = hoursToRefill;
+                document.getElementById('systemEfficiency').textContent = systemEfficiency;
+                // Success feedback
+                spinner.style.display = 'none';
+                msg.textContent = 'Data loaded successfully!';
+                msg.style.color = '#10b981';
+                setTimeout(() => { msg.textContent = ''; }, 2000);
+
+                // Liters Today vs Yesterday
+                let litersYesterday = 0;
+                const yesterday = new Date(today.getTime() - 86400000);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                const yesterdayFeeds = feeds.filter(f => f.timestamp.toISOString().split('T')[0] === yesterdayStr);
+                if (yesterdayFeeds.length > 1) {
+                    litersYesterday = Math.abs(yesterdayFeeds[0].litres - yesterdayFeeds[yesterdayFeeds.length - 1].litres);
+                }
+                let litersTrend = '--';
+                if (litersYesterday > 0) {
+                    const diff = litersToday - litersYesterday;
+                    const pct = (diff / litersYesterday) * 100;
+                    litersTrend = (diff >= 0 ? '+' : '') + pct.toFixed(1) + '% vs yesterday';
+                }
+                // Avg Level % vs Last Week
+                let avgLevelLastWeek = 0;
+                const weekAgo = new Date(today.getTime() - 7 * 86400000);
+                const weekFeeds = feeds.filter(f => f.timestamp >= weekAgo && f.timestamp < today);
+                if (weekFeeds.length > 0) {
+                    avgLevelLastWeek = weekFeeds.reduce((a, d) => a + d.percentage, 0) / weekFeeds.length;
+                }
+                let avgLevelTrend = '--';
+                if (avgLevelLastWeek > 0) {
+                    const diff = avgLevel - avgLevelLastWeek;
+                    const pct = (diff / avgLevelLastWeek) * 100;
+                    avgLevelTrend = (diff >= 0 ? '+' : '') + pct.toFixed(1) + '% vs last week';
+                }
+                // Hours to Refill status
+                let refillStatus = 'On schedule';
+                if (hoursToRefill !== '--') {
+                    const h = parseFloat(hoursToRefill);
+                    if (h < 6) refillStatus = 'High usage';
+                    else if (h > 48) refillStatus = 'Low usage';
+                }
+                // System Efficiency status
+                let effNum = parseFloat(systemEfficiency.toString().replace('%', ''));
+                let effStatus = 'Excellent performance';
+                if (!isNaN(effNum)) {
+                    if (effNum > 85) effStatus = 'Excellent performance';
+                    else if (effNum > 70) effStatus = 'Good';
+                    else effStatus = 'Needs improvement';
+                }
+                // Update DOM for trends/comments
+                document.querySelector('#totalConsumption').parentElement.querySelector('.stat-trend').innerHTML =
+                    (litersTrend.includes('-') ? '<i class="fas fa-arrow-down"></i> ' : '<i class="fas fa-arrow-up"></i> ') + litersTrend;
+                document.querySelector('#avgLevel').parentElement.querySelector('.stat-trend').innerHTML =
+                    (avgLevelTrend.includes('-') ? '<i class="fas fa-arrow-down"></i> ' : '<i class="fas fa-arrow-up"></i> ') + avgLevelTrend;
+                document.querySelector('#nextRefill').parentElement.querySelector('.stat-trend').innerHTML =
+                    '<i class="fas fa-minus"></i> ' + refillStatus;
+                document.querySelector('#systemEfficiency').parentElement.querySelector('.stat-trend').innerHTML =
+                    (effStatus === 'Excellent performance' ? '<i class="fas fa-arrow-up"></i> ' : effStatus === 'Good' ? '<i class="fas fa-arrow-up"></i> ' : '<i class="fas fa-arrow-down"></i> ') + effStatus;
+
+                // --- Update Main Storage Tank Card ---
+                // Set tank capacity to 5L (reverted)
+                const tankCapacity = 5;
+                if (feeds.length > 0) {
+                    const latest = feeds[feeds.length - 1];
+                    // Water fill height and percentage
+                    document.getElementById('mainTankFill').style.height = (latest.percentage || 0) + '%';
+                    document.getElementById('mainTankLevel').textContent = (latest.percentage ? latest.percentage.toFixed(1) : '--') + '%';
+                    // Current liters
+                    let currentLitres = latest.litres ? Math.min(latest.litres, tankCapacity) : 0;
+                    document.getElementById('mainTankCurrent').textContent = (currentLitres ? currentLitres.toFixed(2) : '--') + 'L / ' + tankCapacity + 'L';
+                    // Capacity
+                    document.getElementById('mainTankCapacity').textContent = tankCapacity.toLocaleString() + 'L';
+                    // Status
+                    let status = 'Normal', statusClass = 'status-normal';
+                    if (latest.percentage >= 95) { status = 'Full'; statusClass = 'status-full'; }
+                    else if (latest.percentage <= 25) { status = 'Low'; statusClass = 'status-low'; }
+                    else if (latest.percentage <= 10) { status = 'Critical'; statusClass = 'status-critical'; }
+                    document.getElementById('mainTankStatus').textContent = status;
+                    document.getElementById('mainTankStatus').className = 'tank-status ' + statusClass;
+                    // Last refill: find last time percentage increased significantly
+                    let lastRefill = '--';
+                    for (let i = feeds.length - 2; i >= 0; i--) {
+                        if (feeds[i + 1].percentage - feeds[i].percentage > 10) {
+                            lastRefill = feeds[i + 1].timestamp.toLocaleDateString() + ' ' + feeds[i + 1].timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            break;
+                        }
+                    }
+                    document.getElementById('mainTankLastRefill').textContent = lastRefill;
+                }
+
+                // --- Predictive Analytics & Recommendations ---
+                // 1. Next Refill Needed
+                let nextRefillValue = '--', nextRefillComment = '';
+                if (feeds.length > 24) {
+                    const latest = feeds[feeds.length - 1];
+                    const last24 = feeds.slice(-24);
+                    const usage = Math.abs(last24[0].litres - last24[last24.length - 1].litres);
+                    const rate = usage / 24; // L/hr
+                    if (rate > 0 && latest.litres < tankCapacity) {
+                        const hoursToEmpty = (latest.litres) / rate;
+                        const nextDate = new Date(latest.timestamp.getTime() + hoursToEmpty * 60 * 60 * 1000);
+                        nextRefillValue = nextDate.toLocaleDateString() + ' at ' + nextDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        nextRefillComment = 'Predicted based on last 24h usage.';
+                    }
+                }
+                document.querySelectorAll('.prediction-card')[0].querySelector('.prediction-value').textContent = nextRefillValue;
+                document.querySelectorAll('.prediction-card')[0].querySelector('.prediction-subtitle').textContent = nextRefillComment;
+                // 2. Weekly Consumption
+                let weeklyValue = '--', weeklyComment = '';
+                const paNow = new Date();
+                const paWeekAgo = new Date(paNow.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const paPrevWeekAgo = new Date(paNow.getTime() - 14 * 24 * 60 * 60 * 1000);
+                const paWeekFeeds = feeds.filter(f => f.timestamp >= paWeekAgo);
+                const paPrevWeekFeeds = feeds.filter(f => f.timestamp >= paPrevWeekAgo && f.timestamp < paWeekAgo);
+                let weekUsage = 0, prevWeekUsage = 0;
+                if (paWeekFeeds.length > 1) weekUsage = Math.abs(paWeekFeeds[0].litres - paWeekFeeds[paWeekFeeds.length - 1].litres);
+                if (paPrevWeekFeeds.length > 1) prevWeekUsage = Math.abs(paPrevWeekFeeds[0].litres - paPrevWeekFeeds[paPrevWeekFeeds.length - 1].litres);
+                weeklyValue = weekUsage ? weekUsage.toFixed(2) + 'L' : '--';
+                if (prevWeekUsage > 0) {
+                    const diff = weekUsage - prevWeekUsage;
+                    const pct = (diff / prevWeekUsage) * 100;
+                    weeklyComment = (diff >= 0 ? '+' : '') + pct.toFixed(1) + '% compared to previous week';
+                }
+                document.querySelectorAll('.prediction-card')[1].querySelector('.prediction-value').textContent = weeklyValue;
+                document.querySelectorAll('.prediction-card')[1].querySelector('.prediction-subtitle').textContent = weeklyComment;
+                // 3. System Efficiency
+                let effValue = systemEfficiency;
+                let effComment = '';
+                if (!isNaN(effNum)) {
+                    effComment = effNum > 85 ? 'Excellent water management' : (effNum > 70 ? 'Good' : 'Needs improvement');
+                }
+                document.querySelectorAll('.prediction-card')[2].querySelector('.prediction-value').textContent = effValue;
+                document.querySelectorAll('.prediction-card')[2].querySelector('.prediction-subtitle').textContent = effComment;
+                // 4. Usage Trend
+                let trendValue = '--', trendComment = '';
+                if (prevWeekUsage > 0) {
+                    const diff = weekUsage - prevWeekUsage;
+                    const pct = (diff / prevWeekUsage) * 100;
+                    trendValue = (diff >= 0 ? '\u2197 ' : '\u2198 ') + Math.abs(pct).toFixed(1) + '%';
+                    trendComment = diff >= 0 ? 'Increasing this week' : 'Decreasing this week';
+                }
+                document.querySelectorAll('.prediction-card')[3].querySelector('.prediction-value').textContent = trendValue;
+                document.querySelectorAll('.prediction-card')[3].querySelector('.prediction-subtitle').textContent = trendComment;
+                // 5. Peak Usage Time
+                let peakValue = '--', peakComment = '';
+                if (paWeekFeeds.length > 1) {
+                    let byHour = {};
+                    paWeekFeeds.forEach(f => {
+                        let h = f.timestamp.getHours();
+                        if (!byHour[h]) byHour[h] = [];
+                        byHour[h].push(f.litres);
+                    });
+                    let maxUsage = 0, peakHour = 0;
+                    for (let h in byHour) {
+                        let vals = byHour[h];
+                        let usage = Math.abs(vals[0] - vals[vals.length - 1]);
+                        if (usage > maxUsage) { maxUsage = usage; peakHour = h; }
+                    }
+                    peakValue = (peakHour == 0 ? '12 AM' : peakHour < 12 ? peakHour + ' AM' : (peakHour == 12 ? '12 PM' : (peakHour - 12) + ' PM'));
+                    peakComment = peakHour < 12 ? 'Morning routine' : 'Evening peak';
+                }
+                document.querySelectorAll('.prediction-card')[4].querySelector('.prediction-value').textContent = peakValue;
+                document.querySelectorAll('.prediction-card')[4].querySelector('.prediction-subtitle').textContent = peakComment;
+                // 6. System Status
+                let statusValue = 'All Clear', statusComment = 'No issues detected';
+                if (feeds.length > 0) {
+                    const latest = feeds[feeds.length - 1];
+                    if (latest.litres <= 0.2) { statusValue = 'Low Water'; statusComment = 'Check tank soon'; }
+                }
+                document.querySelectorAll('.prediction-card')[5].querySelector('.prediction-value').textContent = statusValue;
+                document.querySelectorAll('.prediction-card')[5].querySelector('.prediction-subtitle').textContent = statusComment;
+
+                // --- Update Flow Rate Analysis Chart with live data ---
+                updateFlowRateChart();
+
+            } catch (e) {
+                spinner.style.display = 'none';
+                msg.textContent = 'Failed to load data: ' + (e.message || 'Unknown error');
+                msg.style.color = '#e74c3c';
+            }
+        }
+
+        // --- Update Flow Rate Analysis Chart with live data ---
+        function updateFlowRateChart() {
+            if (!window.flowRateChart || !globalFeeds || globalFeeds.length < 2) return;
+            // Use last 24h of data
+            const now = new Date();
+            const dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+            const last24h = globalFeeds.filter(f => f.timestamp >= dayAgo);
+            const chartData = last24h.length >= 2 ? last24h : globalFeeds.slice(-24);
+            let inflow = [], outflow = [], labels = [];
+            for (let i = 1; i < chartData.length; i++) {
+                const prev = chartData[i - 1];
+                const curr = chartData[i];
+                const dt = (curr.timestamp - prev.timestamp) / 60000; // minutes
+                let inRate = 0, outRate = 0;
+                if (dt > 0) {
+                    if (curr.litres > prev.litres) inRate = (curr.litres - prev.litres) / dt;
+                    if (curr.litres < prev.litres) outRate = (prev.litres - curr.litres) / dt;
+                }
+                inflow.push(inRate);
+                outflow.push(outRate);
+                labels.push(curr.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+            }
+            window.flowRateChart.data.labels = labels;
+            window.flowRateChart.data.datasets[0].data = inflow;
+            window.flowRateChart.data.datasets[1].data = outflow;
+            window.flowRateChart.update();
+        }
+
+
     </script>
 </body>
 

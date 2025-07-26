@@ -29,6 +29,85 @@
       opacity: 1 !important;
       font-weight: 700 !important;
     }
+
+    /* Contact Section Enhancements */
+    .contact-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      transform: rotate(-45deg);
+      transition: transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .contact-card:hover::before {
+      transform: rotate(-45deg) translate(10px, 10px);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-card a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .whatsapp-contacts a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+
+    .contact-info {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-info::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .contact-info:hover::after {
+      left: 100%;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .contact-methods-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+
+      .contact-card {
+        padding: 20px !important;
+      }
+
+      .whatsapp-contacts {
+        gap: 8px !important;
+      }
+
+      .whatsapp-contacts a {
+        padding: 8px 16px !important;
+        font-size: 0.9em !important;
+      }
+    }
   </style>
 </head>
 
@@ -153,34 +232,82 @@
         </section>
         <!--End References-->
 
-        <!--Start Contact Form Area-->
+        <!--Start Contact Section-->
         <!-- [REINVENTION] Added 'scroll-reveal' class for fade-in animation -->
         <section class="flex-row scroll-reveal" id="contact">
           <div class="flex-item flex-column full-width">
             <h2>Get In Touch</h2>
             <hr>
-            <p class="text text-center">Have questions or want to collaborate? Reach out to us!</p>
-            <form id="contact-form" class="contact-form">
-              <div class="form-group">
-                <input type="text" id="name" name="name" placeholder="Your Name" required>
-                <label for="name">Name</label>
+            <p class="text text-center">Have questions or want to collaborate? We'd love to hear from you!</p>
+
+            <div class="contact-methods-grid"
+              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
+
+              <!-- GitHub Repository -->
+              <div class="contact-card"
+                style="background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,248,255,0.95)); border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; transition: all 0.3s ease; border: 1px solid rgba(0,0,0,0.05);">
+                <div class="contact-icon" style="font-size: 3em; color: #333; margin-bottom: 20px;">
+                  <i class="fab fa-github"></i>
+                </div>
+                <h3 style="color: #1a365d; margin-bottom: 15px; font-size: 1.3em;">GitHub Repository</h3>
+                <p style="color: #666; line-height: 1.6; margin-bottom: 25px;">Explore our open-source code, contribute
+                  to the project, or report issues. Join our community of developers and innovators.</p>
+                <a href="https://github.com/Chigozieallanie/Smart-Water-Level-Monitoring-System" target="_blank"
+                  rel="noopener noreferrer"
+                  style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #333, #555); color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                  <i class="fab fa-github"></i>
+                  Visit Repository
+                </a>
               </div>
-              <div class="form-group">
-                <input type="email" id="email" name="email" placeholder="Your Email" required>
-                <label for="email">Email</label>
+
+              <!-- WhatsApp Contact -->
+              <div class="contact-card"
+                style="background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,248,255,0.95)); border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; transition: all 0.3s ease; border: 1px solid rgba(0,0,0,0.05);">
+                <div class="contact-icon" style="font-size: 3em; color: #25D366; margin-bottom: 20px;">
+                  <i class="fab fa-whatsapp"></i>
+                </div>
+                <h3 style="color: #1a365d; margin-bottom: 15px; font-size: 1.3em;">WhatsApp Support</h3>
+                <p style="color: #666; line-height: 1.6; margin-bottom: 25px;">Get in touch with our team directly
+                  through WhatsApp for quick responses and personalized support.</p>
+                <div class="whatsapp-contacts"
+                  style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+                  <a href="https://wa.me/256757496328" target="_blank" rel="noopener noreferrer"
+                    style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37,211,102,0.3);">
+                    <i class="fab fa-whatsapp"></i>
+                    Allan Kigozi - 0757496328
+                  </a>
+                  <a href="https://wa.me/256787277231" target="_blank" rel="noopener noreferrer"
+                    style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37,211,102,0.3);">
+                    <i class="fab fa-whatsapp"></i>
+                    Keith Paul Kato - 0787277231
+                  </a>
+                  <a href="https://wa.me/256751550227" target="_blank" rel="noopener noreferrer"
+                    style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37,211,102,0.3);">
+                    <i class="fab fa-whatsapp"></i>
+                    Bwire Rodney Desire - 0751550227
+                  </a>
+                  <a href="https://wa.me/2567405661797" target="_blank" rel="noopener noreferrer"
+                    style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37,211,102,0.3);">
+                    <i class="fab fa-whatsapp"></i>
+                    Chelimo Emma - 07405661797
+                  </a>
+                </div>
               </div>
-              <div class="form-group">
-                <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
-                <label for="message">Message</label>
-              </div>
-              <button type="submit" class="custom-button-flat glossy-button submit-button">
-                Send Message <i class="fas fa-paper-plane water-drop-icon"></i>
-              </button>
-            </form>
-            <div id="form-feedback" class="form-feedback" style="display:none;"></div>
+
+            </div>
+
+            <div class="contact-info"
+              style="margin-top: 40px; text-align: center; padding: 20px; background: rgba(255,255,255,0.8); border-radius: 15px; border: 1px solid rgba(0,0,0,0.05);">
+              <p style="color: #666; font-size: 1.1em; margin: 0;">
+                <i class="fas fa-info-circle" style="color: #0ea5e9; margin-right: 8px;"></i>
+                <strong>Group 3 Project Team</strong> - Building a smart Uganda through innovative water monitoring
+                solutions
+              </p>
+            </div>
+
           </div>
         </section>
-        <!--End Contact Form Area-->
+        <!--End Contact Section-->
 
       </div>
     </div>

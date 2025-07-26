@@ -1079,13 +1079,13 @@ body {
 
 /* Fixed Menu Styling */
 .fixed-header {
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
   /* Ensure it's above other content */
-  background-color: var(--makerere-black) !important;
+  /* background-color: var(--makerere-black) !important; */
   /* Override template */
 }
 
@@ -1346,345 +1346,179 @@ body:not(.force-no-scroll) .content-container {
  * These styles will override the defaults from frame.css
  *************************************************************************/
 
-/* --- 1. Main Menu Bar --- */
-/* Remove default solid background from the container */
-.menu-container {
-  background-color: transparent;
+/* --- NEW MINIMAL MENU STYLES --- */
+.main-nav {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
   position: fixed;
-  /* Make it a fixed header */
   top: 0;
   left: 0;
-  width: 100%;
   z-index: 1000;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-/* Style the menu bar itself */
-.menu.fixed-header {
-  max-width: none;
-  /* Make the bar full-width */
-  background-color: var(--deep-water-bg);
-  /* Dark, semi-transparent blue */
-  backdrop-filter: blur(10px);
-  /* The "glass" effect */
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 207, 255, 0.2);
-  /* Subtle glowing bottom border */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-}
-
-/* Center the menu content within the full-width bar */
-.menu .menu-table {
+.nav-container {
   max-width: 1200px;
-  /* Adjust as needed */
   margin: 0 auto;
-  padding: 0 20px;
-  /* Add some padding on the sides */
-  height: 65px;
-  /* Give the menu a consistent height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 24px;
 }
 
-/* --- 2. Logo --- */
-.menu .logo a {
-  font-size: 24px;
-  color: #ffffff !important;
-  text-shadow: 0 0 8px rgba(0, 207, 255, 0.5);
-  /* Subtle glow effect */
+.nav-logo a {
   font-family: 'Open Sans Condensed', Helvetica, Arial, sans-serif;
+  font-size: 2em;
+  color: #318CE7;
+  text-decoration: none;
   font-weight: 700;
-  transition: all 0.3s ease;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
 }
 
-.menu .logo a:hover {
-  color: var(--neon-blue) !important;
-  text-shadow: 0 0 12px var(--neon-blue);
+.nav-logo a:hover {
+  color: #005cbf;
 }
 
-/* --- 3. Menu Items & Hover Effect --- */
-.menu .menu-items>a,
-.menu .menu-items .dropbtn {
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-weight: 400 !important;
-  font-size: 16px;
-  padding: 0 15px;
-  height: 100%;
-  position: relative;
-  /* Needed for the ::after pseudo-element */
-  transition: color 0.3s ease;
-  background-color: transparent !important;
-  /* Override any potential background */
+.nav-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
 }
 
-.menu .menu-items>a:hover,
-.menu .menu-items .dropbtn:hover {
-  color: #ffffff !important;
+.nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-size: 1.08em;
+  font-weight: 500;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
 }
 
-/* The animated underline */
-.menu .menu-items>a::after,
-.menu .menu-items .dropbtn::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 2px;
-  bottom: 15px;
-  /* Position the line a bit up from the bottom */
-  left: 0;
-  background-color: var(--neon-blue);
-  transform-origin: bottom center;
-  transition: transform 0.25s ease-out;
+.nav-links a:hover,
+.nav-links a.menu-highlight {
+  color: #318CE7;
+  border-bottom: 2px solid #318CE7;
 }
 
-/* Animate the underline on hover */
-.menu .menu-items>a:hover::after,
-.menu .menu-items .dropbtn:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom center;
+.nav-links a.menu-github {
+  margin-left: 32px;
+  color: #222;
+  font-weight: 700;
 }
 
-/* --- 4. Active/Highlighted Menu Item --- */
-/* The main text highlight */
-.menu .menu-highlight,
-.menu .menu-highlight i {
-  color: #ffffff !important;
-  font-weight: 700 !important;
-  opacity: 1 !important;
+.nav-links a.menu-github:hover {
+  color: #318CE7;
 }
 
-/* Keep the underline visible for the active item */
-.menu a.menu-highlight::after,
-.menu a.menu-highlight.dropbtn::after {
-  transform: scaleX(1) !important;
-  background-color: var(--neon-blue);
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  margin-left: 16px;
 }
 
-/* --- 5. Dropdown Menu --- */
-.menu .menu-items .dropdown {
-  position: relative !important;
+.hamburger-bar {
+  width: 26px;
+  height: 3px;
+  background: #222;
+  margin: 3px 0;
+  border-radius: 2px;
+  transition: all 0.3s;
 }
 
-.menu .menu-items .dropdown-content {
-  display: none !important;
-  position: absolute !important;
-  top: 100%;
-  left: 0 !important;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
-  border: 2px solid var(--water-blue-light) !important;
-  border-radius: 12px !important;
-  padding: 5px 0;
-  min-width: 250px !important;
-  overflow: hidden;
-  z-index: 1003 !important;
-  max-width: calc(100vw - 40px);
-  right: auto !important;
-  max-height: none !important;
-  transition: none !important;
+.nav-drawer {
+  display: none;
 }
 
-.menu .menu-items .dropdown-content a {
-  color: var(--water-blue-light) !important;
-  padding: 12px 20px !important;
-  display: flex !important;
-  align-items: center !important;
-  transition: all 0.3s ease !important;
-  border-bottom: 1px solid rgba(117, 221, 221, 0.1) !important;
-  text-decoration: none !important;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.menu .menu-items .dropdown-content a:hover {
-  background: rgba(117, 221, 221, 0.2) !important;
-  color: var(--makerere-yellow) !important;
-  transform: translateX(5px) !important;
-}
-
-.menu .menu-items .dropdown-content a:last-child {
-  border-bottom: none !important;
-}
-
-/* Show dropdown on hover for desktop */
-@media (min-width: 769px) {
-  .menu .menu-items .dropdown:hover .dropdown-content {
-    display: block !important;
-  }
-
-  .menu .menu-items .dropdown:hover .dropbtn i {
-    transform: rotate(180deg) !important;
-    transition: transform 0.3s ease !important;
-  }
-}
-
-/* Show dropdown when active (for mobile and click) */
-.menu .menu-items .dropdown.active .dropdown-content {
-  display: block !important;
-}
-
-/* --- 6. General Adjustments --- */
-/* Push page content down to account for the fixed menu */
-body .content-container {
-  padding-top: 65px;
-  /* Match the menu height */
-}
-
-/* Ensure the future-innovations page hero section is handled correctly */
-.future-innovations-page .content-container {
-  padding-top: 0;
-}
-
-/* --- Mobile Menu Adjustments --- */
-@media screen and (max-width: 750px) {
-  .menu.fixed-header {
-    /* On mobile, the menu expands, so a solid color is better for readability */
-    background-color: #1a1a1a;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .menu .menu-items>a::after,
-  .menu .menu-items .dropbtn::after {
+@media (max-width: 900px) {
+  .nav-links {
     display: none;
-    /* Hide animated underline on mobile */
   }
 
-  /* Fix mobile menu button display */
-  .menu .menu-button {
-    display: flex !important;
-    width: 40px !important;
-    height: 40px !important;
-    background: linear-gradient(135deg, var(--makerere-green), var(--water-blue-light)) !important;
-    border-radius: 8px !important;
-    padding: 8px !important;
-    box-shadow: 0 4px 12px rgba(0, 104, 55, 0.3) !important;
-    transition: all 0.3s ease !important;
-    cursor: pointer !important;
-    -webkit-tap-highlight-color: transparent !important;
-    justify-content: center !important;
-    align-items: center !important;
-    margin-right: 15px !important;
+  .nav-hamburger {
+    display: flex;
   }
 
-  .menu .menu-button:hover,
-  .menu .menu-button:focus {
-    transform: scale(1.05) !important;
-    box-shadow: 0 6px 16px rgba(0, 104, 55, 0.4) !important;
-    outline: none !important;
+  .nav-drawer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -2px 0 16px rgba(0, 0, 0, 0.10);
+    z-index: 2000;
+    padding: 32px 0 0 0;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 1px solid #e0e0e0;
   }
 
-  .menu .menu-button img {
-    width: 24px !important;
-    height: 24px !important;
-    filter: brightness(0) invert(1) !important;
+  .nav-drawer.open {
+    right: 0;
   }
 
-  /* Enhanced mobile menu items */
-  .menu .menu-items {
-    position: absolute !important;
-    top: 100% !important;
-    left: 0 !important;
-    right: 0 !important;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)) !important;
-    backdrop-filter: blur(10px) !important;
-    flex-direction: column !important;
-    padding: 20px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
-    border-top: 3px solid var(--makerere-yellow) !important;
-    display: none !important;
-    z-index: 1001 !important;
-    max-height: none !important;
-    overflow: visible !important;
+  .nav-drawer a {
+    color: #222;
+    text-decoration: none;
+    font-size: 1.15em;
+    font-weight: 600;
+    padding: 18px 32px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: color 0.2s, background 0.2s;
   }
 
-  .menu .menu-items.show {
-    display: flex !important;
-    animation: slideDown 0.3s ease-out !important;
+  .nav-drawer a:last-child {
+    border-bottom: none;
   }
 
-  .menu .menu-items>a,
-  .menu .menu-items .dropbtn {
-    color: var(--water-blue-light) !important;
-    font-size: 1.1em !important;
-    font-weight: 600 !important;
-    padding: 15px 20px !important;
-    margin: 5px 0 !important;
-    background: rgba(117, 221, 221, 0.1) !important;
-    border-radius: 10px !important;
-    border-left: 4px solid var(--makerere-green) !important;
-    text-decoration: none !important;
-    transition: all 0.3s ease !important;
-    display: flex !important;
-    align-items: center !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
+  .nav-drawer a:hover,
+  .nav-drawer a.menu-highlight {
+    color: #318CE7;
+    background: #f5faff;
   }
+}
 
-  .menu .menu-items>a:hover,
-  .menu .menu-items>a.menu-highlight,
-  .menu .menu-items .dropbtn:hover {
-    background: rgba(117, 221, 221, 0.2) !important;
-    color: var(--makerere-yellow) !important;
-    transform: translateX(8px) !important;
-    box-shadow: 0 4px 12px rgba(0, 104, 55, 0.2) !important;
-  }
+/* Overlay for mobile drawer */
+.nav-drawer-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.18);
+  z-index: 1999;
+  transition: opacity 0.3s;
+}
 
-  .menu .menu-items .menu-icon {
-    margin-right: 12px !important;
-    font-size: 1.2em !important;
-    min-width: 20px !important;
-  }
+.nav-drawer-overlay.open {
+  display: block;
+  opacity: 1;
+}
 
-  /* Mobile dropdown styling */
-  .menu .menu-items .dropdown {
-    width: 100% !important;
-  }
-
-  .menu .menu-items .dropdown .dropbtn {
-    width: 100% !important;
-    text-align: left !important;
-    justify-content: space-between !important;
-    background: rgba(117, 221, 221, 0.1) !important;
-  }
-
-  .menu .menu-items .dropdown .dropdown-content {
-    position: static !important;
-    background: rgba(0, 104, 55, 0.2) !important;
-    margin: 10px 0 !important;
-    border-radius: 10px !important;
-    border: none !important;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-    transition: max-height 0.3s ease !important;
-    display: block !important;
-  }
-
-  .menu .menu-items .dropdown.active .dropdown-content {
-    max-height: 500px !important;
-  }
-
-  .menu .menu-items .dropdown .dropdown-content a {
-    color: var(--water-blue-light) !important;
-    background: transparent !important;
-    border-left: 2px solid var(--water-blue-light) !important;
-    margin-left: 20px !important;
-    font-size: 0.95em !important;
-    padding: 12px 15px !important;
-    border-radius: 6px !important;
-  }
-
-  .menu .menu-items .dropdown .dropdown-content a:hover {
-    background: rgba(117, 221, 221, 0.2) !important;
-    color: var(--makerere-yellow) !important;
-  }
-
-  /* Mobile dropdown arrow rotation */
-  .menu .menu-items .dropdown.active .dropbtn i {
-    transform: rotate(180deg) !important;
-    transition: transform 0.3s ease !important;
-  }
+/* Remove all previous menu backgrounds, blur, glass, gradients for .menu, .menu-container, .fixed-header, etc. */
+.menu,
+.menu-container,
+.fixed-header {
+  /* background: none !important; */
+  /* box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important; */
 }
 
 /*************************************************************************
@@ -2228,5 +2062,36 @@ body .content-container {
   .menu .menu-items .dropdown:nth-last-child(2) .dropdown-content {
     left: auto !important;
     right: 0 !important;
+  }
+}
+
+/* --- Desktop Menu Enhancements --- */
+@media (min-width: 769px) {
+  .menu.fixed-header {
+    /* background: linear-gradient(90deg, #0a2540 0%, #006837 100%); */
+    /* Deep blue to green gradient */
+    color: #fff;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 8px 32px rgba(0, 207, 255, 0.10), 0 2px 8px rgba(0, 0, 0, 0.08);
+    /* background: linear-gradient(90deg, rgba(10, 25, 41, 0.98) 0%, rgba(0, 104, 55, 0.97) 100%); */
+    margin-top: 0;
+    padding-bottom: 10px;
+    /* More opaque for better contrast */
+  }
+
+  .menu .menu-items {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .menu .menu-items>a,
+  .menu .menu-items>div {
+    margin-right: 0;
+  }
+
+  .menu .menu-items>a:last-child,
+  .menu .menu-items>div:last-child {
+    margin-right: 0;
   }
 }
