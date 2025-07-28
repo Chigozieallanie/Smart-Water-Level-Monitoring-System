@@ -1,13 +1,13 @@
-SMART WATER-LEVEL MONITORING SYSTEM
+SMART WATER-LEVEL MONITORING SYSTEM: 
 Revolutionizing Water Management for Sustainable Living.
 
-PROJECT-OVERVIEW
+PROJECT-OVERVIEW: 
 The Smart Water Level Monitoring System (SWLMS) is an innovative Internet of Things (IoT) solution designed to address critical challenges in water resource management, 
 particularly in communities reliant on water storage tanks. By transforming traditional, manual monitoring into an automated, 
 real-time process, our system empowers users with precise insights and timely alerts, promoting efficient water usage and preventing wastage. 
 This project represents a significant step towards fostering sustainable water practices and enhancing daily convenience.
 
-KEY-FEATURES
+KEY-FEATURES: 
    . Real-time Water Level Monitoring: Continuously measures and displays water levels in tanks.
 
    . Intelligent Alerting: Sends immediate SMS notifications for low, average, high, and empty water levels.
@@ -20,7 +20,7 @@ KEY-FEATURES
 
    . Automated Pump Readiness: Designed with future integration for automated pump control based on water levels.
 
-TECHNOLOGY STACK
+TECHNOLOGY STACK: 
 Hardware Components:
 
    . Microcontroller: Arduino Uno R3
@@ -39,13 +39,13 @@ Software & Platforms:
 
    . Cloud & Mobile Dashboard: ThingSpeak Application (for real-time data visualization, alerts, and remote monitoring)
 
-How It Works
+How It Works: 
    The system operates by continuously sensing the water level using the ultrasonic sensor and water flow using the flow sensor. 
    This data is processed by the Arduino Uno, which then updates the local LCD and LED indicators. 
    Based on predefined thresholds, the system triggers SMS alerts via the GSM module and uploads all relevant data to the ThingSpeak cloud platform. 
    This allows users to monitor their water tanks remotely and receive critical notifications, ensuring proactive management of their water resources.
 
-BENEFITS
+BENEFITS: 
    . Enhanced Water Conservation: Prevents overflows and promotes mindful usage.
 
    . Increased Convenience: Eliminates the need for manual water level checks.
@@ -56,7 +56,7 @@ BENEFITS
 
    . Cost-Effective & Scalable: Built with readily available and affordable components, suitable for wide deployment.
 
-FUTURE ENHANCEMENTS
+FUTURE ENHANCEMENTS: 
 We are committed to continuously improving the SWLMS. Future work includes:
 
    . Developing a dedicated mobile application for enhanced user experience and advanced control.
@@ -69,7 +69,7 @@ We are committed to continuously improving the SWLMS. Future work includes:
 
    . Enabling multi-user notification support.
 
-GETTING STARTED.
+GETTING STARTED: 
 To replicate or build upon this project:
 
   1. Gather Components: Acquire all listed hardware components.
@@ -82,7 +82,7 @@ To replicate or build upon this project:
 
 Detailed setup instructions and code will be available in the project repository.
 
-CONTACT & SUPPORT
+CONTACT & SUPPORT: 
 For questions, collaborations, or support, please refer to our GitHub repository or contact the project team members.
 
 GROUP-3 | Makerere University | CSC 1304 Practical Skills Development
