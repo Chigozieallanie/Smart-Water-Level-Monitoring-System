@@ -1,6 +1,6 @@
- #include <Wire.h>
+#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-
+ 
 // LCD setup
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 #define TRIG 9
@@ -35,6 +35,8 @@ void setup() {
   pinMode(5, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
+    pinMode(11, OUTPUT);
+
   
   lcd.setCursor(0, 0);
   lcd.print("SMART H2O LEVEL");
@@ -136,9 +138,11 @@ void loop() {
       if(depth >85)
       {
         digitalWrite(7, HIGH);
+                digitalWrite(11, HIGH);
+
         digitalWrite(6, LOW);
         digitalWrite(5, LOW);
-        init_sms("Tank full!");
+        init_sms("Water-Levels getting high, Consider Stopping Refill");
         
       }
       else if(depth>40)
@@ -146,15 +150,17 @@ void loop() {
         digitalWrite(6, HIGH);
         digitalWrite(5, LOW);
         digitalWrite(7, LOW);
+         digitalWrite(11, LOW);
       }
        else 
       {
         digitalWrite(5, HIGH);
         digitalWrite(6, LOW);
         digitalWrite(7, LOW);
-        init_sms("H20 level extremely Low!");
+         digitalWrite(11, HIGH);
+        init_sms("Water-Levels are getting low, Prepare to refill tank");
       }
-      
+        
       
       delay(1000);
 
@@ -215,7 +221,7 @@ void loop() {
   delay(4000);
   ShowSerialData();
   
-  String str="GET https://api.thingspeak.com/update?api_key=L6EE5X3VM6Z3N5ZV&field1=" + String(distance) +"&field2="+String(ltr)+"&field3="+String(depth);
+  String str="GET https://api.thingspeak.com/update?api_key=L6EE5X3VM6Z3N5ZV&field1=" + String(distance) +"&field2="+String(88);
   Serial.println(str);
   Serial.println(str);//begin send data to remote server
   
