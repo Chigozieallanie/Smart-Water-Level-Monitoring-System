@@ -1,0 +1,2097 @@
+/*************************************************************************
+ * Your custom CSS file
+ *************************************************************************/
+
+/* Global fix to prevent horizontal scrolling */
+html,
+body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* General Custom Styles */
+:root {
+  --makerere-green: #006837;
+  --makerere-yellow: #FCDC00;
+  --makerere-black: #000000;
+  --water-blue-light: #75DDDD;
+  --water-blue-dark: #318CE7;
+  --neon-green: #39FF14;
+  --neon-blue: #00CFFF;
+  --dark-bg: #1a1a1a;
+  --light-text: #f0f0f0;
+  --dark-text: #333333;
+  --accent-yellow: #FFD700;
+  --deep-water-bg: rgba(10, 25, 41, 0.7);
+  /* New variable for our menu */
+}
+
+body {
+  transition: background-color 0.5s ease;
+}
+
+/* Page Specific Themes */
+.overview-page {
+  background:
+    linear-gradient(135deg, rgba(117, 221, 221, 0.7), rgba(0, 104, 55, 0.7)),
+    url('img/water.jpg');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-attachment: fixed, fixed;
+  background-repeat: no-repeat, no-repeat;
+  color: var(--dark-text);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Water image overlay for subtle blending */
+.overview-page .water-texture {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/water.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.15;
+  z-index: -4;
+  pointer-events: none;
+  animation: waterTextureFloat 25s ease-in-out infinite;
+}
+
+/* Animated Background for Overview Page Only */
+.overview-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg,
+      rgba(117, 221, 221, 0.15) 0%,
+      rgba(49, 140, 231, 0.2) 25%,
+      rgba(0, 104, 55, 0.15) 50%,
+      rgba(117, 221, 221, 0.1) 75%,
+      rgba(49, 140, 231, 0.15) 100%);
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+  z-index: -3;
+  pointer-events: none;
+}
+
+.overview-page::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(117, 221, 221, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(49, 140, 231, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(0, 104, 55, 0.2) 0%, transparent 50%);
+  animation: floatingBubbles 20s ease-in-out infinite;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Floating water droplets */
+.overview-page .water-drops {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.overview-page .water-drop {
+  position: absolute;
+  background: radial-gradient(circle, rgba(117, 221, 221, 0.6), rgba(49, 140, 231, 0.3));
+  border-radius: 50%;
+  animation: dropFloat 12s linear infinite;
+}
+
+.overview-page .water-drop:nth-child(1) {
+  width: 8px;
+  height: 8px;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 15s;
+}
+
+.overview-page .water-drop:nth-child(2) {
+  width: 12px;
+  height: 12px;
+  left: 20%;
+  animation-delay: 2s;
+  animation-duration: 18s;
+}
+
+.overview-page .water-drop:nth-child(3) {
+  width: 6px;
+  height: 6px;
+  left: 30%;
+  animation-delay: 4s;
+  animation-duration: 14s;
+}
+
+.overview-page .water-drop:nth-child(4) {
+  width: 10px;
+  height: 10px;
+  left: 40%;
+  animation-delay: 6s;
+  animation-duration: 16s;
+}
+
+.overview-page .water-drop:nth-child(5) {
+  width: 8px;
+  height: 8px;
+  left: 50%;
+  animation-delay: 8s;
+  animation-duration: 12s;
+}
+
+.overview-page .water-drop:nth-child(6) {
+  width: 14px;
+  height: 14px;
+  left: 60%;
+  animation-delay: 10s;
+  animation-duration: 20s;
+}
+
+.overview-page .water-drop:nth-child(7) {
+  width: 7px;
+  height: 7px;
+  left: 70%;
+  animation-delay: 12s;
+  animation-duration: 13s;
+}
+
+.overview-page .water-drop:nth-child(8) {
+  width: 11px;
+  height: 11px;
+  left: 80%;
+  animation-delay: 14s;
+  animation-duration: 17s;
+}
+
+.overview-page .water-drop:nth-child(9) {
+  width: 9px;
+  height: 9px;
+  left: 90%;
+  animation-delay: 16s;
+  animation-duration: 15s;
+}
+
+/* Keyframe Animations */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatingBubbles {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-40px) rotate(180deg);
+    opacity: 0.4;
+  }
+
+  75% {
+    transform: translateY(-20px) rotate(270deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes dropFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes waterTextureFloat {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.15;
+  }
+
+  25% {
+    transform: scale(1.02) rotate(0.5deg);
+    opacity: 0.18;
+  }
+
+  50% {
+    transform: scale(1.04) rotate(1deg);
+    opacity: 0.12;
+  }
+
+  75% {
+    transform: scale(1.02) rotate(0.5deg);
+    opacity: 0.18;
+  }
+}
+
+/* Ensure content stays above animated background */
+.overview-page .content-container {
+  position: relative;
+  z-index: 1;
+}
+
+.overview-page h1,
+.overview-page h2,
+.overview-page .banner .uni-name,
+.overview-page .banner .dept-name {
+  color: white;
+  /* Ensure banner text is white on dark/image background */
+}
+
+.overview-page .banner .uni-name {
+  color: var(--makerere-yellow);
+}
+
+
+.system-insights-page {
+  background-color: var(--dark-bg);
+  color: var(--light-text);
+}
+
+.system-insights-page h1,
+.system-insights-page h2,
+.system-insights-page h3 {
+  color: var(--neon-green);
+}
+
+.system-insights-page hr {
+  background: var(--neon-blue);
+}
+
+.system-insights-page .text {
+  color: #cccccc;
+}
+
+.future-innovations-page {
+  color: var(--dark-text);
+  background-color: transparent !important;
+  /* Ensure body has no background color */
+}
+
+/* [REINVENTION] These styles are no longer needed as the hero section handles the header */
+.future-innovations-page .page-header {
+  position: relative;
+  z-index: 1;
+  padding: 40px 20px;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.future-innovations-page .page-header h1 {
+  color: white;
+  font-size: 3.5em;
+  /* Increased size for impact */
+  font-weight: 700;
+}
+
+.future-innovations-page .page-header p {
+  font-size: 1.4em;
+  font-weight: 300;
+}
+
+
+/* Video Background for Future Innovations */
+.video-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -2;
+  /* [FIX] Changed path from absolute to relative */
+  /*background: url('../img/water.jpg') center center / cover no-repeat;
+  /* stays behind everything else */
+}
+
+#bgVideoFuture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -2;
+
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* dark overlay */
+  z-index: -1;
+  /* overlay is above video, but below content */
+}
+
+/* [REINVENTION] Hero Section Styling */
+.hero-section {
+  height: 100vh;
+  /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.scroll-down-prompt {
+  position: absolute;
+  bottom: 30px;
+  color: white;
+  font-size: 2em;
+  opacity: 0.7;
+  animation: bounce 2s infinite;
+  transition: opacity 0.3s;
+}
+
+.scroll-down-prompt:hover {
+  opacity: 1;
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-20px);
+  }
+
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+/* [REINVENTION] Content container is now just a transparent wrapper */
+.future-innovations-page .content-container {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+  /* This is the key change! */
+  margin-top: 0;
+  /* Remove spacing */
+  border-radius: 0;
+  padding: 50px 0;
+  /* Add padding to top and bottom of the content area */
+}
+
+/* [REINVENTION] Style individual sections with the "glassmorphism" effect */
+.future-innovations-page section.flex-row {
+  background: rgba(10, 25, 41, 0.3);
+  /* Dark blue, very transparent */
+  backdrop-filter: blur(12px);
+  /* The "frosting" effect */
+  -webkit-backdrop-filter: blur(12px);
+  /* Safari support */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.future-innovations-page section h2 {
+  color: white;
+  /* Make section titles white for contrast */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.future-innovations-page section hr {
+  background: var(--water-blue-light);
+  border-color: var(--water-blue-light);
+  height: 2px;
+  opacity: 0.5;
+}
+
+/* [REINVENTION] General purpose scroll reveal animation */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* [REINVENTION] Tweak timeline styles for the new glass background */
+.timeline {
+  position: relative;
+  padding: 20px 0;
+  list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background-color: var(--water-blue-light);
+  /* Brighter line */
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px var(--water-blue-light);
+}
+
+.timeline-item {
+  padding: 10px 40px;
+  position: relative;
+  margin: 10px 0;
+  width: 50%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.timeline-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-item:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+}
+
+.timeline-item:nth-child(odd)::before,
+.timeline-item:nth-child(even)::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #0a1929;
+  /* Match dark glass bg */
+  border: 3px solid var(--water-blue-light);
+  z-index: 1;
+  box-shadow: 0 0 8px var(--water-blue-light);
+}
+
+.timeline-item:nth-child(odd)::before {
+  right: -8px;
+}
+
+.timeline-item:nth-child(even)::before {
+  left: -7px;
+}
+
+.timeline-icon {
+  position: absolute;
+  top: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--water-blue-dark);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  z-index: 2;
+  box-shadow: 0 0 0 4px rgba(10, 25, 41, 0.5), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
+  animation: glowEffect 2s infinite alternate;
+}
+
+.timeline-content {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+  /* Keep light background for readability */
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.timeline-content h3 {
+  color: var(--water-blue-dark);
+  margin-top: 0;
+}
+
+.references-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* [REINVENTION] Adjust reference cards for the new design */
+.reference-card {
+  perspective: 1000px;
+  height: 150px;
+  cursor: pointer;
+  background-color: transparent;
+  /* Card itself is transparent */
+}
+
+.reference-card .card-front,
+.reference-card .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  backface-visibility: hidden;
+  transition: transform 0.6s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.reference-card .card-front {
+  background-color: var(--water-blue-dark);
+  color: white;
+  z-index: 2;
+}
+
+.reference-card .card-back {
+  background-color: var(--water-blue-light);
+  transform: rotateY(180deg);
+  color: var(--dark-text);
+  font-size: 0.9em;
+}
+
+.reference-card:hover .card-front {
+  transform: rotateY(180deg);
+}
+
+.reference-card:hover .card-back {
+  transform: rotateY(0deg);
+}
+
+/* [REINVENTION] Responsive tweaks */
+@media screen and (max-width: 750px) {
+  .future-innovations-page .page-header h1 {
+    font-size: 2.2em;
+  }
+
+  .future-innovations-page .page-header p {
+    font-size: 1.1em;
+  }
+
+  .future-innovations-page section.flex-row {
+    padding: 20px;
+  }
+
+  .timeline::before {
+    left: 20px;
+  }
+}
+
+/* The future-innovations-page now handles its own layout */
+.future-innovations-page .content-container {
+  padding-top: 50px;
+}
+
+.future-innovations-page .content {
+  padding: 0;
+  border-radius: 0;
+}
+
+/* --- [END REINVENTION BLOCK] --- */
+
+
+/* Animations */
+.animated-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animated-fade-in-slow {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+.animated-fade-in-right {
+  animation: fadeInRight 1s ease-out forwards;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scroll-triggered Animations */
+.scroll-reveal-section .problem-icon-home,
+.scroll-reveal-section .problem-icon-tank,
+.scroll-reveal-section .problem-text-area p {
+  opacity: 0;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal-section .problem-icon-home {
+  transform: translateY(30px) scale(0.5);
+}
+
+.scroll-reveal-section .problem-icon-tank {
+  transform: translateY(30px) scale(0.5);
+}
+
+.scroll-reveal-section .problem-text-area p {
+  transform: translateY(20px);
+}
+
+.scroll-reveal-section.revealed .problem-icon-home,
+.scroll-reveal-section.revealed .problem-icon-tank,
+.scroll-reveal-section.revealed .problem-text-area p {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.scroll-reveal-section.revealed .problem-icon-home {
+  transition-delay: 0.2s;
+}
+
+.scroll-reveal-section.revealed .problem-icon-tank {
+  transition-delay: 0.4s;
+}
+
+
+/* Overview Page Specifics */
+.overview-banner {
+  min-height: 350px;
+  /* Increased height */
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  overflow: hidden;
+  /* For ripple effect */
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 50, 20, 0.6);
+  /* Dark green tint */
+  z-index: 0;
+}
+
+.banner-content-area {
+  z-index: 1;
+  position: relative;
+}
+
+.university-logo {
+  height: 70px;
+  width: auto;
+  max-width: 120px;
+  margin-right: 15px;
+  object-fit: contain;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Slight bg for visibility if logo is transparent */
+  padding: 5px;
+}
+
+.uni-name {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: var(--makerere-yellow);
+  margin-bottom: 2px;
+}
+
+.dept-name {
+  font-size: 0.9em;
+  color: #E0E0E0;
+}
+
+.water-ripple-effect {
+  /* Basic ripple placeholder */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 200%;
+  height: 100px;
+  background: url('../img/water_ripple.png') repeat-x;
+  /* Changed to PNG, also relative path */
+  background-size: contain;
+  animation: ripple 15s linear infinite;
+  transform: translateX(-50%);
+  opacity: 0.3;
+  z-index: 0;
+}
+
+@keyframes ripple {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: -1000px;
+    /* Adjust based on PNG width for seamless tiling */
+  }
+}
+
+.ken-burns-effect {
+  animation: kenburns 20s ease-in-out infinite alternate;
+}
+
+@keyframes kenburns {
+  0% {
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+
+  100% {
+    background-size: 120% 120%;
+    background-position: top left;
+  }
+}
+
+.problem-content {
+  display: flex;
+  align-items: center;
+}
+
+.inline-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+.objectives-list li {
+  padding: 8px;
+  margin-bottom: 5px;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.objectives-list li:hover {
+  color: var(--makerere-green);
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-left-color: var(--makerere-yellow);
+  transform: translateX(5px);
+}
+
+.requirements-carousel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  padding: 10px 0;
+  /* Remove horizontal scrolling */
+}
+
+.carousel-item {
+  width: 100%;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.carousel-item p {
+  font-size: 0.9em;
+  color: var(--dark-text);
+  margin: 0;
+}
+
+.requirements-full-list {
+  margin-top: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.requirements-full-list summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--makerere-green);
+}
+
+
+.target-users-tabs .custom-tab-menu-item {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--makerere-yellow);
+  color: var(--makerere-green);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  position: relative;
+  overflow: hidden;
+}
+
+.target-users-tabs .custom-tab-menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.target-users-tabs .custom-tab-menu-item:hover::before {
+  left: 100%;
+}
+
+.target-users-tabs .custom-tab-menu-item.active,
+.target-users-tabs .custom-tab-menu-item:hover {
+  background-color: var(--makerere-yellow);
+  color: var(--makerere-black);
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(252, 220, 0, 0.3);
+}
+
+.target-users-tabs .custom-tab-content {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--makerere-yellow);
+  border-top: none;
+  padding: 30px;
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.target-users-tabs .custom-tab-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.target-users-tabs .custom-tab-content::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(252, 220, 0, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.target-users-tabs .custom-tab-content.show::before {
+  opacity: 1;
+}
+
+.tab-avatar {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  border-radius: 50%;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: brightness(0.9);
+  position: relative;
+  z-index: 2;
+}
+
+.target-users-tabs .custom-tab-menu-item:hover .tab-avatar,
+.target-users-tabs .custom-tab-menu-item.active .tab-avatar {
+  transform: scale(1.4) rotate(5deg);
+  filter: brightness(1.1) saturate(1.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Content Animation Effects */
+.target-users-tabs .custom-tab-content h3 {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+  color: var(--makerere-green);
+  font-weight: 700;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.target-users-tabs .custom-tab-content.show h3 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.target-users-tabs .custom-tab-content h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--makerere-yellow), var(--makerere-green));
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+}
+
+.target-users-tabs .custom-tab-content.show h3::after {
+  width: 60px;
+}
+
+.target-users-tabs .custom-tab-content p {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+  line-height: 1.6;
+  font-size: 1.1em;
+  color: var(--dark-text);
+  position: relative;
+  z-index: 2;
+}
+
+.target-users-tabs .custom-tab-content.show p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pulse animation for active tab */
+@keyframes pulse-avatar {
+  0% {
+    transform: scale(1.4) rotate(5deg);
+  }
+
+  50% {
+    transform: scale(1.5) rotate(5deg);
+  }
+
+  100% {
+    transform: scale(1.4) rotate(5deg);
+  }
+}
+
+.target-users-tabs .custom-tab-menu-item.active .tab-avatar {
+  animation: pulse-avatar 2s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tab-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .target-users-tabs .custom-tab-menu-item:hover .tab-avatar,
+  .target-users-tabs .custom-tab-menu-item.active .tab-avatar {
+    transform: scale(1.3) rotate(5deg);
+  }
+
+  .target-users-tabs .custom-tab-content {
+    padding: 20px;
+  }
+
+  .target-users-tabs .custom-tab-content h3 {
+    font-size: 1.5em;
+  }
+}
+
+/* Fixed Menu Styling */
+.fixed-header {
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  /* Ensure it's above other content */
+  /* background-color: var(--makerere-black) !important; */
+  /* Override template */
+}
+
+.fixed-header .menu-items a,
+.fixed-header .menu-items .dropbtn {
+  color: var(--makerere-green) !important;
+  font-weight: bold;
+}
+
+.fixed-header .menu-items a:hover,
+.fixed-header .menu-items .dropbtn:hover,
+.fixed-header .menu-items a.menu-highlight,
+.fixed-header .menu-items .dropbtn.menu-highlight {
+  color: var(--makerere-yellow) !important;
+  background-color: rgba(0, 104, 55, 0.3);
+  /* Darker green tint */
+}
+
+.menu-icon {
+  margin-right: 8px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--makerere-black);
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-top: 3px solid var(--makerere-yellow);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  /* Keep for JS fallback or if CSS only solution is tricky */
+  max-height: 500px;
+  /* Animate max-height for slide-down */
+}
+
+.dropdown-content a {
+  color: var(--makerere-green) !important;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(0, 104, 55, 0.3) !important;
+  color: var(--makerere-yellow) !important;
+}
+
+/* Footer specific styles adjustments if needed */
+.footer-container {
+  /* This is the class for the div loaded by footer.js */
+  background-color: #333333;
+  /* Ensuring consistent dark background */
+  color: #f0f0f0;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.footer-main-content {
+  margin-bottom: 20px;
+}
+
+.footer-motto {
+  font-size: 1.4em;
+  color: var(--makerere-yellow);
+  margin-bottom: 10px;
+}
+
+.footer-credits {
+  font-size: 0.9em;
+  color: #cccccc;
+  line-height: 1.6;
+}
+
+.footer-bottom-bar {
+  padding-top: 15px;
+  border-top: 1px solid #555;
+  font-size: 0.8em;
+  color: #aaa;
+}
+
+.footer-link {
+  color: var(--water-blue-light) !important;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+
+/* Responsive adjustments for new elements */
+@media screen and (max-width: 750px) {
+  .overview-banner .banner-title-group h1 {
+    font-size: 1.6em;
+  }
+
+  .overview-banner .banner-title-group h2 {
+    font-size: 1.2em;
+  }
+
+  .university-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .university-logo {
+    margin-bottom: 5px;
+  }
+
+  .carousel-item {
+    min-width: 120px;
+  }
+
+  /* Smaller carousel items on mobile */
+  .carousel-item img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .gallery-item {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  /* Stack gallery items */
+
+  .timeline::before {
+    left: 20px;
+  }
+
+  .timeline-item,
+  .timeline-item:nth-child(even) {
+    width: 100%;
+    left: 0;
+    padding-left: 50px;
+    padding-right: 10px;
+    text-align: left;
+  }
+
+  .timeline-item:nth-child(odd)::before,
+  .timeline-item:nth-child(even)::before {
+    left: 12px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-icon,
+  .timeline-item:nth-child(even) .timeline-icon {
+    left: 0px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-content,
+  .timeline-item:nth-child(even) .timeline-content {
+    padding-left: 30px;
+    padding-right: 0;
+  }
+
+  .future-innovations-page .page-header h1 {
+    font-size: 2em;
+  }
+
+  .fixed-header .menu-items {
+    text-align: left;
+  }
+}
+
+/* Comprehensive responsive fixes to prevent horizontal scrolling */
+.content-container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+.content {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+.flex-row {
+  max-width: 100% !important;
+}
+
+.banner-content-area {
+  flex-wrap: wrap !important;
+}
+
+/* Ensure all grid layouts are responsive */
+@media (max-width: 768px) {
+  .requirements-carousel {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .references-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  .timeline::before {
+    left: 20px;
+  }
+}
+
+/* General Dialog and Controls Overrides If Needed */
+#dialog-1,
+#dialog-2,
+#dialog-3,
+#dialog-4,
+#share-dialog,
+#component-popup {
+  display: none;
+  /* Ensure hidden initially, JS controls visibility */
+}
+
+/* Ensure jquery UI dialogs adapt to themes */
+.ui-dialog.system-insights-page {
+  background-color: #2a2a2a;
+  border-color: var(--neon-blue);
+}
+
+.ui-dialog.system-insights-page .ui-dialog-titlebar {
+  background-color: #222;
+  color: var(--neon-green);
+  border-bottom-color: var(--neon-blue);
+}
+
+.ui-dialog.system-insights-page .ui-dialog-content {
+  color: var(--light-text);
+}
+
+.ui-dialog.system-insights-page .ui-dialog-buttonpane button {
+  background-color: var(--neon-green);
+  color: var(--dark-bg);
+}
+
+/* Make sure the main content is pushed down due to fixed menu */
+body:not(.force-no-scroll) .content-container {
+  padding-top: 60px;
+  /* Adjust this value based on your menu's height */
+}
+
+/* For pages like future-innovations that handle their own top padding due to full-screen bg */
+.future-innovations-page .content-container {
+  padding-top: 0;
+  /* Override global if needed */
+}
+
+/*************************************************************************
+ * NEW MENU STYLES - START
+ * These styles will override the defaults from frame.css
+ *************************************************************************/
+
+/* --- NEW MINIMAL MENU STYLES --- */
+.main-nav {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 24px;
+}
+
+.nav-logo a {
+  font-family: 'Open Sans Condensed', Helvetica, Arial, sans-serif;
+  font-size: 2em;
+  color: #318CE7;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+
+.nav-logo a:hover {
+  color: #005cbf;
+}
+
+.nav-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-size: 1.08em;
+  font-weight: 500;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.menu-highlight {
+  color: #318CE7;
+  border-bottom: 2px solid #318CE7;
+}
+
+.nav-links a.menu-github {
+  margin-left: 32px;
+  color: #222;
+  font-weight: 700;
+}
+
+.nav-links a.menu-github:hover {
+  color: #318CE7;
+}
+
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  margin-left: 16px;
+}
+
+.hamburger-bar {
+  width: 26px;
+  height: 3px;
+  background: #222;
+  margin: 3px 0;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.nav-drawer {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-hamburger {
+    display: flex;
+  }
+
+  .nav-drawer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -2px 0 16px rgba(0, 0, 0, 0.10);
+    z-index: 2000;
+    padding: 32px 0 0 0;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 1px solid #e0e0e0;
+  }
+
+  .nav-drawer.open {
+    right: 0;
+  }
+
+  .nav-drawer a {
+    color: #222;
+    text-decoration: none;
+    font-size: 1.15em;
+    font-weight: 600;
+    padding: 18px 32px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nav-drawer a:last-child {
+    border-bottom: none;
+  }
+
+  .nav-drawer a:hover,
+  .nav-drawer a.menu-highlight {
+    color: #318CE7;
+    background: #f5faff;
+  }
+}
+
+/* Overlay for mobile drawer */
+.nav-drawer-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.18);
+  z-index: 1999;
+  transition: opacity 0.3s;
+}
+
+.nav-drawer-overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+/* Remove all previous menu backgrounds, blur, glass, gradients for .menu, .menu-container, .fixed-header, etc. */
+.menu,
+.menu-container,
+.fixed-header {
+  /* background: none !important; */
+  /* box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important; */
+}
+
+/*************************************************************************
+ * NEW MENU STYLES - END
+ *************************************************************************/
+
+/* Enhanced Dropdown Functionality Fix */
+.menu .menu-items .dropdown .dropdown-content {
+  display: none !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)) !important;
+  backdrop-filter: blur(10px) !important;
+  min-width: 350px !important;
+  border-radius: 12px !important;
+  border: 2px solid var(--water-blue-light) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden !important;
+  margin-top: 10px !important;
+  z-index: 1003 !important;
+  animation: fadeIn 0.3s ease-out !important;
+}
+
+.menu .menu-items .dropdown.active .dropdown-content,
+.menu .menu-items .dropdown:hover .dropdown-content {
+  display: block !important;
+}
+
+/* Desktop dropdown hover effect - only for desktop */
+@media (min-width: 769px) {
+  .menu .menu-items .dropdown:hover .dropdown-content {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    animation: dropdownSlideIn 0.3s ease-out !important;
+  }
+
+  /* Ensure dropdown arrow rotates on hover for desktop */
+  .menu .menu-items .dropdown:hover .dropbtn i {
+    transform: rotate(180deg) !important;
+    transition: transform 0.3s ease !important;
+  }
+}
+
+/* Dropdown slide-in animation */
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile menu slide down animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure dropdown links are properly styled */
+.menu .menu-items .dropdown .dropdown-content a {
+  color: var(--water-blue-light) !important;
+  padding: 12px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  transition: all 0.3s ease !important;
+  border-bottom: 1px solid rgba(117, 221, 221, 0.1) !important;
+  text-decoration: none !important;
+}
+
+.menu .menu-items .dropdown .dropdown-content a:hover {
+  background: rgba(117, 221, 221, 0.2) !important;
+  color: var(--makerere-yellow) !important;
+  transform: translateX(5px) !important;
+}
+
+/*************************************************************************
+ * ENHANCED DROPDOWN MENU STYLES - FINAL VERSION
+ * These styles specifically target the new dropdown structure
+ *************************************************************************/
+
+/* Enhanced Dropdown Button */
+.menu .menu-items .dropdown .dropbtn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 0 16px !important;
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.1), rgba(117, 221, 221, 0.1)) !important;
+  border: 1px solid rgba(0, 207, 255, 0.3) !important;
+  border-radius: 8px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.menu .menu-items .dropdown .dropbtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.1), rgba(117, 221, 221, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.menu .menu-items .dropdown:hover .dropbtn::before,
+.menu .menu-items .dropdown.active .dropbtn::before {
+  opacity: 1;
+}
+
+.menu .menu-items .dropdown:hover .dropbtn,
+.menu .menu-items .dropdown.active .dropbtn {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 207, 255, 0.3);
+  border-color: rgba(0, 207, 255, 0.5);
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.2), rgba(117, 221, 221, 0.2)) !important;
+}
+
+.menu .menu-items .dropdown .dropbtn .menu-icon {
+  color: var(--neon-blue) !important;
+  font-size: 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+.menu .menu-items .dropdown .dropbtn span {
+  color: var(--water-blue-light) !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.menu .menu-items .dropdown .dropdown-arrow {
+  color: var(--water-blue-light) !important;
+  font-size: 12px !important;
+  transition: transform 0.3s ease !important;
+}
+
+.menu .menu-items .dropdown:hover .dropbtn .menu-icon,
+.menu .menu-items .dropdown.active .dropbtn .menu-icon {
+  transform: scale(1.1);
+  color: var(--makerere-yellow) !important;
+}
+
+.menu .menu-items .dropdown:hover .dropbtn span,
+.menu .menu-items .dropdown.active .dropbtn span {
+  color: var(--makerere-yellow) !important;
+}
+
+.menu .menu-items .dropdown:hover .dropdown-arrow,
+.menu .menu-items .dropdown.active .dropdown-arrow {
+  transform: rotate(180deg);
+  color: var(--makerere-yellow) !important;
+}
+
+/* Enhanced Dropdown Content Container */
+.menu .menu-items .dropdown-content {
+  display: none !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  background: linear-gradient(135deg, rgba(10, 25, 41, 0.98), rgba(0, 0, 0, 0.95)) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 2px solid rgba(0, 207, 255, 0.4) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.7),
+    0 10px 20px rgba(0, 207, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  padding: 20px 0 !important;
+  min-width: 380px !important;
+  max-width: 420px !important;
+  z-index: 1003 !important;
+  overflow: hidden !important;
+  margin-top: 8px !important;
+}
+
+.menu .menu-items .dropdown-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--water-blue-light), var(--makerere-green));
+  opacity: 0.8;
+}
+
+.menu .menu-items .dropdown-content::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, rgba(10, 25, 41, 0.98), rgba(0, 0, 0, 0.95));
+  border-left: 2px solid rgba(0, 207, 255, 0.4);
+  border-top: 2px solid rgba(0, 207, 255, 0.4);
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+/* Dropdown Header */
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px 16px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 207, 255, 0.2);
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.1), rgba(117, 221, 221, 0.05));
+}
+
+.dropdown-header i {
+  color: var(--makerere-yellow) !important;
+  font-size: 18px;
+  margin-right: 12px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.dropdown-header span {
+  color: var(--makerere-yellow) !important;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Dropdown Groups */
+.dropdown-group {
+  margin-bottom: 16px;
+  padding: 0 12px;
+}
+
+.dropdown-group:last-child {
+  margin-bottom: 0;
+}
+
+.group-title {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(0, 207, 255, 0.9) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.1), rgba(117, 221, 221, 0.05));
+  border-radius: 8px;
+  border-left: 3px solid var(--neon-blue);
+}
+
+.group-title i {
+  margin-right: 8px;
+  font-size: 10px;
+  color: var(--neon-blue) !important;
+}
+
+/* Enhanced Dropdown Links */
+.dropdown-link {
+  display: flex !important;
+  align-items: center !important;
+  padding: 12px 12px !important;
+  margin: 4px 8px !important;
+  border-radius: 10px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+}
+
+.dropdown-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 207, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.dropdown-link:hover::before {
+  left: 100%;
+}
+
+.dropdown-link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--neon-blue), var(--water-blue-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dropdown-link:hover::after {
+  opacity: 1;
+}
+
+.link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.2), rgba(117, 221, 221, 0.1));
+  border-radius: 8px;
+  border: 1px solid rgba(0, 207, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.link-icon i {
+  color: var(--neon-blue) !important;
+  font-size: 14px !important;
+  transition: all 0.3s ease !important;
+}
+
+.link-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.link-title {
+  color: var(--water-blue-light) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  margin-bottom: 2px !important;
+  transition: color 0.3s ease !important;
+}
+
+.link-desc {
+  color: rgba(117, 221, 221, 0.7) !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+  transition: color 0.3s ease !important;
+}
+
+/* Hover Effects for Links */
+.dropdown-link:hover {
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.15), rgba(117, 221, 221, 0.1)) !important;
+  border-color: rgba(0, 207, 255, 0.4) !important;
+  transform: translateX(6px) !important;
+  box-shadow: 0 6px 16px rgba(0, 207, 255, 0.2) !important;
+}
+
+.dropdown-link:hover .link-icon {
+  background: linear-gradient(135deg, rgba(0, 207, 255, 0.4), rgba(117, 221, 221, 0.2));
+  border-color: rgba(0, 207, 255, 0.5);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 207, 255, 0.3);
+}
+
+.dropdown-link:hover .link-icon i {
+  color: var(--makerere-yellow) !important;
+  transform: scale(1.1);
+}
+
+.dropdown-link:hover .link-title {
+  color: var(--makerere-yellow) !important;
+}
+
+.dropdown-link:hover .link-desc {
+  color: rgba(252, 220, 0, 0.8) !important;
+}
+
+/* Show/Hide Dropdown */
+@media (min-width: 769px) {
+  .menu .menu-items .dropdown:hover .dropdown-content {
+    display: block !important;
+    animation: dropdownFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+}
+
+.menu .menu-items .dropdown.active .dropdown-content {
+  display: block !important;
+  animation: dropdownFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Staggered Animation for Links */
+.menu .menu-items .dropdown:hover .dropdown-link,
+.menu .menu-items .dropdown.active .dropdown-link {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: linkFadeIn 0.3s ease-out forwards;
+}
+
+.dropdown-link:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.dropdown-link:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.dropdown-link:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.dropdown-link:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.dropdown-link:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.dropdown-link:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+@keyframes linkFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Dropdown Styles */
+@media (max-width: 768px) {
+  .menu .menu-items .dropdown-content {
+    position: static !important;
+    background: linear-gradient(135deg, rgba(0, 104, 55, 0.25), rgba(10, 25, 41, 0.25)) !important;
+    margin: 12px 0 !important;
+    border-radius: 12px !important;
+    border: 2px solid rgba(0, 207, 255, 0.4) !important;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: block !important;
+    min-width: 100% !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .menu .menu-items .dropdown.active .dropdown-content {
+    max-height: 600px !important;
+    padding: 16px 0 !important;
+  }
+
+  .dropdown-header {
+    padding: 10px 16px 12px;
+    margin-bottom: 8px;
+  }
+
+  .dropdown-group {
+    margin-bottom: 12px;
+    padding: 0 8px;
+  }
+
+  .group-title {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    font-size: 10px;
+  }
+
+  .dropdown-link {
+    padding: 10px 10px !important;
+    margin: 3px 6px !important;
+    border-radius: 8px !important;
+  }
+
+  .link-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    border-radius: 6px;
+  }
+
+  .link-icon i {
+    font-size: 12px !important;
+  }
+
+  .link-title {
+    font-size: 13px !important;
+  }
+
+  .link-desc {
+    font-size: 10px !important;
+  }
+
+  .menu .menu-items .dropdown .dropbtn {
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+}
+
+/* Responsive Positioning */
+@media (min-width: 769px) {
+
+  .menu .menu-items .dropdown:last-child .dropdown-content,
+  .menu .menu-items .dropdown:nth-last-child(2) .dropdown-content {
+    left: auto !important;
+    right: 0 !important;
+  }
+}
+
+/* --- Desktop Menu Enhancements --- */
+@media (min-width: 769px) {
+  .menu.fixed-header {
+    /* background: linear-gradient(90deg, #0a2540 0%, #006837 100%); */
+    /* Deep blue to green gradient */
+    color: #fff;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 8px 32px rgba(0, 207, 255, 0.10), 0 2px 8px rgba(0, 0, 0, 0.08);
+    /* background: linear-gradient(90deg, rgba(10, 25, 41, 0.98) 0%, rgba(0, 104, 55, 0.97) 100%); */
+    margin-top: 0;
+    padding-bottom: 10px;
+    /* More opaque for better contrast */
+  }
+
+  .menu .menu-items {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .menu .menu-items>a,
+  .menu .menu-items>div {
+    margin-right: 0;
+  }
+
+  .menu .menu-items>a:last-child,
+  .menu .menu-items>div:last-child {
+    margin-right: 0;
+  }
+}

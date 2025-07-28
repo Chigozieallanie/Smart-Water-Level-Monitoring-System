@@ -1,0 +1,1194 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Smart Water Monitoring - Overview</title>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" media="screen" rel="stylesheet"
+    type="text/css" />
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700&display=swap' rel='stylesheet'
+    type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/custom.js"></script>
+  <style>
+    .menu-index {
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+
+    /* Enhanced Card Styling for Index Page */
+    section {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.95));
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin: 20px 0;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg,
+          rgba(0, 150, 255, 0.05) 0%,
+          rgba(0, 200, 255, 0.08) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(0, 180, 255, 0.06) 75%,
+          rgba(0, 150, 255, 0.04) 100%);
+      z-index: -1;
+    }
+
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    #problem {
+      background: linear-gradient(135deg, rgba(255, 240, 240, 0.95), rgba(255, 250, 250, 0.95));
+    }
+
+    #problem::before {
+      background: linear-gradient(45deg,
+          rgba(255, 100, 100, 0.08) 0%,
+          rgba(255, 150, 150, 0.06) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 120, 120, 0.07) 75%,
+          rgba(255, 100, 100, 0.05) 100%);
+    }
+
+    #objectives {
+      background: linear-gradient(135deg, rgba(240, 255, 240, 0.95), rgba(250, 255, 250, 0.95));
+    }
+
+    #objectives::before {
+      background: linear-gradient(45deg,
+          rgba(50, 200, 50, 0.08) 0%,
+          rgba(100, 220, 100, 0.06) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(70, 210, 70, 0.07) 75%,
+          rgba(50, 200, 50, 0.05) 100%);
+    }
+
+    #requirements {
+      background: linear-gradient(135deg, rgba(240, 245, 255, 0.95), rgba(250, 252, 255, 0.95));
+    }
+
+    #requirements::before {
+      background: linear-gradient(45deg,
+          rgba(100, 150, 255, 0.08) 0%,
+          rgba(120, 170, 255, 0.06) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(110, 160, 255, 0.07) 75%,
+          rgba(100, 150, 255, 0.05) 100%);
+    }
+
+    #target-users {
+      background: linear-gradient(135deg, rgba(255, 248, 240, 0.95), rgba(255, 252, 248, 0.95));
+    }
+
+    #target-users::before {
+      background: linear-gradient(45deg,
+          rgba(255, 165, 0, 0.08) 0%,
+          rgba(255, 185, 50, 0.06) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 175, 30, 0.07) 75%,
+          rgba(255, 165, 0, 0.05) 100%);
+    }
+
+    /* Enhanced Carousel Items */
+    .carousel-item {
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(248, 252, 255, 0.95) 30%,
+          rgba(240, 248, 255, 0.95) 70%,
+          rgba(235, 245, 255, 0.95) 100%);
+      border-radius: 16px;
+      padding: 25px;
+      margin: 15px;
+      box-shadow:
+        0 8px 25px rgba(0, 150, 255, 0.15),
+        0 3px 10px rgba(0, 200, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(0, 150, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-item img {
+      max-width: 80px;
+      max-height: 80px;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 4px 8px rgba(0, 150, 255, 0.3));
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .carousel-item:hover img {
+      transform: scale(1.1);
+      filter: drop-shadow(0 6px 12px rgba(0, 150, 255, 0.4));
+    }
+
+    .carousel-item p {
+      color: #1a365d;
+      font-weight: 600;
+      font-size: 1.05em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .carousel-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #0096ff, #00c8ff, #74b9ff);
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    .carousel-item:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow:
+        0 15px 35px rgba(0, 150, 255, 0.25),
+        0 6px 15px rgba(0, 200, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 150, 255, 0.4);
+    }
+
+    /* Enhanced Tab Content */
+    .custom-tab-content {
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(255, 248, 240, 0.95) 30%,
+          rgba(255, 245, 235, 0.95) 70%,
+          rgba(250, 240, 230, 0.95) 100%);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 20px 0;
+      box-shadow:
+        0 10px 30px rgba(255, 165, 0, 0.15),
+        0 4px 12px rgba(255, 185, 50, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 165, 0, 0.25);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .custom-tab-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ffa500, #ffb732, #ffc947);
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    .custom-tab-content:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 15px 40px rgba(255, 165, 0, 0.2),
+        0 6px 16px rgba(255, 185, 50, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .custom-tab-content h3 {
+      color: #8b4513;
+      font-weight: 700;
+      font-size: 1.4em;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .custom-tab-content p {
+      color: #2d3748;
+      font-weight: 500;
+      font-size: 1.05em;
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Enhanced Section Headers */
+    section h2 {
+      color: #0d1b2a;
+      font-weight: 800;
+      font-size: 2.4em;
+      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      margin-bottom: 25px;
+      position: relative;
+      z-index: 3;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(248, 252, 255, 0.95) 100%);
+      padding: 20px 30px;
+      border-radius: 12px;
+      border: 2px solid rgba(13, 27, 42, 0.1);
+      box-shadow:
+        0 8px 25px rgba(13, 27, 42, 0.15),
+        0 3px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    section h2::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg,
+          rgba(13, 27, 42, 0.03) 0%,
+          rgba(0, 119, 204, 0.05) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(0, 119, 204, 0.04) 75%,
+          rgba(13, 27, 42, 0.02) 100%);
+      border-radius: 12px;
+      z-index: -1;
+    }
+
+    section h2:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 35px rgba(13, 27, 42, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    section h3 {
+      color: #1a365d;
+      margin-bottom: 15px;
+      font-weight: 600;
+      font-size: 1.3em;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(248, 252, 255, 0.9) 100%);
+      padding: 15px 20px;
+      border-radius: 8px;
+      border-left: 4px solid #0077cc;
+      box-shadow:
+        0 4px 15px rgba(26, 54, 93, 0.1),
+        0 2px 8px rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    section h3:hover {
+      transform: translateX(5px);
+      box-shadow:
+        0 6px 20px rgba(26, 54, 93, 0.15),
+        0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Section-specific header styles */
+    #problem h2 {
+      background: linear-gradient(135deg,
+          rgba(255, 245, 245, 0.95) 0%,
+          rgba(255, 250, 250, 0.95) 100%);
+      border-color: rgba(220, 38, 38, 0.2);
+      color: #7f1d1d;
+    }
+
+    #problem h2::before {
+      background: linear-gradient(45deg,
+          rgba(220, 38, 38, 0.05) 0%,
+          rgba(248, 113, 113, 0.03) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(248, 113, 113, 0.04) 75%,
+          rgba(220, 38, 38, 0.03) 100%);
+    }
+
+    #objectives h2 {
+      background: linear-gradient(135deg,
+          rgba(240, 255, 240, 0.95) 0%,
+          rgba(250, 255, 250, 0.95) 100%);
+      border-color: rgba(34, 197, 94, 0.2);
+      color: #14532d;
+    }
+
+    #objectives h2::before {
+      background: linear-gradient(45deg,
+          rgba(34, 197, 94, 0.05) 0%,
+          rgba(74, 222, 128, 0.03) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(74, 222, 128, 0.04) 75%,
+          rgba(34, 197, 94, 0.03) 100%);
+    }
+
+    #requirements h2 {
+      background: linear-gradient(135deg,
+          rgba(240, 249, 255, 0.95) 0%,
+          rgba(248, 252, 255, 0.95) 100%);
+      border-color: rgba(59, 130, 246, 0.2);
+      color: #1e3a8a;
+    }
+
+    #requirements h2::before {
+      background: linear-gradient(45deg,
+          rgba(59, 130, 246, 0.05) 0%,
+          rgba(96, 165, 250, 0.03) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(96, 165, 250, 0.04) 75%,
+          rgba(59, 130, 246, 0.03) 100%);
+    }
+
+    #target-users h2 {
+      background: linear-gradient(135deg,
+          rgba(255, 247, 237, 0.95) 0%,
+          rgba(255, 251, 247, 0.95) 100%);
+      border-color: rgba(251, 146, 60, 0.2);
+      color: #9a3412;
+    }
+
+    #target-users h2::before {
+      background: linear-gradient(45deg,
+          rgba(251, 146, 60, 0.05) 0%,
+          rgba(253, 186, 116, 0.03) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(253, 186, 116, 0.04) 75%,
+          rgba(251, 146, 60, 0.03) 100%);
+    }
+
+    /* Enhanced Lists */
+    .objectives-list {
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(248, 255, 248, 0.95) 30%,
+          rgba(240, 255, 240, 0.95) 70%,
+          rgba(235, 250, 235, 0.95) 100%);
+      border-radius: 16px;
+      padding: 25px;
+      margin: 20px 0;
+      box-shadow:
+        0 10px 32px rgba(0, 104, 55, 0.15),
+        0 4px 12px rgba(117, 221, 221, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(0, 104, 55, 0.25);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .objectives-list::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--makerere-green), var(--water-blue-light), var(--water-blue-dark));
+      opacity: 0.8;
+    }
+
+    .objectives-list:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 15px 40px rgba(0, 104, 55, 0.2),
+        0 6px 16px rgba(117, 221, 221, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .objectives-list li {
+      color: #1a365d;
+      margin: 12px 0;
+      font-weight: 600;
+      font-size: 1.05em;
+      padding: 10px 15px;
+      background: rgba(117, 221, 221, 0.1);
+      border-radius: 10px;
+      border-left: 4px solid var(--water-blue-light);
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 104, 55, 0.05);
+    }
+
+    .objectives-list li:hover {
+      background: rgba(117, 221, 221, 0.2);
+      transform: translateX(8px);
+      box-shadow: 0 4px 12px rgba(0, 104, 55, 0.1);
+    }
+
+    /* Enhanced Details/Summary */
+    .requirements-full-list {
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(248, 252, 255, 0.95) 30%,
+          rgba(240, 248, 255, 0.95) 70%,
+          rgba(235, 245, 255, 0.95) 100%);
+      border-radius: 16px;
+      padding: 25px;
+      margin: 20px 0;
+      box-shadow:
+        0 10px 32px rgba(41, 128, 185, 0.15),
+        0 4px 12px rgba(52, 152, 219, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(41, 128, 185, 0.25);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .requirements-full-list::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2980b9, #3498db, #74b9ff);
+      opacity: 0.8;
+    }
+
+    .requirements-full-list:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 15px 40px rgba(41, 128, 185, 0.2),
+        0 6px 16px rgba(52, 152, 219, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .requirements-full-list summary {
+      color: #1a365d;
+      font-weight: 700;
+      font-size: 1.1em;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      background: rgba(41, 128, 185, 0.1);
+      border: 1px solid rgba(41, 128, 185, 0.2);
+      box-shadow: 0 2px 8px rgba(41, 128, 185, 0.1);
+    }
+
+    .requirements-full-list summary:hover {
+      background: rgba(41, 128, 185, 0.2);
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(41, 128, 185, 0.2);
+    }
+
+    .requirements-full-list ul {
+      margin-top: 20px;
+    }
+
+    .requirements-full-list li {
+      color: #2d3748;
+      margin: 10px 0;
+      font-weight: 500;
+      font-size: 1.05em;
+      padding: 10px 15px;
+      background: rgba(74, 144, 226, 0.08);
+      border-radius: 10px;
+      border-left: 3px solid #3498db;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(41, 128, 185, 0.05);
+    }
+
+    .requirements-full-list li:hover {
+      background: rgba(74, 144, 226, 0.15);
+      transform: translateX(8px);
+      box-shadow: 0 4px 10px rgba(41, 128, 185, 0.1);
+    }
+
+    /* Enhanced Mobile Menu Styles */
+    @media (max-width: 768px) {
+
+      /* Improve menu visibility and functionality on mobile */
+      .menu-table {
+        padding: 10px 15px;
+      }
+
+      .logo a {
+        font-size: 1.2em !important;
+        color: var(--makerere-yellow) !important;
+        font-weight: 700 !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .menu-button {
+        display: block !important;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--makerere-green), var(--water-blue-light));
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 104, 55, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .menu-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 104, 55, 0.4);
+      }
+
+      .menu-button img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+      }
+
+      .menu-items {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95));
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        border-top: 3px solid var(--makerere-yellow);
+        display: none;
+        z-index: 1001;
+      }
+
+      .menu-items.show {
+        display: flex !important;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      .menu-items a {
+        color: var(--water-blue-light) !important;
+        font-size: 1.1em !important;
+        font-weight: 600 !important;
+        padding: 15px 20px !important;
+        margin: 5px 0 !important;
+        background: rgba(117, 221, 221, 0.1);
+        border-radius: 10px;
+        border-left: 4px solid var(--makerere-green);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+      }
+
+      .menu-items a:hover,
+      .menu-items a.active {
+        background: rgba(117, 221, 221, 0.2) !important;
+        color: var(--makerere-yellow) !important;
+        transform: translateX(8px);
+        box-shadow: 0 4px 12px rgba(0, 104, 55, 0.2);
+      }
+
+      .menu-items .menu-icon {
+        margin-right: 12px !important;
+        font-size: 1.2em;
+        min-width: 20px;
+      }
+
+      /* Enhanced dropdown for mobile */
+      .dropdown {
+        width: 100%;
+      }
+
+      .dropbtn {
+        width: 100% !important;
+        text-align: left !important;
+        justify-content: space-between !important;
+      }
+
+      .dropdown-content {
+        position: static !important;
+        background: rgba(0, 104, 55, 0.2) !important;
+        margin: 10px 0 !important;
+        border-radius: 10px !important;
+        border: none !important;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        transition: max-height 0.3s ease !important;
+      }
+
+      .dropdown.active .dropdown-content {
+        max-height: 500px !important;
+        display: block !important;
+      }
+
+      .dropdown-content a {
+        color: var(--water-blue-light) !important;
+        background: transparent !important;
+        border-left: 2px solid var(--water-blue-light) !important;
+        margin-left: 20px !important;
+        font-size: 0.95em !important;
+        padding: 12px 15px !important;
+      }
+
+      .dropdown-content a:hover {
+        background: rgba(117, 221, 221, 0.2) !important;
+        color: var(--makerere-yellow) !important;
+      }
+
+      /* Enhanced banner for mobile */
+      .banner {
+        min-height: 60vh;
+        padding: 100px 20px 40px;
+      }
+
+      .banner-title-group h1 {
+        font-size: 1.8em !important;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+
+      .banner-title-group h2 {
+        font-size: 1.3em !important;
+        line-height: 1.3;
+      }
+
+      .university-info {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .university-logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+
+      .uni-name,
+      .dept-name {
+        font-size: 0.9em;
+      }
+
+      /* Enhanced sections for mobile */
+      section {
+        margin: 15px 10px !important;
+        padding: 20px 15px !important;
+        border-radius: 12px !important;
+      }
+
+      section h2 {
+        font-size: 1.8em !important;
+        text-align: center;
+        margin-bottom: 15px !important;
+        padding: 15px 20px !important;
+        border-radius: 8px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.3px !important;
+        box-shadow:
+          0 6px 20px rgba(13, 27, 42, 0.12),
+          0 2px 8px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+      }
+
+      section h3 {
+        font-size: 1.1em !important;
+        padding: 12px 15px !important;
+        border-radius: 6px !important;
+        margin-bottom: 12px !important;
+        text-align: center !important;
+        border-left-width: 3px !important;
+      }
+
+      section h3:hover {
+        transform: translateX(0) !important;
+      }
+
+      section p.text {
+        font-size: 1em !important;
+        line-height: 1.6 !important;
+        text-align: justify;
+      }
+
+      /* Mobile-optimized carousel */
+      .requirements-carousel {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+        margin: 20px 0 !important;
+      }
+
+      .carousel-item {
+        margin: 0 !important;
+        padding: 20px !important;
+        transform: none !important;
+      }
+
+      .carousel-item:hover {
+        transform: translateY(-3px) !important;
+      }
+
+      /* Mobile-optimized tabs */
+      .custom-tab-menu {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+
+      .custom-tab-menu-item {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 15px !important;
+        font-size: 1em !important;
+      }
+
+      .tab-avatar {
+        width: 30px !important;
+        height: 30px !important;
+        margin-right: 10px !important;
+      }
+
+      /* Mobile-optimized objectives list */
+      .objectives-list {
+        padding: 15px !important;
+      }
+
+      .objectives-list li {
+        font-size: 1em !important;
+        padding: 12px 15px !important;
+        margin: 10px 0 !important;
+      }
+
+      /* Mobile-optimized requirements list */
+      .requirements-full-list {
+        padding: 15px !important;
+      }
+
+      .requirements-full-list summary {
+        padding: 12px !important;
+        font-size: 1em !important;
+      }
+
+      .requirements-full-list li {
+        font-size: 0.95em !important;
+        padding: 10px 12px !important;
+      }
+
+      /* Improved text readability on mobile */
+      .inline-icon {
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 3px !important;
+      }
+    }
+
+    /* Animation for mobile menu */
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Extra small mobile devices */
+    @media (max-width: 480px) {
+      .banner {
+        min-height: 50vh;
+        padding: 80px 15px 30px;
+      }
+
+      .banner-title-group h1 {
+        font-size: 1.5em !important;
+      }
+
+      .banner-title-group h2 {
+        font-size: 1.1em !important;
+      }
+
+      section {
+        margin: 10px 5px !important;
+        padding: 15px 10px !important;
+      }
+
+      section h2 {
+        font-size: 1.5em !important;
+      }
+
+      .menu-items a {
+        font-size: 1em !important;
+        padding: 12px 15px !important;
+      }
+
+      .custom-tab-menu-item {
+        padding: 12px !important;
+        font-size: 0.9em !important;
+      }
+
+      .step-highlight {
+        font-size: 0.8em !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="overview-page">
+  <!-- Water Texture Background -->
+  <div class="water-texture"></div>
+
+  <!-- Animated Water Drops Background -->
+  <div class="water-drops">
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+    <div class="water-drop"></div>
+  </div>
+
+  <!-- Wave Animation -->
+  <div class="wave-animation"></div>
+
+  <!-- Water Ripples -->
+  <div class="water-ripples">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+  </div>
+
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <!-------------------------------------------------------------------------------------------->
+    <!--Start Header-->
+    <div class="banner overview-banner" style="background-image: url('img/water_tank_banner.png');">
+      <div class="banner-overlay"></div>
+      <div class="water-ripple-effect"></div>
+      <div class="banner-table flex-column">
+        <div class="flex-row-space-between banner-content-area">
+          <div class="flex-item flex-column banner-title-group">
+            <h1 class="animated-fade-in-slow">SMART WATER-LEVEL MONITORING</h1>
+            <h2 class="animated-fade-in-slow delay-500">SYSTEM FOR TANKS & DRUMS</h2>
+          </div>
+          <div class="flex-item flex-column banner-logo-group animated-fade-in-right">
+            <div class="flex-row university-info">
+              <img src="img/makerere_building_logo.png" alt="Makerere University Logo"
+                class="university-logo animated-fade-in">
+              <div>
+                <p class="uni-name">MAKERERE UNIVERSITY</p>
+                <p class="dept-name">DEPARTMENT Of COMPUTER SCIENCE</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End Header-->
+    <!-------------------------------------------------------------------------------------------->
+    <div class="content">
+      <div class="content-table flex-column">
+
+        <!--Start Problem-->
+        <section class="flex-row scroll-reveal-section" id="problem">
+          <div class="flex-item flex-column">
+            <h2>Welcome to Smart Water Monitoring!</h2>
+            <hr>
+            <div class="problem-content">
+              <div class="problem-text-area">
+                <p class="text" style="font-size:1.2em; color:#1a365d;">
+                  Welcome! Experience peace of mind and smarter living with our intelligent water tank monitoring
+                  system. Effortlessly track your water levels, receive timely alerts, and enjoy a reliable water
+                  supply—whether at home, school, or managing properties. We're here to help you save water, prevent
+                  overflows, and make water management easy and stress-free. <br><br>
+                  <strong>Let’s make every drop count—together!</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--End Problem-->
+
+        <!--Start Project Objectives-->
+        <section class="flex-row" id="objectives">
+          <div class="flex-item flex-column">
+            <h2>Our Objectives</h2>
+            <hr>
+            <div class="objectives-grid" style="display: flex; flex-wrap: wrap; gap: 18px;">
+              <div
+                style="flex:1 1 220px; background:#e6f7fa; border-radius:10px; padding:18px; min-width:200px; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.6em; color:#318CE7;"><i class="fas fa-tachometer-alt"></i></span>
+                <span>Develop a real-time water-level monitoring system for storage tanks.</span>
+              </div>
+              <div
+                style="flex:1 1 220px; background:#f9fbe7; border-radius:10px; padding:18px; min-width:200px; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.6em; color:#e67e22;"><i class="fas fa-bell"></i></span>
+                <span>Alert users of critical water level to prevent overflows or dry tanks.</span>
+              </div>
+              <div
+                style="flex:1 1 220px; background:#e8f5e9; border-radius:10px; padding:18px; min-width:200px; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.6em; color:#10b981;"><i class="fas fa-water"></i></span>
+                <span>Improve water management in areas with irregular supply.</span>
+              </div>
+              <div
+                style="flex:1 1 220px; background:#fff3e0; border-radius:10px; padding:18px; min-width:200px; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.6em; color:#f39c12;"><i class="fas fa-check-circle"></i></span>
+                <span>Reduce manual checks in apartments, schools, and clinics.</span>
+              </div>
+              <div
+                style="flex:1 1 220px; background:#ede7f6; border-radius:10px; padding:18px; min-width:200px; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.6em; color:#8e24aa;"><i class="fas fa-mobile-alt"></i></span>
+                <span>Provide simple, accessible user alerts (SMS/display).</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--End Project Objectives-->
+
+        <!--Start Project Requirements-->
+        <section class="flex-row" id="requirements">
+          <div class="flex-item flex-column">
+            <h2>Key Components</h2>
+            <hr>
+            <p class="text">The system is built using a selection of robust and accessible electronic components:</p>
+            <div class="requirements-carousel">
+              <div class="carousel-item">
+                <img src="img/esp32_component.png" alt="ESP-32 Microcontroller">
+                <p>ESP-32 Microcontroller</p>
+              </div>
+              <div class="carousel-item">
+                <img src="img/ultrasonic_sensor_component.png" alt="Ultrasonic Sensor">
+                <p>Ultrasonic Sensor (HC-SR04)</p>
+              </div>
+              <div class="carousel-item">
+                <img src="img/lcd_display_component.png" alt="LCD 1602 Display">
+                <p>LCD 1602 (I2C)</p>
+              </div>
+              <div class="carousel-item">
+                <img src="img/buzzer_led_component.png" alt="Buzzer and LEDs">
+                <p>Buzzer & LEDs</p>
+              </div>
+            </div>
+            <details class="requirements-full-list">
+              <summary>View Full Component List</summary>
+              <ul>
+                <li>ESP-32, 9V Battery.</li>
+                <li>Ultrasonic Sensor, USB-A to B cable.</li>
+                <li>Breadboard, 5V water Pump, DC Female.</li>
+                <li>5mm LED: (Green, Orange, Red).</li>
+                <li>Buzzer.</li>
+                <li>Male to Female, Male to Male Jumper Wires.</li>
+                <li>LCD 1602 Yellow (I2C).</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+        <!--End Project Requirements-->
+
+        <!--Start Target Users-->
+        <section class="flex-row" id="target-users">
+          <div class="flex-item flex-column full-width">
+            <h2>Who Benefits?</h2>
+            <hr>
+            <div class="custom-tab target-users-tabs" id="target-users-tab-container">
+              <div class="custom-tab-menu center">
+                <a class="custom-tab-menu-item active" data-content="homeowners" href="javascript:void(0)">
+                  <img src="img/avatar_homeowner.png" alt="Homeowner Avatar" class="tab-avatar"> Residential Owners
+                </a>
+                <a class="custom-tab-menu-item" data-content="schools" href="javascript:void(0)">
+                  <img src="img/avatar_school.png" alt="School Admin Avatar" class="tab-avatar"> Schools & Clinics
+                </a>
+                <a class="custom-tab-menu-item" data-content="landlords" href="javascript:void(0)">
+                  <img src="img/avatar_landlord.png" alt="Landlord Avatar" class="tab-avatar"> Landlords
+                </a>
+              </div>
+              <div class="custom-tab-content" data-content="homeowners">
+                <h3>Peace of Mind for Homeowners</h3>
+                <p>Imagine never worrying about your tank running dry during a critical moment or overflowing and
+                  causing damage. Our system automates water-level tracking, sending you timely alerts. Enjoy consistent
+                  water supply, save water, and protect your property by preventing unnoticed overflows.</p>
+              </div>
+              <div class="custom-tab-content" data-content="schools">
+                <h3>Reliable Water for Institutions</h3>
+                <p>For schools and clinics, a consistent water supply is paramount for sanitation and safety. Our system
+                  ensures administrators can manage water resources effectively, guaranteeing that water is always
+                  available when needed, supporting a healthy and safe environment for students and patients.</p>
+              </div>
+              <div class="custom-tab-content" data-content="landlords">
+                <h3>Efficient Management for Landlords</h3>
+                <p>Apartment managers can significantly reduce water bills and tenant complaints. Prevent costly tank
+                  overflows, schedule refills efficiently, and provide tenants with a reliable water supply. Our system
+                  makes property management smoother and more cost-effective.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--End Target Users-->
+
+      </div>
+    </div>
+    <div class="footer-container"></div>
+  </div>
+  <script type="module" src="/index.tsx"></script>
+  <!-- Enhanced Mobile Menu JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Mobile menu toggle functionality
+      const menuButton = document.querySelector('.menu-button');
+      const menuItems = document.querySelector('.menu-items');
+      const dropdowns = document.querySelectorAll('.dropdown');
+
+      // Toggle mobile menu
+      if (menuButton && menuItems) {
+        menuButton.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          menuItems.classList.toggle('show');
+
+          // Add animation class
+          if (menuItems.classList.contains('show')) {
+            menuItems.style.display = 'flex';
+            // Force reflow
+            menuItems.offsetHeight;
+          } else {
+            setTimeout(() => {
+              if (!menuItems.classList.contains('show')) {
+                menuItems.style.display = 'none';
+              }
+            }, 300);
+          }
+        });
+      }
+
+      // Enhanced dropdown functionality for mobile
+      dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropbtn && dropdownContent) {
+          dropbtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Close other dropdowns
+            dropdowns.forEach(otherDropdown => {
+              if (otherDropdown !== dropdown) {
+                otherDropdown.classList.remove('active');
+              }
+            });
+
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+          });
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function (e) {
+        if (menuItems && !menuItems.contains(e.target) && !menuButton?.contains(e.target)) {
+          menuItems.classList.remove('show');
+          setTimeout(() => {
+            if (!menuItems.classList.contains('show')) {
+              menuItems.style.display = 'none';
+            }
+          }, 300);
+        }
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', function (e) {
+        dropdowns.forEach(dropdown => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+          }
+        });
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) {
+          menuItems.classList.remove('show');
+          menuItems.style.display = '';
+          dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+          });
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            // Close mobile menu if open
+            if (menuItems.classList.contains('show')) {
+              menuItems.classList.remove('show');
+              setTimeout(() => {
+                menuItems.style.display = 'none';
+              }, 300);
+            }
+
+            // Smooth scroll to target
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Enhanced mobile menu item highlighting
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const menuLinks = document.querySelectorAll('.menu-items a');
+
+      menuLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && (href === currentPage || href.includes(currentPage))) {
+          link.classList.add('active');
+        }
+      });
+
+      // Mobile-specific optimizations
+      if (window.innerWidth <= 768) {
+        // Improve touch targets
+        const allButtons = document.querySelectorAll('button, .carousel-item, .operation-step');
+        allButtons.forEach(button => {
+          button.style.minHeight = '44px';
+          button.style.cursor = 'pointer';
+        });
+
+        // Prevent zoom on input focus (if any forms are added later)
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+          input.style.fontSize = '16px';
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
