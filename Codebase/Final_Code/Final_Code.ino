@@ -255,7 +255,7 @@ void handleAlerts()
     digitalWrite(5, LOW);
     if (!fullAlertSent)
     {
-      sendSMS("Tank full! Consider closing the tap.");
+      sendSMS("Tank full! or about to be full! Consider stopping water supply to avoid overflow.");
       fullAlertSent = true;
       lowAlertSent = false; // Reset low alert
     }
@@ -280,7 +280,7 @@ void handleAlerts()
     digitalWrite(11, HIGH); // Buzzer ON
     if (!lowAlertSent)
     {
-      sendSMS("H2O level low! Please refill soon. Check for leaks if unexpected.");
+      sendSMS("Water-levels are getting low! Please refill soon. Check for leaks if unexpected.");
       lowAlertSent = true;
       fullAlertSent = false; // Reset full alert
     }
