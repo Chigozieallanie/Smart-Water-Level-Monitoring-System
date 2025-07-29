@@ -14,7 +14,7 @@ const int TANK_LITERS = 5;
 String thingspeakChannelID = "3001129";
 String thingspeakWriteAPIKey = "L6EE5X3VM6Z3N5ZV";
 String lastCommand = "";
-const char *phoneNumber = "+256786178453";
+const char *phoneNumber = "+256776785906";
 
 // State
 float distance;
@@ -173,6 +173,17 @@ String readSerialResponse()
 }
 void processCommand(String cmd)
 {
+  cmd.trim();
+  // Ignore empty, AT commands, and GSM responses
+  if (cmd.length() == 0 ||
+      cmd == "OK" ||
+      cmd == "SHUT OK" ||
+      cmd == ">" ||
+      cmd.startsWith("AT"))
+  {
+    return;
+  }
+
   if (cmd.startsWith("REPORT:"))
   {
     String reportType = cmd.substring(7);
@@ -194,7 +205,7 @@ void processCommand(String cmd)
     String msg = cmd.substring(4);
     sendSMS(msg);
   }
-  else if (cmd.length() > 0)
+  else
   {
     sendSMS("Unknown command: " + cmd);
   }
@@ -245,8 +256,8 @@ void updateLCD()
 
 void handleAlerts()
 {
-  // Full alert (≥95%)
-  if (depth >= 95)
+  // Full alert (≥80%)
+  if (depth >= 80)
   {
     // Tank full: LED/buzzer logic
     digitalWrite(7, HIGH);  // Full LED ON
@@ -255,12 +266,12 @@ void handleAlerts()
     digitalWrite(5, LOW);
     if (!fullAlertSent)
     {
-      sendSMS("Tank full! or about to be full! Consider stopping water supply to avoid overflow.");
+      sendSMS("Tank full! or about to become full! Consider stopping refill to avoid overflow.");
       fullAlertSent = true;
       lowAlertSent = false; // Reset low alert
     }
   }
-  // Normal range (21–94%)
+  // Normal range (21–80%)
   else if (depth > 20)
   {
     digitalWrite(6, HIGH); // Normal LED ON
@@ -280,7 +291,7 @@ void handleAlerts()
     digitalWrite(11, HIGH); // Buzzer ON
     if (!lowAlertSent)
     {
-      sendSMS("Water-levels are getting low! Please refill soon. Check for leaks if unexpected.");
+      sendSMS("Water-levels are getting low! Please consider refilling tank soon. Check for leaks if unexpected.");
       lowAlertSent = true;
       fullAlertSent = false; // Reset full alert
     }

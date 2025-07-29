@@ -13,7 +13,7 @@ void init_sms(String msg)
       delay(2500); 
       Serial.write("AT+CMGS="); 
       Serial.write(34); //ASCII of “ 
-      Serial.write("+256786178453"); 
+      Serial.write("+256776785906 "); 
       Serial.write(34); 
       Serial.write(13); 
       Serial.write(10); 
